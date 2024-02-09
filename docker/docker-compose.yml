@@ -1,0 +1,77 @@
+version: '3.8'
+
+services:
+  backend:
+    image: ${NEXUS_REPOSITORY_URL}${PROJECT_NAME}-backend:${BACKEND_IMAGE_TAG}
+    container_name: ${PROJECT_NAME}-backend
+    ports:
+      - "127.0.0.1:${BACKEND_EXTERNAL_PORT}:${BACKEND_INTERNAL_PORT}"
+    volumes:
+      - storage:/var/www/storage
+      - assets:/var/www/public
+    networks:
+      - main
+    environment:
+      TZ: ${TIMEZONE}
+      DATABASE_USER: $DATABASE_USER
+      DATABASE_PASSWORD: $DATABASE_PASSWORD
+      DATABASE_NAME: $DATABASE_NAME
+    depends_on:
+      - database
+    deploy:
+      resources:
+        limits:
+          memory: ${BACKEND_RESOURCES_MEMORY_LIMIT}
+        reservations:
+          memory: ${BACKEND_RESOURCES_MEMORY_RESERVATION}
+    restart: always
+  database:
+    image: ${DATABASE_IMAGE}
+    container_name: ${PROJECT_NAME}-database
+    environment:
+      POSTGRES_DB: ${DATABASE_NAME}
+      POSTGRES_USER: ${DATABASE_USER}
+      POSTGRES_PASSWORD: ${DATABASE_PASSWORD}
+      TZ: ${TIMEZONE}
+    volumes:
+      - database:/var/lib/postgresql/data
+      - ./database-init:/docker-entrypoint-initdb.d
+    networks:
+      - main
+  frontend:
+    image: ${NEXUS_REPOSITORY_URL}${PROJECT_NAME}-frontend:${FRONTEND_IMAGE_TAG}
+    container_name: ${PROJECT_NAME}-frontend
+    ports:
+      - "127.0.0.1:${FRONTEND_EXTERNAL_PORT}:${FRONTEND_INTERNAL_PORT}"
+    networks:
+      - main
+    environment:
+      TZ: ${TIMEZONE}
+    restart: always
+
+volumes:
+  storage:
+    name: '${PROJECT_NAME}-storage'
+    driver: 'local'
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${VOLUMES_ROOT}/${VOLUMES_STORAGE_RELATIVE_PATH}'
+  database:
+    name: '${PROJECT_NAME}-database'
+    driver: 'local'
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${VOLUMES_ROOT}/${VOLUMES_DATABASE_RELATIVE_PATH}'
+  assets:
+    name: '${PROJECT_NAME}-assets'
+    driver: 'local'
+    driver_opts:
+      type: 'none'
+      o: 'bind'
+      device: '${VOLUMES_ROOT}/${VOLUMES_ASSETS_RELATIVE_PATH}'
+
+networks:
+  main:
+    name: ${PROJECT_NAME}
