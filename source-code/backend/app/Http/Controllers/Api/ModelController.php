@@ -9,7 +9,8 @@ use Illuminate\Http\Request;
 
 class ModelController extends Controller
 {
- public function index(){
-     return ModelResource::make(Model::query()->first());
- }
+    public function index()
+    {
+        return ModelResource::make(Model::query()->first());
+    }
 }
