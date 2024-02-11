@@ -11,6 +11,16 @@ class ModelController extends Controller
 {
     public function index()
     {
-        return ModelResource::make(Model::query()->first());
+        return response()->json(['status' => 'success', 'data' => ModelResource::collection(Model::all())]);
+    }
+
+    public function show($id)
+    {
+        $model = Model::query()->where('id', $id)->first();
+        if (!empty($model)) {
+            return response()->json(['status' => 'success', 'data' => ModelResource::make($model)]);
+        } else {
+            return response()->json(['status' => 'not found']);
+        }
     }
 }

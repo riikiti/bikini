@@ -21,6 +21,7 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'avatar'
     ];
 
     /**
@@ -41,5 +42,11 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
+        'created_at' => 'date',
     ];
+
+    public function getCreatedAttribute()
+    {
+        return date('d.m.Y', strtotime($this->created_at));
+    }
 }
