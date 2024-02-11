@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();
             $table->string('photo',500);
-            $table->string('description',2000);
+            $table->string('description',2000)->nullable();
             $table->timestamps();
         });
     }
