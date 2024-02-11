@@ -5,12 +5,14 @@
   import type { ILinkSettings } from '~/services/models'
   import UserAvatar from '~/components/TheHeader/UserAvatar.vue'
   import { useUserStore } from '~/stores/user'
+  import { useI18n } from '#imports'
 
   interface IProps {
     userMenu: ILinkSettings[]
   }
   const props = defineProps<IProps>()
 
+  const { t } = useI18n()
   const userStore = useUserStore()
   const { userMenu } = toRefs(props)
   const isOpen = ref(false)
@@ -34,6 +36,9 @@
       <div class="mt-2">
         <div v-for="(link, index) in userMenu" :key="index" class="px-4 py-2 border-b">
           <a :href="link.href">{{ link.name }}</a>
+        </div>
+        <div class="px-4 py-2 border-b">
+          {{ $t('header.logout') }}
         </div>
       </div>
     </div>

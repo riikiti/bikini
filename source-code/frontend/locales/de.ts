@@ -5,6 +5,7 @@ export default {
     box: 'Box',
     settings: 'Settings',
     finance: 'Finance',
-    portfolio: 'Portfolio'
+    portfolio: 'Portfolio',
+    logout: 'Logout'
   }
 }
