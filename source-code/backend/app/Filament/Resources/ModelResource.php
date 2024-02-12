@@ -16,7 +16,7 @@ class ModelResource extends Resource
 {
     protected static ?string $model = Model::class;
 
-    protected static ?string $navigationIcon = 'heroicon-o-user';
+    protected static ?string $navigationIcon = 'heroicon-s-user';
 
     protected static ?string $navigationLabel = 'Модели';
 
