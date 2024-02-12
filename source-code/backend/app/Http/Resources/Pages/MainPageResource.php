@@ -23,7 +23,7 @@ class MainPageResource extends JsonResource
             'votes' => MainPageBlocksResource::make($this->votes),
             'info' => MainPageBlocksResource::make($this->info),
             'winners' => MainPageBlocksResource::make($this->winners),
-
+            'prizes'=>MainPagePrizesResource::collection($this->prizes),
         ];
     }
 

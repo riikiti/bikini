@@ -20,7 +20,7 @@ class MainPage extends Model
 
     public function prizes(): HasMany
     {
-        return $this->hasMany(MainPageBlocks::class, 'id', 'main_page_id');
+        return $this->hasMany(MainPagePrizes::class);
     }
 
     public function votes(): HasOne
