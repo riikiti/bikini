@@ -42,7 +42,7 @@
 </script>
 
 <template>
-  <div class="sticky top-0 border-b border-gray-200">
+  <div class="sticky top-0 z-30 border-b border-gray-200 bg-background">
     <div class="max-w-[1368px] mx-auto px-2 sm:px-4">
       <div class="flex justify-between h-10 py-4 sm:h-16 sm:py-0">
         <div class="flex gap-2">

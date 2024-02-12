@@ -7,8 +7,8 @@
   const localePath = useLocalePath()
   const userMenu = [
     {
-      href: localePath(RoutesNames.BLOG),
-      name: t('header.blog')
+      href: localePath(RoutesNames.USERS),
+      name: t('header.users')
     },
     {
       href: localePath(RoutesNames.BOX),

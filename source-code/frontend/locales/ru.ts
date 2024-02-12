@@ -6,6 +6,7 @@ export default {
     settings: 'Settings',
     finance: 'Finance',
     portfolio: 'Portfolio',
-    logout: 'Logout'
+    logout: 'Logout',
+    users: 'Участницы'
   }
 }
