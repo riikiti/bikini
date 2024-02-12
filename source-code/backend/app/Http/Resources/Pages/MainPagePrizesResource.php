@@ -7,16 +7,14 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainPagePrizesResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+    private string $appUrl;
+
     public function toArray(Request $request): array
     {
+        $this->appUrl = config('app.url');
         return [
-            'image'=>$this->image,
-            'text'=>$this->text
+            'image' => $this->image ? $this->appUrl . '/storage/' . $this->image : null,
+            'text' => $this->text
         ];
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Services\Helpers\Images\ImageHelperService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -53,6 +54,24 @@ class Model extends BaseModel
     public function photos(): HasMany
     {
         return $this->hasMany(ModelPhoto::class,'model_id','id');
+    }
+
+    private ImageHelperService $imageHelper;
+
+    public function __construct()
+    {
+        $this->imageHelper = app(ImageHelperService::class);
+        $this->imageHelper->setSavingPath('model/images');
+    }
+
+    public function setAvatarAttribute($value)
+    {
+        $this->attributes['avatar'] = $this->imageHelper->handleImageUpload(
+            value: $value,
+            model: $this,
+            attribute: 'avatar'
+        );
+        $this->save();
     }
 
 }

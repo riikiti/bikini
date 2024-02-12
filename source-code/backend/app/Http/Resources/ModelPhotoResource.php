@@ -7,15 +7,13 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class ModelPhotoResource extends JsonResource
 {
-    /**
-     * Transform the resource into an array.
-     *
-     * @return array<string, mixed>
-     */
+    private string $appUrl;
+
     public function toArray(Request $request): array
     {
+        $this->appUrl = config('app.url');
         return [
-            'photo' => $this->photo,
+            'photo' => $this->photo ? $this->appUrl.'/storage/'.$this->photo : null,
             'description' => $this->description
         ];
     }

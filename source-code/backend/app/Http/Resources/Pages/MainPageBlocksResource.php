@@ -8,9 +8,11 @@ use Illuminate\Http\Resources\Json\JsonResource;
 
 class MainPageBlocksResource extends JsonResource
 {
+    private string $appUrl;
 
     public function toArray(Request $request): array
     {
+        $this->appUrl = config('app.url');
         $data = [];
         match ($this->key) {
             MainPageEnum::SUB_HEADER->value => $this->initSubHeaderBlock($data),
@@ -38,7 +40,7 @@ class MainPageBlocksResource extends JsonResource
     public function initInfoBlock(array &$data): void
     {
         $data['description'] = $this->description;
-        $data['image'] = $this->title;
+        $data['image'] = $this->image ? $this->appUrl . '/storage/' . $this->image : null;
     }
 
 }
