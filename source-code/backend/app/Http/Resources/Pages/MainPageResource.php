@@ -16,14 +16,16 @@ class MainPageResource extends JsonResource
     {
 
         return [
-            'head' => $this->head,
-            'seo_title' => $this->seo_title,
-            'seo_description' => $this->seo_description,
+            'seo'=>[
+                'head' => $this->head,
+                'seo_title' => $this->seo_title,
+                'seo_description' => $this->seo_description,
+            ],
             'sub_header' => MainPageBlocksResource::make($this->sub_header),
+            'prizes'=>MainPagePrizesResource::collection($this->prizes),
             'votes' => MainPageBlocksResource::make($this->votes),
             'info' => MainPageBlocksResource::make($this->info),
             'winners' => MainPageBlocksResource::make($this->winners),
-            'prizes'=>MainPagePrizesResource::collection($this->prizes),
         ];
     }
 

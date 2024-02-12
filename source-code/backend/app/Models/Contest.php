@@ -10,11 +10,22 @@ class Contest extends Model
 {
     use HasFactory;
 
-    protected $fillable= [
+    protected $fillable = [
         'name',
         'start',
         'finish',
+        'active'
     ];
+
+    public function getDateStartAttribute(): string
+    {
+        return date('d.m.Y', strtotime($this->start));
+    }
+
+    public function getDateFinishAttribute(): string
+    {
+        return date('d.m.Y', strtotime($this->finish));
+    }
 
     public function prizes(): HasMany
     {

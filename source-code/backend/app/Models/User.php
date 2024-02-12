@@ -46,7 +46,7 @@ class User extends Authenticatable
         'created_at' => 'date',
     ];
 
-    public function getCreatedAttribute()
+    public function getCreatedAttribute(): string
     {
         return date('d.m.Y', strtotime($this->created_at));
     }

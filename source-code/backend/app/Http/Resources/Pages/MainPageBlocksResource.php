@@ -34,7 +34,6 @@ class MainPageBlocksResource extends JsonResource
         $data['title'] = $this->title;
         $data['description'] = $this->description;
         $data['button_name'] = $this->button_name;
-        $data['link'] = $this->link;
     }
 
     public function initInfoBlock(array &$data): void
