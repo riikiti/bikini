@@ -2,27 +2,32 @@
 
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
 use App\Services\Helpers\Images\ImageHelperService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Foundation\Auth\User as Authenticatable;
-use Illuminate\Notifications\Notifiable;
-use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Model as BaseModel;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class User extends Authenticatable
+class Model extends BaseModel
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
+    use HasFactory;
     protected $fillable = [
-        'name',
         'email',
+        'email_verified_at',
         'password',
-        'avatar'
+        'birthdate',
+        'height',
+        'weight',
+        'hair_color',
+        'size',
+        'breast',
+        'waist',
+        'hips',
+        'country',
+        'city',
+        'avatar',
+        'about',
+        'approved',
+        'active',
     ];
 
     /**
@@ -42,13 +47,13 @@ class User extends Authenticatable
      */
     protected $casts = [
         'email_verified_at' => 'datetime',
+        'birthdate' => 'date',
         'password' => 'hashed',
-        'created_at' => 'date',
     ];
 
-    public function getCreatedAttribute()
+    public function photos(): HasMany
     {
-        return date('d.m.Y', strtotime($this->created_at));
+        return $this->hasMany(ModelPhoto::class,'model_id','id');
     }
 
     private ImageHelperService $imageHelper;
@@ -56,7 +61,7 @@ class User extends Authenticatable
     public function __construct()
     {
         $this->imageHelper = app(ImageHelperService::class);
-        $this->imageHelper->setSavingPath('user/images');
+        $this->imageHelper->setSavingPath('model/images');
     }
 
     public function setAvatarAttribute($value)
@@ -68,4 +73,5 @@ class User extends Authenticatable
         );
         $this->save();
     }
+
 }
