@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\Services\Helpers\Images\ImageHelperService;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model as BaseModel;
 use Illuminate\Database\Eloquent\Relations\HasMany;

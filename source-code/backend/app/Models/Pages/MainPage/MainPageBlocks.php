@@ -2,8 +2,7 @@
 
 namespace App\Models\Pages\MainPage;
 
-use App\Services\Helpers\Files\FilesHelperService;
-use App\Services\Helpers\Images\ImageHelperService;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
