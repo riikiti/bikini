@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\ModelController;
+use App\Http\Controllers\Api\Pages\MainPageController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -23,4 +24,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('model', ModelController::class)->only('index', 'show');
 Route::apiResource('user', ModelController::class)->only('index', 'show');
+Route::get('/main',[MainPageController::class,'index']);
 
