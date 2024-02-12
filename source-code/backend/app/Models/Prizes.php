@@ -18,21 +18,7 @@ class Prizes extends Model
         'image',
     ];
 
-    private ImageHelperService $imageHelper;
-
-    public function __construct()
-    {
-        $this->imageHelper = app(ImageHelperService::class);
-        $this->imageHelper->setSavingPath('prizes/images');
-    }
-
-    public function setImageAttribute($value)
-    {
-        $this->attributes['image'] = $this->imageHelper->handleImageUpload(
-            value: $value,
-            model: $this,
-            attribute: 'image'
-        );
-        $this->save();
-    }
+    protected $casts = [
+        'image' => 'array',
+    ];
 }

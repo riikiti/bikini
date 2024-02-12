@@ -14,6 +14,7 @@ use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Livewire\Features\SupportFileUploads\TemporaryUploadedFile;
 
 class PrizesRelationManager extends RelationManager
 {
@@ -31,7 +32,11 @@ class PrizesRelationManager extends RelationManager
                 Select::make('place')->label('Место')
                     ->options([1 => '1 место', 2 => '2 место', 3 => '3 место'])
                     ->required(),
-                FileUpload::make('image')->label('Изображение')->image()
+                FileUpload::make('image')
+                    ->directory('prizes')
+                    ->visibility('private')
+
+
             ]);
     }
 

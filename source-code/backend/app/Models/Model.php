@@ -56,22 +56,5 @@ class Model extends BaseModel
         return $this->hasMany(ModelPhoto::class,'model_id','id');
     }
 
-    private ImageHelperService $imageHelper;
-
-    public function __construct()
-    {
-        $this->imageHelper = app(ImageHelperService::class);
-        $this->imageHelper->setSavingPath('model/images');
-    }
-
-    public function setAvatarAttribute($value)
-    {
-        $this->attributes['avatar'] = $this->imageHelper->handleImageUpload(
-            value: $value,
-            model: $this,
-            attribute: 'avatar'
-        );
-        $this->save();
-    }
 
 }

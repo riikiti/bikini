@@ -14,21 +14,4 @@ class ModelPhoto extends Model
 
     protected $fillable = ['photo', 'description'];
 
-    private ImageHelperService $imageHelper;
-
-    public function __construct()
-    {
-        $this->imageHelper = app(ImageHelperService::class);
-        $this->imageHelper->setSavingPath('model/images');
-    }
-
-    public function setPhotoAttribute($value)
-    {
-        $this->attributes['photo'] = $this->imageHelper->handleImageUpload(
-            value: $value,
-            model: $this,
-            attribute: 'photo'
-        );
-        $this->save();
-    }
 }

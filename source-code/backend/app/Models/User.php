@@ -51,21 +51,4 @@ class User extends Authenticatable
         return date('d.m.Y', strtotime($this->created_at));
     }
 
-    private ImageHelperService $imageHelper;
-
-    public function __construct()
-    {
-        $this->imageHelper = app(ImageHelperService::class);
-        $this->imageHelper->setSavingPath('user/images');
-    }
-
-    public function setAvatarAttribute($value)
-    {
-        $this->attributes['avatar'] = $this->imageHelper->handleImageUpload(
-            value: $value,
-            model: $this,
-            attribute: 'avatar'
-        );
-        $this->save();
-    }
 }
