@@ -24,10 +24,5 @@ class MainPageSeeder extends Seeder
             'info_id' => MainPageBlocks::query()->where('key', MainPageEnum::INFO)->first()->id,
             'winners_id' => MainPageBlocks::query()->where('key', MainPageEnum::WINNERS)->first()->id,
         ]);
-
-        MainPagePrizes::insert([
-            ['main_page_id' => 1, 'image' => '123', 'text' => '123'],
-            ['main_page_id' => 1, 'image' => '234', 'text' => '234'],
-        ]);
     }
 }

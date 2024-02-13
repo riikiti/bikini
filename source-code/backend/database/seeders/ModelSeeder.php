@@ -14,12 +14,12 @@ class ModelSeeder extends Seeder
      */
     public function run(): void
     {
-        Model::firstOrCreate([
+        Model::query()->firstOrCreate([
             'email'=>'model@model.com',
             'password'=>'$2y$12$5LcwA22o7w0scpYXpmWsx./TU7/bryLDJS0vBFS8KQOGX6ceef15m"',
         ]);
 
-        ModelPhoto::firstOrCreate([
+        ModelPhoto::query()->firstOrCreate([
             'photo'=>'123',
             'description'=>'123',
             'model_id'=>1

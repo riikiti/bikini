@@ -17,8 +17,4 @@ class Prizes extends Model
         'description',
         'image',
     ];
-
-    protected $casts = [
-        'image' => 'array',
-    ];
 }

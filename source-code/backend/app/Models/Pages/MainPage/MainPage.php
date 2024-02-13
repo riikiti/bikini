@@ -18,11 +18,6 @@ class MainPage extends Model
         return $this->hasOne(MainPageBlocks::class, 'id', 'sub_header_id');
     }
 
-    public function prizes(): HasMany
-    {
-        return $this->hasMany(MainPagePrizes::class);
-    }
-
     public function votes(): HasOne
     {
         return $this->hasOne(MainPageBlocks::class, 'id', 'votes_id');
