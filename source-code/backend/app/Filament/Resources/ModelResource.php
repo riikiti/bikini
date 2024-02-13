@@ -3,7 +3,6 @@
 namespace app\Filament\Resources;
 
 use app\Filament\Resources\ModelResource\Pages\ListModels;
-use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
 use App\Models\Model;
 use Filament\Resources\Resource;

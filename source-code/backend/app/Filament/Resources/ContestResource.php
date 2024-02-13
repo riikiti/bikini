@@ -3,24 +3,18 @@
 namespace App\Filament\Resources;
 
 use App\Filament\Resources\ContestResource\Pages;
-use App\Filament\Resources\ContestResource\RelationManagers;
 use App\Filament\Resources\ContestResource\RelationManagers\PrizesRelationManager;
 use App\Models\Contest;
 use Filament\Forms;
-use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\Textarea;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Components\Toggle;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
-use Filament\Tables\Columns\IconColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
 
 class ContestResource extends Resource
 {
@@ -65,14 +59,14 @@ class ContestResource extends Resource
                 ]),
             ]);
     }
-    
+
     public static function getRelations(): array
     {
         return [
             PrizesRelationManager::class
         ];
     }
-    
+
     public static function getPages(): array
     {
         return [
@@ -80,5 +74,5 @@ class ContestResource extends Resource
             'create' => Pages\CreateContest::route('/create'),
             'edit' => Pages\EditContest::route('/{record}/edit'),
         ];
-    }    
+    }
 }

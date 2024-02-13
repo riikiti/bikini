@@ -27,6 +27,7 @@ class Model extends BaseModel
         'about',
         'approved',
         'active',
+        'box_id',
     ];
 
     /**
