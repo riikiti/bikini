@@ -20,7 +20,7 @@ class ModelSeeder extends Seeder
         ]);
 
         ModelPhoto::query()->firstOrCreate([
-            'photo'=>'123',
+            'image'=>'123',
             'description'=>'123',
             'model_id'=>1
         ]);
