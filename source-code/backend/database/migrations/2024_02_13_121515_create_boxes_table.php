@@ -11,11 +11,13 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('model_photos', function (Blueprint $table) {
+        Schema::create('boxes', function (Blueprint $table) {
             $table->id();
+            $table->integer('price')->default(500);
+            $table->boolean('isPublished')->default(false);
+            $table->foreignId('box_photo_id')->constrained('box_photos', 'id')->cascadeOnDelete();
+            $table->foreignId('box_video_id')->constrained('box_videos', 'id')->cascadeOnDelete();
             $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();
-            $table->string('image',500);
-            $table->string('description',2000)->nullable();
             $table->timestamps();
         });
     }
@@ -25,6 +27,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('model_photos');
+        Schema::dropIfExists('boxes');
     }
 };
