@@ -25,7 +25,7 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
-                ToggleColumn::make('isActive')->label('Активен'),
+                ToggleColumn::make('is_active')->label('Активен'),
             ])
             ->filters([
                 //

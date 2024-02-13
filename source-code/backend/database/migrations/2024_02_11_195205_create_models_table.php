@@ -29,7 +29,7 @@ return new class extends Migration
             $table->string('avatar')->nullable();
             $table->string('about', 2048)->nullable();
             $table->boolean('approved')->default(false);
-            $table->boolean('active')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->string('referral')->nullable();
             $table->timestamps();
         });
