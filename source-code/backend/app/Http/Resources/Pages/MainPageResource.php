@@ -16,15 +16,20 @@ class MainPageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
+        $contest = Contest::query()->where('active', true)->first();
+        match (empty($contest)) {
+            true => $prizes = null,
+            false => $prizes = PrizesResource::collection($contest->prizes),
+        };
 
         return [
-            'seo'=>[
+            'seo' => [
                 'head' => $this->head,
                 'seo_title' => $this->seo_title,
                 'seo_description' => $this->seo_description,
             ],
             'sub_header' => MainPageBlocksResource::make($this->sub_header),
-            'prizes' => PrizesResource::collection(Contest::query()->where('active', true)->first()->prizes),
+            'prizes' => $prizes,
             'votes' => MainPageBlocksResource::make($this->votes),
             'info' => MainPageBlocksResource::make($this->info),
             'winners' => MainPageBlocksResource::make($this->winners),
