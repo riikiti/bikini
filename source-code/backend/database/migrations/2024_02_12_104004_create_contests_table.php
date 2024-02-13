@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contests', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->boolean('active')->default(false);
+            $table->boolean('is_active')->default(false);
             $table->timestamp('start');
             $table->timestamp('finish');
             $table->timestamps();

@@ -30,7 +30,7 @@ class ContestResource extends Resource
             ->schema([
                 Forms\Components\Section::make('Конкурс')->schema([
                     TextInput::make('name')->label('Название')->required()->maxValue(64),
-                    Toggle::make('active')->label('Открыт'),
+                    Toggle::make('is_active')->label('Открыт'),
                     DatePicker::make('start')->label('Дата начала')->native(false),
                     DatePicker::make('finish')->label('Дата завершения')->native(false)
                 ])
