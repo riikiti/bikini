@@ -27,7 +27,7 @@ class ModelResource extends JsonResource
             'avatar' => $this->avatar ? $this->appUrl . '/storage/' . $this->avatar : null,
             'about' => $this->about,
             'approved' => $this->approved,
-            'active' => $this->active,
+            'is_active' => $this->is_active,
             'photos' => ModelPhotoResource::collection($this->photos)
         ];
     }

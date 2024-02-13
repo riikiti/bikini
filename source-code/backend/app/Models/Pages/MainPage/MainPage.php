@@ -13,6 +13,7 @@ class MainPage extends Model
 
     protected $fillable = ['seo_title', 'seo_description', 'head', 'sub_header_id', 'votes_id', 'info_id', 'winners_id'];
 
+    public const PAGE_NAME_PUBLIC = 'Главная страница';
     public function sub_header(): HasOne
     {
         return $this->hasOne(MainPageBlocks::class, 'id', 'sub_header_id');
