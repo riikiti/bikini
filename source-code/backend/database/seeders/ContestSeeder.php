@@ -2,16 +2,16 @@
 
 namespace Database\Seeders;
 
-use App\Models\User;
+use App\Models\Contest;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class ContestSeeder extends Seeder
 {
     /**
-     * Seed the application's database.
+     * Run the database seeds.
      */
     public function run(): void
     {
-        User::factory()->create();
+        Contest::factory()->create();
     }
 }

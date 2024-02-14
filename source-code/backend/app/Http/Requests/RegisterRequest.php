@@ -26,7 +26,7 @@ class RegisterRequest extends FormRequest
     {
         return [
             '*.required' => 'error',
-            'email.unique' => 'Данная почта уже зарешестрирована на сайте',
+            'email.unique' => 'Данная почта уже зарегистрирована на сайте',
         ];
     }
 }

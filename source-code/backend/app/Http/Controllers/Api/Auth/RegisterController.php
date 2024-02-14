@@ -13,13 +13,7 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        $user = new User([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-        ]);
-
-        $user->save();
+        $user =User::create($request->validated());
 
         if (!$token = auth()->tokenById($user->id)) {
             return response()->json(['error' => 'Unauthorized'], 401);

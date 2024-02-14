@@ -1,17 +1,17 @@
 <?php
 
-namespace Database\Seeders;
+namespace database\seeders;
 
-use App\Models\User;
+use App\Models\Box;
 use Illuminate\Database\Seeder;
 
-class UserSeeder extends Seeder
+class BoxSeeder extends Seeder
 {
     /**
      * Seed the application's database.
      */
     public function run(): void
     {
-        User::factory()->create();
+        Box::factory()->create();
     }
 }

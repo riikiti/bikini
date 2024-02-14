@@ -42,7 +42,7 @@ class ContestResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Название'),
-                ToggleColumn::make('active')->label('Открыт'),
+                ToggleColumn::make('is_active')->label('Открыт'),
                 TextColumn::make('start')->label('Старт')->date(),
                 TextColumn::make('finish')->label('Завершение')->date(),
                 TextColumn::make('created_at')->label('Создан')->date()
