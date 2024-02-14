@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\ContestController;
 use App\Http\Controllers\Api\ModelController;
 use App\Http\Controllers\Api\Pages\MainPageController;
@@ -23,9 +25,18 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 
+Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
+    Route::post('login', [AuthController::class, 'login']);
+    Route::post('logout', [AuthController::class, 'logout']);
+    Route::post('refresh', [AuthController::class, 'refresh']);
+    Route::post('me', [AuthController::class, 'me']);
+    Route::post('register', [RegisterController::class, 'register'])->withoutMiddleware('api');
+});
+
+
 Route::apiResource('model', ModelController::class)->only('index', 'show');
 Route::apiResource('user', UserController::class)->only('index', 'show');
-Route::get('/main',[MainPageController::class,'index']);
-Route::get('/contest',[ContestController::class,'index']);
-Route::get('/active-contest',[ContestController::class,'show']);
+Route::get('/main', [MainPageController::class, 'index']);
+Route::get('/contest', [ContestController::class, 'index']);
+Route::get('/active-contest', [ContestController::class, 'show']);
 
