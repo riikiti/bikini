@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('boxes', function (Blueprint $table) {
             $table->id();
             $table->integer('price')->default(500);
-            $table->boolean('isPublished')->default(false);
+            $table->boolean('is_published')->default(false);
             $table->foreignId('box_photo_id')->constrained('box_photos', 'id')->cascadeOnDelete();
             $table->foreignId('box_video_id')->constrained('box_videos', 'id')->cascadeOnDelete();
             $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();

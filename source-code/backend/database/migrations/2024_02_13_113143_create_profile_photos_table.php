@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('profile_photos', function (Blueprint $table) {
             $table->id();
             $table->string('image');
-            $table->boolean('isCover')->default(false);
+            $table->boolean('is_cover')->default(false);
             $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();
             $table->timestamps();
         });
