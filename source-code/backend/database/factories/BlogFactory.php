@@ -2,15 +2,15 @@
 
 namespace Database\Factories;
 
-use App\Models\BoxPhotos;
-use App\Models\BoxVideos;
+use App\Models\BlogPhotos;
+use App\Models\BlogVideos;
 use App\Models\Model;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Box>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Blog>
  */
-class BoxFactory extends Factory
+class BlogFactory extends Factory
 {
     /**
      * Define the model's default state.
@@ -20,12 +20,11 @@ class BoxFactory extends Factory
     public function definition(): array
     {
         return [
-            'price' => fake()->numberBetween(200, 1000),
-            'box_photo_id' => function () {
-                return BoxPhotos::factory()->create()->id;
+            'blog_photo_id' => function () {
+                return BlogPhotos::factory()->create()->id;
             },
-            'box_video_id' => function () {
-                return BoxVideos::factory()->create()->id;
+            'blog_video_id' => function () {
+                return BlogVideos::factory()->create()->id;
             },
             'model_id' => function () {
                 return Model::factory();

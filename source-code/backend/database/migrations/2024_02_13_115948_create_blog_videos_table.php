@@ -13,7 +13,6 @@ return new class extends Migration
     {
         Schema::create('blog_videos', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();
             $table->string('video');
             $table->timestamps();
         });
