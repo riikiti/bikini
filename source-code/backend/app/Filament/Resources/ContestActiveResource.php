@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace app\Filament\Resources;
 
 use App\Filament\Resources\ContestResource\Pages;
 use App\Filament\Resources\ContestResource\RelationManagers\PrizesRelationManager;
@@ -17,26 +17,14 @@ use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 
-class ContestResource extends Resource
+class ContestActiveResource extends Resource
 {
     protected static ?string $model = Contest::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar-square';
 
-    protected static ?string $navigationLabel = 'Конкурсы';
+    protected static ?string $navigationLabel = 'Активный конкурс';
 
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Конкурс')->schema([
-                    TextInput::make('name')->label('Название')->required()->maxValue(64),
-                    Toggle::make('is_active')->label('Открыт'),
-                    DatePicker::make('start')->label('Дата начала')->native(false),
-                    DatePicker::make('finish')->label('Дата завершения')->native(false)
-                ])
-            ]);
-    }
 
     public static function table(Table $table): Table
     {
@@ -49,31 +37,26 @@ class ContestResource extends Resource
                 TextColumn::make('created_at')->label('Создан')->date()
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('is_active')
+                    ->default(true)
+                    ->options([
+                        '1' => 'true',
+                    ]),
             ])
             ->actions([
-                Tables\Actions\EditAction::make(),
+                //
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
-                    Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
     }
 
-    public static function getRelations(): array
-    {
-        return [
-            PrizesRelationManager::class
-        ];
-    }
 
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListContests::route('/'),
-            'create' => Pages\CreateContest::route('/create'),
-            'edit' => Pages\EditContest::route('/{record}/edit'),
+            'index' => Pages\ListActiveContests::route('/'),
         ];
     }
 }
