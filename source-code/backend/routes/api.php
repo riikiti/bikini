@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\ContestController;
+use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ModelController;
 use App\Http\Controllers\Api\Pages\MainPageController;
 use App\Http\Controllers\Api\UserController;
@@ -39,4 +40,9 @@ Route::apiResource('user', UserController::class)->only('index', 'show');
 Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
+
+Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
+    Route::get('/messages/{user}', [MessageController::class, 'index']);
+    Route::post('/messages', [MessageController::class, 'store']);
+});
 
