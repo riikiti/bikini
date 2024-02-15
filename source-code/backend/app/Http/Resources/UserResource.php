@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Models\Property\Breast;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
@@ -17,6 +18,9 @@ class UserResource extends JsonResource
             'name' => $this->name,
             'avatar' => $this->avatar ? $this->appUrl . '/storage/' . $this->avatar : null,
             'created_at' => $this->created,
+            'country' => CountryResurce::make($this->country),
+            'hair' => HairColorResurce::make($this->hair),
+            'breast'=>BreastResurce::make($this->breast)
         ];
     }
 }

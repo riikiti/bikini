@@ -3,7 +3,11 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use App\Models\Property\Breast;
+use App\Models\Property\Country;
+use App\Models\Property\HairColor;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -22,7 +26,8 @@ class User extends Authenticatable implements JWTSubject
         'name',
         'email',
         'password',
-        'avatar'
+        'avatar',
+        'country_id'
     ];
 
     /**
@@ -44,11 +49,27 @@ class User extends Authenticatable implements JWTSubject
         'email_verified_at' => 'datetime',
         'password' => 'hashed',
         'created_at' => 'date',
+        'fields' => 'array',
     ];
 
     public function getCreatedAttribute(): string
     {
         return date('d.m.Y', strtotime($this->created_at));
+    }
+
+    public function country(): BelongsTo
+    {
+        return $this->belongsTo(Country::class);
+    }
+
+    public function hair(): BelongsTo
+    {
+        return $this->belongsTo(HairColor::class);
+    }
+
+    public function breast(): BelongsTo
+    {
+        return $this->belongsTo(Breast::class);
     }
 
     public function getJWTIdentifier()
