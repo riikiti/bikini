@@ -10,15 +10,47 @@ use Illuminate\Support\Facades\Hash;
 
 class RegisterController extends Controller
 {
+    private User $user;
+
+    public function __construct()
+    {
+        $this->user = new User();
+    }
 
     public function register(RegisterRequest $request)
     {
-        $user =User::create($request->validated());
-
-        if (!$token = auth()->tokenById($user->id)) {
+        match ($request->role) {
+            User::USER => $this->user->fill($request->validated())->save(),
+            User::MODEL => $this->fillModelFields($request),
+        };
+        if (!$token = auth()->tokenById($this->user->id)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
         return response()->json(['status' => 'success', 'token' => $this->respondWithToken($token)]);
+    }
+
+    public function fillModelFields($request)
+    {
+        $fields = [
+            'birthdate' => $request->birthdate,
+            'height' => $request->height,
+            'weight' => $request->weight,
+            'size' => $request->size,
+            'waist' => $request->waist,
+            'hips' => $request->hips,
+            'city' => $request->city,
+            'avatar' => $request->avatar,
+            'about' => $request->about,
+            'active' => $request->active,
+        ];
+
+        $this->user->fill([
+            'email' => $request->email,
+            'password' => Hash::make($request->password),
+            'role' => $request->role,
+            'fields' => $fields,
+        ])->save();
+
     }
 
     protected function respondWithToken($token)

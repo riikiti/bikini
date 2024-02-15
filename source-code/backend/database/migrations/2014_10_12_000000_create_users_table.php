@@ -22,6 +22,7 @@ return new class extends Migration {
             $table->foreignId('hair_id')->nullable()->constrained('hair_colors', 'id')->cascadeOnDelete();
             $table->foreignId('breast_id')->nullable()->constrained('breasts', 'id')->cascadeOnDelete();
             $table->jsonb('fields')->nullable();
+            $table->string('role');
             $table->rememberToken();
             $table->timestamps();
         });

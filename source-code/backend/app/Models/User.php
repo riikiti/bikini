@@ -27,8 +27,13 @@ class User extends Authenticatable implements JWTSubject
         'email',
         'password',
         'avatar',
-        'country_id'
+        'country_id',
+        'fields',
+        'role'
     ];
+
+    public const USER = 'user';
+    public const MODEL = 'model';
 
     /**
      * The attributes that should be hidden for serialization.
@@ -70,6 +75,10 @@ class User extends Authenticatable implements JWTSubject
     public function breast(): BelongsTo
     {
         return $this->belongsTo(Breast::class);
+    }
+
+    public function getFieldsValue(){
+        return $this->fields;
     }
 
     public function getJWTIdentifier()
