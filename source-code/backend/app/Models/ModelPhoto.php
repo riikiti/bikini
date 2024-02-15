@@ -11,6 +11,6 @@ class ModelPhoto extends Model
 
     protected $table = 'model_photos';
 
-    protected $fillable = ['image', 'description','model_id'];
+    protected $fillable = ['image', 'description','user_id'];
 
 }

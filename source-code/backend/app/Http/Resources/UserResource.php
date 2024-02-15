@@ -44,6 +44,7 @@ class UserResource extends JsonResource
         $data['info']['active'] = $this->fields ? $this->fields['active'] : null;
         $data['info']['hair'] = HairColorResurce::make($this->hair);
         $data['info']['breast'] = BreastResurce::make($this->breast);
+        $data['info']['photos'] = ModelPhotoResource::collection($this->photos);
         return $data;
     }
 }

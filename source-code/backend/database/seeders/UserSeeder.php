@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\ModelPhoto;
 use App\Models\Property\Breast;
 use App\Models\Property\Country;
 use App\Models\Property\HairColor;
@@ -18,6 +19,13 @@ class UserSeeder extends Seeder
         Country::create(
             [
                 'name' => 'Russia',
+            ]
+        );
+        ModelPhoto::create(
+            [
+                'image' => '123',
+                'description' => '123',
+                'user_id' => 1
             ]
         );
         User::factory()->create();
