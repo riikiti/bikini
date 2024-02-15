@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace app\Filament\Resources\ContestResource;
 
-use App\Filament\Resources\ContestResource\Pages;
 use App\Filament\Resources\ContestResource\RelationManagers\PrizesRelationManager;
 use App\Models\Contest;
 use Filament\Forms;

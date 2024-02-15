@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\Pages;
 
-use app\Filament\Resources\BlogResource;
+use app\Filament\Resources\BlogResource\BlogResource;
 use Filament\Resources\Pages\ListRecords;
 
 class ListBlogs extends ListRecords

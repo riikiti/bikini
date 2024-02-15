@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\UserResource\Pages;
 
-use app\Filament\Resources\BoxResource;
+use app\Filament\Resources\BoxResource\BoxResource;
 use Filament\Resources\Pages\ListRecords;
 
 class ListBoxes extends ListRecords

@@ -16,9 +16,10 @@ return new class extends Migration
             $table->foreignId('contest_id')->constrained('contests', 'id')->cascadeOnDelete();
             $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();
 
-            $table->jsonb('photos');
+            $table->string('photo');
             $table->integer('freeRating');
-            $table->integer('PaidRating');
+            $table->integer('additionalFreeRating');
+            $table->integer('paidRating');
 
             $table->timestamps();
         });
