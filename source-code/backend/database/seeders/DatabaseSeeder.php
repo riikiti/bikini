@@ -12,6 +12,8 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
+        $this->call(HairColorSeeder::class);
+        $this->call(BreastSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(MainPageSeeder::class);
         $this->call(BoxSeeder::class);
