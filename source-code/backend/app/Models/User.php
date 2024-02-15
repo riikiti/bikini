@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Property\Breast;
 use App\Models\Property\Country;
 use App\Models\Property\HairColor;
+use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -13,8 +14,9 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
 use Tymon\JWTAuth\Contracts\JWTSubject;
+use Filament\Models\Contracts\FilamentUser;
 
-class User extends Authenticatable implements JWTSubject
+class User extends Authenticatable implements JWTSubject, FilamentUser
 {
     use HasApiTokens, HasFactory, Notifiable;
 
@@ -98,5 +100,11 @@ class User extends Authenticatable implements JWTSubject
     public function photos(): HasMany
     {
         return $this->hasMany(ModelPhoto::class, 'user_id', 'id');
+    }
+
+
+    public function canAccessPanel(Panel $panel): bool
+    {
+        return $this->role == static::ADMIN;
     }
 }

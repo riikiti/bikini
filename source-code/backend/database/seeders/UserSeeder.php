@@ -21,6 +21,7 @@ class UserSeeder extends Seeder
                 'name' => 'Russia',
             ]
         );
+        User::factory()->create();
         ModelPhoto::create(
             [
                 'image' => '123',
@@ -28,7 +29,6 @@ class UserSeeder extends Seeder
                 'user_id' => 1
             ]
         );
-        User::factory()->create();
 
 
     }
