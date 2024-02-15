@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Pages\MainPageResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -19,14 +20,17 @@ class SubHeaderRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Заголовок'),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Описание'),
+                Grid::make(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Заголовок'),
+                        Forms\Components\TextInput::make('description')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Описание'),
+                    ])
             ]);
     }
 

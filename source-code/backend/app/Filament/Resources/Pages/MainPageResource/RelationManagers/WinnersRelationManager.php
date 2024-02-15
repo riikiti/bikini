@@ -3,6 +3,7 @@
 namespace App\Filament\Resources\Pages\MainPageResource\RelationManagers;
 
 use Filament\Forms;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -19,18 +20,21 @@ class WinnersRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('title')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Заголовок'),
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Описание'),
-                Forms\Components\TextInput::make('button_name')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Название кнопки')
+                Grid::make(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('title')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Заголовок'),
+                        Forms\Components\TextInput::make('description')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Описание'),
+                        Forms\Components\TextInput::make('button_name')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Название кнопки')
+                    ])
             ]);
     }
 

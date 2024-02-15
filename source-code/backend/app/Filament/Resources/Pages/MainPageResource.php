@@ -11,8 +11,7 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Filament\Forms\Components\Grid;
 
 class MainPageResource extends Resource
 {
@@ -25,15 +24,21 @@ class MainPageResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('seo_title')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('seo_description')
-                    ->required()
-                    ->maxLength(255),
-                Forms\Components\TextInput::make('head')
-                    ->required()
-                    ->maxLength(255),
+                Grid::make(3)
+                    ->schema([
+                        Forms\Components\TextInput::make('seo_title')
+                            ->required()
+                            ->label('SEO Заголовок')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('seo_description')
+                            ->required()
+                            ->label('SEO Описание')
+                            ->maxLength(255),
+                        Forms\Components\TextInput::make('head')
+                            ->label('HEAD')
+                            ->required()
+                            ->maxLength(255),
+                    ])
             ]);
     }
 

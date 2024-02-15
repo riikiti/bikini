@@ -4,6 +4,7 @@ namespace App\Filament\Resources\Pages\MainPageResource\RelationManagers;
 
 use Filament\Forms;
 use Filament\Forms\Components\FileUpload;
+use Filament\Forms\Components\Grid;
 use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
@@ -21,14 +22,17 @@ class InfoRelationManager extends RelationManager
     {
         return $form
             ->schema([
-                Forms\Components\TextInput::make('description')
-                    ->required()
-                    ->maxLength(255)
-                    ->label('Описание'),
-                FileUpload::make('image')
-                    ->directory('main-page')
-                    ->visibility('private')
-                    ->label('Картинка')
+                Grid::make(1)
+                    ->schema([
+                        Forms\Components\TextInput::make('description')
+                            ->required()
+                            ->maxLength(255)
+                            ->label('Описание'),
+                        FileUpload::make('image')
+                            ->directory('main-page')
+                            ->visibility('private')
+                            ->label('Картинка')
+                    ])
             ]);
     }
 
