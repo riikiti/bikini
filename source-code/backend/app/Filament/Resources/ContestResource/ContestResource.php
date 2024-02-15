@@ -1,8 +1,7 @@
 <?php
 
-namespace App\Filament\Resources;
+namespace app\Filament\Resources\ContestResource;
 
-use App\Filament\Resources\ContestResource\Pages;
 use App\Filament\Resources\ContestResource\RelationManagers\PrizesRelationManager;
 use App\Models\Contest;
 use Filament\Forms;
@@ -14,7 +13,6 @@ use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 
 class ContestResource extends Resource

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\ContestResource\Pages;
 
-use App\Filament\Resources\ContestResource;
+use app\Filament\Resources\ContestResource\ContestResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

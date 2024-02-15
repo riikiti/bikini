@@ -1,30 +1,29 @@
 <?php
 
-namespace app\Filament\Resources;
+namespace app\Filament\Resources\BlogResource;
 
 use App\Filament\Resources\UserResource\Pages;
 use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\Box;
+use App\Models\Blog;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
-class BoxResource extends Resource
+class BlogResource extends Resource
 {
-    protected static ?string $model = Box::class;
+    protected static ?string $model = Blog::class;
 
     protected static ?string $navigationIcon = 'heroicon-m-photo';
 
-    protected static ?string $navigationLabel = 'Боксы';
+    protected static ?string $navigationLabel = 'Блоги';
 
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
                 TextColumn::make('id')->label('id')->searchable(),
-                TextColumn::make('price')->label('Стоимость'),
                 //TextColumn::make('getModelEmail')->label('Модель'),// не работает !!!
                 TextColumn::make('created_at')->label('Дата создания')->date(),
                 ToggleColumn::make('is_published')->label('Опубликован модератором'),
@@ -49,7 +48,7 @@ class BoxResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListBoxes::route('/')
+            'index' => Pages\ListBlogs::route('/')
         ];
     }
 }

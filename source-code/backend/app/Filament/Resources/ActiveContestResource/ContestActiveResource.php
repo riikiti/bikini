@@ -1,20 +1,13 @@
 <?php
 
-namespace app\Filament\Resources;
+namespace app\Filament\Resources\ActiveContestResource;
 
 use App\Filament\Resources\ContestResource\Pages;
-use App\Filament\Resources\ContestResource\RelationManagers\PrizesRelationManager;
 use App\Models\Contest;
-use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
-use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
-use Filament\Tables\Filters\Filter;
 use Filament\Tables\Table;
 
 class ContestActiveResource extends Resource

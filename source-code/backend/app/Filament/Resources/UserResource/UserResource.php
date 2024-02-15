@@ -1,23 +1,21 @@
 <?php
 
-namespace app\Filament\Resources;
+namespace app\Filament\Resources\UserResource;
 
-use app\Filament\Resources\ModelResource\Pages\ListModels;
-use App\Filament\Resources\UserResource\RelationManagers;
-use App\Models\Model;
+use App\Models\User;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
-class ModelResource extends Resource
+class UserResource extends Resource
 {
-    protected static ?string $model = Model::class;
+    protected static ?string $model = User::class;
 
-    protected static ?string $navigationIcon = 'heroicon-s-user';
+    protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationLabel = 'Модели';
+    protected static ?string $navigationLabel = 'Участники';
 
     public static function table(Table $table): Table
     {
@@ -25,7 +23,7 @@ class ModelResource extends Resource
             ->columns([
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
-                ToggleColumn::make('approved')->label('Активен'),
+                ToggleColumn::make('is_active')->label('Активен'),
             ])
             ->filters([
                 //
@@ -47,7 +45,7 @@ class ModelResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => ListModels::route('/')
+            'index' => Pages\ListUsers::route('/')
         ];
     }
 }
