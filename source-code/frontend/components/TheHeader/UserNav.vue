@@ -34,10 +34,10 @@
     </dropdown-menu-trigger>
     <dropdown-menu-content class="w-56 px-2" align="end">
       <DropdownMenuLabel class="font-normal flex">
-        <div class="flex flex-col space-y-1">
+        <a href="/portfolio/profile" class="flex flex-col space-y-1">
           <p class="text-sm font-medium leading-none">{{ userStore.username }}</p>
           <p class="text-xs leading-none text-muted-foreground">{{ userStore.email }}</p>
-        </div>
+        </a>
       </DropdownMenuLabel>
       <dropdown-menu-separator />
       <dropdown-menu-group>

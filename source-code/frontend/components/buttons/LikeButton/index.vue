@@ -11,7 +11,7 @@
 </script>
 
 <template>
-  <div :class="['w-8 h-8 cursor-pointer transition-all', defaultColor, `hover:${hoverColor}`]">
+  <div :class="['w-8 h-8 cursor-pointer transition-all hover:text-red-600', defaultColor]">
     <slot />
   </div>
 </template>
