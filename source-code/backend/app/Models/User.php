@@ -34,6 +34,8 @@ class User extends Authenticatable implements JWTSubject
     ];
 
     public const USER = 'user';
+    public const ADMIN = 'admin';
+    public const MODERATOR = 'moderator';
     public const MODEL = 'model';
 
     /**
@@ -78,7 +80,8 @@ class User extends Authenticatable implements JWTSubject
         return $this->belongsTo(Breast::class);
     }
 
-    public function getFieldsValue(){
+    public function getFieldsValue()
+    {
         return $this->fields;
     }
 
@@ -94,6 +97,6 @@ class User extends Authenticatable implements JWTSubject
 
     public function photos(): HasMany
     {
-        return $this->hasMany(ModelPhoto::class,'user_id','id');
+        return $this->hasMany(ModelPhoto::class, 'user_id', 'id');
     }
 }

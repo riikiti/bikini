@@ -17,6 +17,7 @@ class AdminUserSeeder extends Seeder
             'name'=>'admin',
             'email'=>'admin@a.com',
             'password'=>'12345678',
+            'role'=>User::ADMIN,
         ]);
     }
 }
