@@ -23,10 +23,17 @@ class UserResource extends Resource
             ->columns([
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
+                TextColumn::make('role')->label('Роль'),
                 ToggleColumn::make('is_active')->label('Активен'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('role')
+                    ->default(false)
+                    ->options([
+                        User::USER => 'Пользователь',
+                        User::MODEL => 'Модель',
+                        User::MODERATOR => 'Модератор',
+                    ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([

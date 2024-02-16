@@ -23,6 +23,8 @@ return new class extends Migration {
             $table->foreignId('breast_id')->nullable()->constrained('breasts', 'id')->cascadeOnDelete();
             $table->jsonb('fields')->nullable();
             $table->string('role');
+            $table->boolean('approved')->default(false);
+            $table->string('referral')->nullable();
             $table->rememberToken();
             $table->timestamps();
         });

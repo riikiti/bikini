@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\BoxPhotos;
 use App\Models\BoxVideos;
 use App\Models\Model;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -27,8 +28,8 @@ class BoxFactory extends Factory
             'box_video_id' => function () {
                 return BoxVideos::factory()->create()->id;
             },
-            'model_id' => function () {
-                return Model::factory();
+            'user_id' => function () {
+                return User::factory();
             },
             'created_at' => now(),
         ];

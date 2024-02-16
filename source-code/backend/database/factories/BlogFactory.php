@@ -5,6 +5,7 @@ namespace Database\Factories;
 use App\Models\BlogPhotos;
 use App\Models\BlogVideos;
 use App\Models\Model;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -26,8 +27,8 @@ class BlogFactory extends Factory
             'blog_video_id' => function () {
                 return BlogVideos::factory()->create()->id;
             },
-            'model_id' => function () {
-                return Model::factory();
+            'user_id' => function () {
+                return User::factory();
             },
             'created_at' => now(),
         ];

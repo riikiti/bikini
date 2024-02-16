@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('contest_models', function (Blueprint $table) {
             $table->id();
             $table->foreignId('contest_id')->constrained('contests', 'id')->cascadeOnDelete();
-            $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
 
             $table->string('photo');
             $table->integer('freeRating');

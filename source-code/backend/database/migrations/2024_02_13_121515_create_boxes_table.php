@@ -17,7 +17,7 @@ return new class extends Migration
             $table->boolean('is_published')->default(true);
             $table->foreignId('box_photo_id')->constrained('box_photos', 'id')->cascadeOnDelete();
             $table->foreignId('box_video_id')->constrained('box_videos', 'id')->cascadeOnDelete();
-            $table->foreignId('model_id')->constrained('models', 'id')->cascadeOnDelete();
+            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
             $table->timestamps();
         });
     }
