@@ -19,15 +19,9 @@ class MessageController extends Controller
         $receivedMessages = $senderUser->receivedMessages;
         $sentMessages = $senderUser->sentMessages;
 
-        $user = ([
-            'id' => $user->id,
-            'name' => $user->name,
-            'avatar' => $user->avatar,
-        ]);
-
         return response()->json(['status' => 'success', 'data' =>
             ['messages' => [
-                'receiver_user' =>$user,
+                'receiver_user' =>$user->options(),
                 'sent_messages' => $sentMessages,
                 'received_messages' => $receivedMessages,
             ]]]);

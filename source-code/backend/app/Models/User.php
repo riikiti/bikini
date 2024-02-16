@@ -60,7 +60,12 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
         'password' => 'hashed',
         'created_at' => 'date',
         'fields' => 'array',
+        'options' => 'array',
     ];
+
+    public function options(){
+        return $this->options = ['id' => $this->id,'name'=> $this->name,'avatar' => $this->avatar];
+    }
 
     public function getCreatedAttribute(): string
     {
