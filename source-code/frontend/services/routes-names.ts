@@ -7,5 +7,7 @@ export const enum RoutesNames {
   PORTFOLIO = '/portfolio',
   DASHBOARD = '/dashboard',
   MESSAGES = '/messages',
-  USERS = '/platform/users'
+  USERS = '/platform/users',
+  PROFILE = '/platform/profile',
+  EDIT_PROFILE = '/platform/profile/edit'
 }

@@ -11,15 +11,18 @@
   } from '~/components/ui/command'
   import { Popover, PopoverContent, PopoverTrigger } from '~/components/ui/popover'
   import { Button } from '~/components/ui/button'
+  import { Label } from '~/components/ui/label'
 
   interface IProps {
     data: Array<{ value: string; label: string }>
     selected?: string
     placeholder?: string
+    label?: string
   }
   const props = withDefaults(defineProps<IProps>(), {
     selected: '',
-    placeholder: 'Select...'
+    placeholder: 'Select...',
+    label: ''
   })
   const emit = defineEmits<{
     (e: 'select', value: string)
@@ -30,6 +33,7 @@
 </script>
 
 <template>
+  <Label v-if="label">{{ label }}</Label>
   <popover>
     <popover-trigger as-child>
       <Button

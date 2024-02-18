@@ -1,34 +1,15 @@
 <script setup lang="ts">
-  import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
-  } from '~/components/ui/card'
+  import { Card, CardContent, CardFooter, CardHeader, CardTitle } from '~/components/ui/card'
   import { Label } from '~/components/ui/label'
   import { Input } from '~/components/ui/input'
   import { Textarea } from '@/components/ui/textarea'
-  import AppSelect from '~/components/settings/AppSelect.vue'
 
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
-  import { useGenerateDateArray } from '~/services/utils/UseGenerateDateArray'
+  import { useGenerateDateArray } from '~/services/utils/useGenerateDateArray'
   import { Button } from '~/components/ui/button'
-
-  const languages = [
-    { label: 'English', value: 'en' },
-    { label: 'French', value: 'fr' },
-    { label: 'German', value: 'de' },
-    { label: 'Spanish', value: 'es' },
-    { label: 'Portuguese', value: 'pt' },
-    { label: 'Russian', value: 'ru' },
-    { label: 'Japanese', value: 'ja' },
-    { label: 'Korean', value: 'ko' },
-    { label: 'Chinese', value: 'zh' }
-  ]
+  import { AppInput, AppSelect, AppTextarea } from '~/components/app'
 
   const years = useGenerateDateArray(50)
 
@@ -48,97 +29,101 @@
       years: value
     })
   }
+  const text = ref('')
 </script>
 
 <template>
   <the-header />
   <the-wrapper class="mt-12 pb-12">
-    <Card>
-      <CardHeader>
-        <CardTitle>Шапка профиля</CardTitle>
-      </CardHeader>
+    <card>
+      <card-header>
+        <card-title>Шапка профиля</card-title>
+      </card-header>
       <separator class="mb-4" />
-      <CardContent>
+      <card-content>
         <div class="h-[300px] bg-red-300 flex items-center justify-center text-white">
           change photo/etc (нужно понять что в этом блоке можно менять)
         </div>
-      </CardContent>
-    </Card>
-    <Card class="mt-6">
-      <CardHeader>
-        <CardTitle>Краткая информация</CardTitle>
-      </CardHeader>
+      </card-content>
+    </card>
+    <card class="mt-6">
+      <card-header>
+        <card-title>Краткая информация</card-title>
+      </card-header>
       <separator class="mb-4" />
-      <CardContent>
+      <card-content>
         <form>
           <div class="grid items-center w-full gap-8">
             <div class="flex flex-col space-y-3">
-              <Label for="name">Никнейм</Label>
-              <Input id="name" placeholder="Введите имя" />
+              <app-input placeholder="Введите ваш никнейм" label="Никнейм" />
             </div>
             <div class="flex flex-col space-y-3">
-              <Label for="message">О себе</Label>
-              <Textarea id="message" class="resize-none h-[100px]" placeholder="О себе" />
+              <app-textarea v-model="text" placeholder="О себе" label="О себе" />
             </div>
             <div class="flex flex-grow flex-col space-y-3">
-              <Label> Год рождения </Label>
-              <app-select :data="years" :selected="values.years" @select="selectValue" />
+              <app-select
+                :data="years"
+                label="Год рождения"
+                :selected="values.years"
+                @select="selectValue"
+              />
             </div>
             <div class="grid grid-cols-2 gap-8">
               <div class="flex flex-col space-y-3">
-                <Label for="name">Рост</Label>
-                <Input id="name" placeholder="Введите ваш рост" />
+                <app-input label="Рост" placeholder="Введите ваш рост" />
               </div>
               <div class="flex flex-col space-y-3">
-                <Label for="name">Вес</Label>
-                <Input id="name" placeholder="Введите ваш вес" />
+                <app-input label="Вес" placeholder="Введите ваш вес" />
               </div>
             </div>
           </div>
         </form>
-      </CardContent>
-    </Card>
-    <Card class="mt-6">
-      <CardHeader>
-        <CardTitle>Размеры</CardTitle>
-      </CardHeader>
+      </card-content>
+    </card>
+    <card class="mt-6">
+      <card-header>
+        <card-title>Размеры</card-title>
+      </card-header>
       <separator class="mb-4" />
-      <CardContent>
+      <card-content>
         <form>
           <div class="grid lg:grid-cols-3 gap-8">
             <div class="flex flex-col space-y-3">
-              <Label for="name">Грудь</Label>
-              <Input id="name" placeholder="Введите ваш рост" />
+              <app-input label="Грудь" placeholder="Введите ваш размер" />
             </div>
             <div class="flex flex-col space-y-3">
-              <Label for="name">Талия</Label>
-              <Input id="name" placeholder="Введите ваш рост" />
+              <app-input label="Талия" placeholder="Введите вашу талию" />
             </div>
             <div class="flex flex-col space-y-3">
-              <Label for="name">Бедра</Label>
-              <Input id="name" placeholder="Введите ваш рост" />
+              <app-input label="Бедра" placeholder="Введите ваши бедра" />
             </div>
           </div>
           <separator class="my-4" />
           <div class="grid grid-cols-2 items-center w-full gap-8">
             <div class="flex flex-col space-y-3">
-              <Label for="name">Цвет волос</Label>
-              <app-select :data="years" :selected="values.years" @select="selectValue" />
+              <app-select
+                :data="years"
+                label="Цвет волос"
+                :selected="values.years"
+                @select="selectValue"
+              />
             </div>
             <div class="flex flex-col space-y-3">
-              <Label for="name">Размер бюстгалтера</Label>
-              <app-select :data="years" :selected="values.years" @select="selectValue" />
+              <app-select
+                :data="years"
+                label="Размер бюстгалтера"
+                :selected="values.years"
+                @select="selectValue"
+              />
             </div>
           </div>
         </form>
-      </CardContent>
+      </card-content>
       <separator class="my-4" />
-      <CardFooter class="flex justify-between px-6">
-        <Button variant="outline"> Cancel </Button>
-        <Button class="dark:text-white">Save changes</Button>
-      </CardFooter>
-    </Card>
+      <card-footer class="flex justify-between px-6">
+        <Button variant="outline"> Отменить </Button>
+        <Button class="dark:text-white">Сохранить изменения</Button>
+      </card-footer>
+    </card>
   </the-wrapper>
 </template>
-
-<style scoped></style>

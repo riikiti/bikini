@@ -21,6 +21,7 @@
     <div class="flex flex-col gap-0.5">
       <div>{{ name }}</div>
       <div v-if="email" class="font-light italic">{{ email }}</div>
+      <slot name="additional" />
     </div>
   </div>
 </template>

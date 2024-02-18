@@ -10,7 +10,7 @@
   import { Input } from '~/components/ui/input'
   import { Label } from '~/components/ui/label'
   import { Button } from '~/components/ui/button'
-  import AppSelect from '~/components/settings/AppSelect.vue'
+  import AppSelect from '~/components/app/AppSelect.vue'
   import { useForm } from 'vee-validate'
   import { toTypedSchema } from '@vee-validate/zod'
   import * as z from 'zod'
@@ -66,8 +66,12 @@
             </div>
             <div class="flex flex-col sm:flex-row md:gap-8">
               <div class="flex flex-grow flex-col">
-                <Label> Country </Label>
-                <app-select :data="languages" :selected="values.language" @select="selectValue" />
+                <app-select
+                  :data="languages"
+                  label="Country"
+                  :selected="values.language"
+                  @select="selectValue"
+                />
               </div>
               <div class="flex flex-grow flex-col">
                 <Label for="newPassword">City</Label>
