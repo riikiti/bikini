@@ -11,7 +11,6 @@
   const text = ref('')
   const active = ref(false)
   const userStore = useUserStore()
-  //todo вынести в компоненты
 </script>
 
 <template>
@@ -98,9 +97,11 @@
               <!--              -->
               <div class="mt-4">
                 <!--    Post            -->
-                <div class="shadow-sm rounded-xl bg-white dark:bg-muted flex flex-col gap-4">
+                <div
+                  class="px-8 py-4 shadow-sm rounded-xl bg-white dark:bg-muted flex flex-col gap-4"
+                >
                   <!--      Post-header            -->
-                  <div class="px-8 py-4 flex">
+                  <div class="flex">
                     <user-avatar :img="userStore.avatar" :name="userStore.username">
                       <template #additional>
                         <div class="text-sm text-gray-400">3 hours ago</div>
@@ -108,7 +109,7 @@
                     </user-avatar>
                   </div>
                   <!--   Post content               -->
-                  <div class="px-8 py-4 flex flex-col gap-4">
+                  <div class="flex flex-col gap-4">
                     <div>
                       <p>
                         Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ab architecto
@@ -126,30 +127,25 @@
                     </div>
                   </div>
                   <!--         Post action         -->
-                  <div class="px-8 border-t dark:border-t-white flex items-center gap-4 pt-4">
+                  <div class="border-t dark:border-t-white flex items-center gap-4 pt-4">
                     <like-button
-                      class="rounded-xl w-max bg-gradient-to-r from-red-400 to-blue-500 px-4 flex items-center gap-2"
+                      class="rounded-xl w-max bg-gradient-to-r from-green-400 to-blue-500 px-4 flex items-center gap-2 hover:from-red-400/90 hover:to-blue-500/90 cursor-pointer"
                       :default-color="active ? 'text-red-600' : 'text-white'"
                       :active-color="active ? 'bg-red-100 text-red-600' : ''"
                     >
                       <heart :fill="active ? 'currentColor' : 'none'" :size="20" />
                       <div>47</div>
                     </like-button>
-                    <like-button
-                      class="rounded-xl w-max bg-gradient-to-r from-green-400 to-blue-500 px-4 flex items-center gap-2 hover:from-green-400/90 hover:to-blue-500/90"
-                      :hover-color="'text-white'"
-                    >
-                      <message-square-more :size="20" />
-                      <div>4</div>
-                    </like-button>
-                  </div>
-                  <div class="border-t dark:border-t-white flex flex-col gap-8 pt-4 px-8">
-                    <div></div>
                   </div>
                 </div>
               </div>
             </tabs-content>
-            <tabs-content value="blog"> Blog field </tabs-content>
+            <tabs-content value="blog">
+              <div class="px-8 pt-8 pb-4 shadow-sm rounded-xl bg-white dark:bg-muted"></div>
+              <div class="grid grid-cols-3 gap-8">
+                <app-dropzone />
+              </div>
+            </tabs-content>
             <tabs-content value="box"> Box field </tabs-content>
           </tabs>
         </div>
