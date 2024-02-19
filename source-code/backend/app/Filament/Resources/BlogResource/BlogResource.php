@@ -24,7 +24,7 @@ class BlogResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('id')->searchable(),
-                //TextColumn::make('getModelEmail')->label('Модель'),// не работает !!!
+                TextColumn::make('email')->label('Модель'),
                 TextColumn::make('created_at')->label('Дата создания')->date(),
                 ToggleColumn::make('is_published')->label('Опубликован модератором'),
             ])
