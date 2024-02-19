@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Api\Auth\AuthController;
+use App\Http\Controllers\Api\Auth\FillModelInfoController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\ContestController;
 use App\Http\Controllers\Api\MessageController;
@@ -34,7 +35,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('register', [RegisterController::class, 'register'])->withoutMiddleware('api');
 });
 
-
+Route::post('fill/{user}', [FillModelInfoController::class, 'update']);
 Route::apiResource('model', ModelController::class)->only('index', 'show');
 Route::apiResource('user', UserController::class)->only('index', 'show');
 Route::get('/main', [MainPageController::class, 'index']);

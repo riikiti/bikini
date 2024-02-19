@@ -15,6 +15,7 @@ class UserResource extends JsonResource
     {
         $this->appUrl = config('app.url');
         $data = [
+            'id'=>$this->id,
             'email' => $this->email,
             'name' => $this->name,
             'avatar' => $this->avatar ? $this->appUrl . '/storage/' . $this->avatar : null,
@@ -32,6 +33,7 @@ class UserResource extends JsonResource
 
     public function initModelInfo(array &$data): array
     {
+
         $data['info']['birthdate'] = $this->fields ? $this->fields['birthdate'] : null;
         $data['info']['height'] = $this->fields ? $this->fields['height'] : null;
         $data['info']['weight'] = $this->fields ? $this->fields['weight'] : null;
@@ -41,7 +43,6 @@ class UserResource extends JsonResource
         $data['info']['city'] = $this->fields ? $this->fields['city'] : null;
         $data['info']['avatar'] = $this->fields ? $this->fields['avatar'] : null;
         $data['info']['about'] = $this->fields ? $this->fields['about'] : null;
-        $data['info']['active'] = $this->fields ? $this->fields['active'] : null;
         $data['info']['hair'] = HairColorResurce::make($this->hair);
         $data['info']['breast'] = BreastResurce::make($this->breast);
         $data['info']['photos'] = ModelPhotoResource::collection($this->photos);

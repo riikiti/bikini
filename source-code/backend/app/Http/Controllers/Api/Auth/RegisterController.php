@@ -29,30 +29,6 @@ class RegisterController extends Controller
         return response()->json(['status' => 'success', 'token' => $this->respondWithToken($token)]);
     }
 
-    public function fillModelFields($request)
-    {
-        $fields = [
-            'birthdate' => $request->birthdate,
-            'height' => $request->height,
-            'weight' => $request->weight,
-            'size' => $request->size,
-            'waist' => $request->waist,
-            'hips' => $request->hips,
-            'city' => $request->city,
-            'avatar' => $request->avatar,
-            'about' => $request->about,
-            'active' => $request->active,
-        ];
-
-        $this->user->fill([
-            'email' => $request->email,
-            'password' => Hash::make($request->password),
-            'role' => $request->role,
-            'fields' => $fields,
-        ])->save();
-
-    }
-
     protected function respondWithToken($token)
     {
         return response()->json([
