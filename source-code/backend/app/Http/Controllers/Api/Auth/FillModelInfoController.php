@@ -12,12 +12,31 @@ use Illuminate\Support\Facades\Hash;
 class FillModelInfoController extends Controller
 {
 
+    private User $user;
+
     public function update(FillModelInfoRequest $request, User $user)
     {
-        if ($user->role != User::MODEL) {
-            return response()->json(['status' => 'error', 'message' => 'didnt model']);
-        }
+        $this->user = $user;
+        $data = [];
+        match ($user->role) {
+            User::MODEL => $this->fillModelInfo($data, $request),
+            User::USER => $this->fillUserInfo($request),
+            User::ADMIN => $data = null,
+        };
+        return response()->json(['status' => 'success', 'data' => UserResource::make($this->user)]);
+    }
 
+
+    public function fillUserInfo( FillModelInfoRequest $request)
+    {
+        $this->user->fill([
+            'country' => $request->country_id,
+            'avatar' => $request->avatar,
+        ])->save();
+
+    }
+    public function fillModelInfo(array &$fields, FillModelInfoRequest $request)
+    {
         $fields = [
             'birthdate' => $request->birthdate,
             'height' => $request->height,
@@ -28,14 +47,13 @@ class FillModelInfoController extends Controller
             'waist' => $request->waist,
             'hips' => $request->hips,
             'city' => $request->city,
-            'avatar' => $request->avatar,
             'about' => $request->about,
         ];
-        $user->fill([
+
+        $this->user->fill([
             'country' => $request->country_id,
+            'avatar' => $request->avatar,
             'fields' => $fields,
         ])->save();
-
-        return response()->json(['status' => 'success', 'data' => UserResource::make($user)]);
     }
 }

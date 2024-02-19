@@ -107,6 +107,10 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
         return $this->hasMany(ModelPhoto::class, 'user_id', 'id');
     }
 
+    public function box(): HasMany
+    {
+        return $this->hasMany(Box::class, 'user_id', 'id');
+    }
 
     public function canAccessPanel(Panel $panel): bool
     {

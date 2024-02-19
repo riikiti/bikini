@@ -2,6 +2,7 @@
 
 namespace App\Http\Resources;
 
+use App\Http\Resources\Box\BoxCompactResource;
 use App\Models\Property\Breast;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -33,7 +34,6 @@ class UserResource extends JsonResource
 
     public function initModelInfo(array &$data): array
     {
-
         $data['info']['birthdate'] = $this->fields ? $this->fields['birthdate'] : null;
         $data['info']['height'] = $this->fields ? $this->fields['height'] : null;
         $data['info']['weight'] = $this->fields ? $this->fields['weight'] : null;
@@ -41,11 +41,11 @@ class UserResource extends JsonResource
         $data['info']['waist'] = $this->fields ? $this->fields['waist'] : null;
         $data['info']['hips'] = $this->fields ? $this->fields['hips'] : null;
         $data['info']['city'] = $this->fields ? $this->fields['city'] : null;
-        $data['info']['avatar'] = $this->fields ? $this->fields['avatar'] : null;
         $data['info']['about'] = $this->fields ? $this->fields['about'] : null;
         $data['info']['hair'] = HairColorResurce::make($this->hair);
         $data['info']['breast'] = BreastResurce::make($this->breast);
         $data['info']['photos'] = ModelPhotoResource::collection($this->photos);
+        $data['info']['boxes'] = BoxCompactResource::collection($this->box);
         return $data;
     }
 }

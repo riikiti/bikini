@@ -15,9 +15,15 @@ return new class extends Migration
             $table->id();
             $table->integer('price')->default(500);
             $table->boolean('is_published')->default(true);
-            $table->foreignId('box_photo_id')->constrained('box_photos', 'id')->cascadeOnDelete();
-            $table->foreignId('box_video_id')->constrained('box_videos', 'id')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('box_photo_id');
+            $table->unsignedBigInteger('box_video_id');
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('box_photo_id')->references('id')->on('box_photos')->onDelete('set null');
+            $table->foreign('box_video_id')->references('id')->on('box_videos')->onDelete('set null');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+
+
             $table->timestamps();
         });
     }

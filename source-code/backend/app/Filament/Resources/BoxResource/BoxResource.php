@@ -25,7 +25,7 @@ class BoxResource extends Resource
             ->columns([
                 TextColumn::make('id')->label('id')->searchable(),
                 TextColumn::make('price')->label('Стоимость'),
-                //TextColumn::make('getModelEmail')->label('Модель'),// не работает !!!
+                TextColumn::make('email')->label('Модель'),// не работает !!!
                 TextColumn::make('created_at')->label('Дата создания')->date(),
                 ToggleColumn::make('is_published')->label('Опубликован модератором'),
             ])

@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\FillModelInfoController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\BoxController;
 use App\Http\Controllers\Api\ContestController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ModelController;
@@ -36,11 +37,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 });
 
 Route::post('fill/{user}', [FillModelInfoController::class, 'update']);
-Route::apiResource('model', ModelController::class)->only('index', 'show');
 Route::apiResource('user', UserController::class)->only('index', 'show');
 Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
+Route::get('/box/{id}', [BoxController::class, 'show']);
 
 Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
     Route::get('/messages/{user}', [MessageController::class, 'index']);
