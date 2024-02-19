@@ -16,7 +16,7 @@ class MainPageResource extends JsonResource
      */
     public function toArray(Request $request): array
     {
-        $contest = Contest::query()->where('active', true)->first();
+        $contest = Contest::query()->where('is_active', true)->first();
         match (empty($contest)) {
             true => $prizes = null,
             false => $prizes = PrizesResource::collection($contest->prizes),

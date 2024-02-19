@@ -20,6 +20,7 @@ class ContestFactory extends Factory
             'name' => fake()->text(10),
             'start' => fake()->date('2024-02-01'),
             'finish' => fake()->date('2024-03-01'),
+            'is_active'=>true,
             'created_at' => now(),
         ];
     }
