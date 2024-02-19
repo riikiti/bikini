@@ -18,4 +18,22 @@ class Message extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function senderUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'sender_id','id');
+    }
+
+    public function receiverUser(): BelongsTo
+    {
+        return $this->belongsTo(User::class,'receiver_id','id');
+    }
+
+    public function getSenderEmailAttribute(){
+        return $this->senderUser->email;
+    }
+
+    public function getReceiverEmailAttribute(){
+        return $this->receiverUser->email;
+    }
 }

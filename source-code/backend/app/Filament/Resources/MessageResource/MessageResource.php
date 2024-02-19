@@ -40,8 +40,8 @@ class MessageResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('sender_id')->label('Отправил'),
-                TextColumn::make('receiver_id')->label('Получил'),
+                TextColumn::make('SenderEmail')->label('Отправил'),
+                TextColumn::make('ReceiverEmail')->label('Получил'),
                 TextColumn::make('content')->label('Текст'),
                 TextColumn::make('created_at')->label('Дата отправки')->timezone('Europe/Moscow')->date('Y-m-d H:i'),
             ])
