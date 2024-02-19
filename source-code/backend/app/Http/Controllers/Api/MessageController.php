@@ -2,6 +2,7 @@
 
 namespace app\Http\Controllers\Api;
 
+use App\Events\StoreMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Models\Message;
 use App\Models\User;
@@ -16,8 +17,8 @@ class MessageController extends Controller
         $senderUser = $request->user();
 
         // Получаем все сообщения, связанные с этим пользователем
-        $receivedMessages = $senderUser->receivedMessages;
         $sentMessages = $senderUser->sentMessages;
+        $receivedMessages = $senderUser->receivedMessages;
 
         return response()->json(['status' => 'success', 'data' =>
             ['messages' => [
@@ -30,6 +31,7 @@ class MessageController extends Controller
 
     public function store(Request $request): JsonResponse
     {
+        $userId = $request->user->id;
         // Получаем данные формы
         $data = $request->validate([
             'receiver_id' => 'required',
@@ -38,13 +40,15 @@ class MessageController extends Controller
 
         // Создаем новое сообщение
         $message = new Message([
-            'sender_id' => $request->user()->id,
+            'sender_id' => $userId,
             'receiver_id' => $data['receiver_id'],
             'content' => $data['content'],
         ]);
 
         // Сохраняем сообщение
         $message->save();
+
+        broadcast(new StoreMessageEvent($message,$userId))->toOthers();
 
         return response()->json(['status' => 'success', 'data' => 'Сообщение отправлено']);
 
