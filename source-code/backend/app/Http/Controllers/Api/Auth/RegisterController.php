@@ -19,10 +19,7 @@ class RegisterController extends Controller
 
     public function register(RegisterRequest $request)
     {
-        match ($request->role) {
-            User::USER => $this->user->fill($request->validated())->save(),
-            User::MODEL => $this->fillModelFields($request),
-        };
+        $this->user->fill($request->validated())->save();
         if (!$token = auth()->tokenById($this->user->id)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }

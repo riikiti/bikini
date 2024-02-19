@@ -34,9 +34,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('refresh', [AuthController::class, 'refresh']);
     Route::post('me', [AuthController::class, 'me']);
     Route::post('register', [RegisterController::class, 'register'])->withoutMiddleware('api');
+    Route::post('fill/{user}', [FillModelInfoController::class, 'update']);
 });
 
-Route::post('fill/{user}', [FillModelInfoController::class, 'update']);
 Route::apiResource('user', UserController::class)->only('index', 'show');
 Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/contest', [ContestController::class, 'index']);

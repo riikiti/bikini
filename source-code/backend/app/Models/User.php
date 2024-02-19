@@ -31,6 +31,8 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
         'password',
         'avatar',
         'country_id',
+        'hair_id',
+        'breast_id',
         'fields',
         'role'
     ];

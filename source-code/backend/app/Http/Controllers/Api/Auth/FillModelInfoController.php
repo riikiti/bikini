@@ -16,6 +16,12 @@ class FillModelInfoController extends Controller
 
     public function update(FillModelInfoRequest $request, User $user)
     {
+        try {
+            auth()->user();
+        }catch (\Error $err){
+            return response()->json(['status'=>'success','message'=>$err]);
+        }
+
         $this->user = $user;
         $data = [];
         match ($user->role) {
@@ -30,7 +36,7 @@ class FillModelInfoController extends Controller
     public function fillUserInfo( FillModelInfoRequest $request)
     {
         $this->user->fill([
-            'country' => $request->country_id,
+            'country_id' => $request->country_id,
             'avatar' => $request->avatar,
         ])->save();
 
@@ -41,8 +47,6 @@ class FillModelInfoController extends Controller
             'birthdate' => $request->birthdate,
             'height' => $request->height,
             'weight' => $request->weight,
-            'hair_color' => $request->hair_color,
-            'breast' => $request->breast,
             'size' => $request->size,
             'waist' => $request->waist,
             'hips' => $request->hips,
@@ -51,7 +55,9 @@ class FillModelInfoController extends Controller
         ];
 
         $this->user->fill([
-            'country' => $request->country_id,
+            'country_id' => $request->country,
+            'hair_id' => $request->hair_color,
+            'breast_id' => $request->breast,
             'avatar' => $request->avatar,
             'fields' => $fields,
         ])->save();
