@@ -18,7 +18,7 @@ class ContestResource extends JsonResource
             'name' => $this->name,
             'start' => $this->date_start,
             'finish' => $this->date_finish,
-            'active' => $this->active,
+            'active' => $this->is_active,
             'prizes' => PrizesResource::collection($this->prizes),
         ];
     }

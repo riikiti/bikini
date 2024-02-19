@@ -16,8 +16,8 @@ class ContestController extends Controller
 
     public function show()
     {
-        $contest = Contest::query()->where('active', true)->first();
-        if (!empty($model)) {
+        $contest = Contest::query()->where('is_active', true)->first();
+        if (!empty($contest)) {
             return response()->json(['status' => 'success', 'data' => ContestResource::make($contest)]);
         } else {
             return response()->json(['status' => 'not found']);

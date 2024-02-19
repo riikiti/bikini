@@ -15,6 +15,7 @@ class BoxVideoResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
+            'id'=>$this->id,
             'video' => $this->video,
             'description' => $this->description
         ];

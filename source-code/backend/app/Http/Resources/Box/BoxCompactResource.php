@@ -19,7 +19,8 @@ class BoxCompactResource extends JsonResource
             'price' => $this->price,
             'photo' => $this->photos ? BoxPhotoResource::collection($this->photos) : null,
             'videos' => $this->videos ? BoxVideoResource::collection($this->videos) : null,
-            'created' => $this->created_at
+            'created' => $this->created_at,
+            'is_published' => $this->is_published
         ];
     }
 }
