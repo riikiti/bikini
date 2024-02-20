@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\ContestController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ModelController;
 use App\Http\Controllers\Api\Pages\MainPageController;
+use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -42,6 +43,8 @@ Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
 Route::get('/box/{id}', [BoxController::class, 'show']);
+Route::get('/property', [PropertyController::class, 'index']);
+
 
 Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
     Route::get('/messages/{user}', [MessageController::class, 'index']);
