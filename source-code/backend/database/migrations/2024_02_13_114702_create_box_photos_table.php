@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('box_photos', function (Blueprint $table) {
             $table->id();
             $table->foreignId('box_id')->constrained('boxes', 'id')->cascadeOnDelete();
-            $table->string('description')->nullable();
             $table->string('image');
             $table->timestamps();
         });

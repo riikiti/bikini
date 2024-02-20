@@ -22,7 +22,6 @@ class BoxPhotosFactory extends Factory
             'box_id' => function () {
                 return Box::factory();
             },
-            'description' => fake()->text(30),
             'image' => fake()->text(30),
             'created_at' => now(),
         ];

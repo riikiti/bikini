@@ -22,6 +22,7 @@ class BoxFactory extends Factory
     {
         return [
             'price' => fake()->numberBetween(200, 1000),
+            'description' => fake()->text(30),
             'user_id' => function () {
                 return User::factory();
             },

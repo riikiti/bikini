@@ -21,7 +21,6 @@ class BoxVideosFactory extends Factory
             'box_id' => function () {
                 return Box::factory();
             },
-            'description' => fake()->text(30),
             'video' => fake()->text(30),
             'created_at' => now(),
         ];
