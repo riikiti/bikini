@@ -15,7 +15,7 @@ class BoxCompactResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'id'=>$this->id,
+            'id' => $this->id,
             'price' => $this->price,
             'photo' => $this->photos ? BoxPhotoResource::collection($this->photos) : null,
             'videos' => $this->videos ? BoxVideoResource::collection($this->videos) : null,

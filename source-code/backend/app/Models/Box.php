@@ -5,6 +5,8 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Box extends Model
 {
@@ -12,7 +14,7 @@ class Box extends Model
 
     protected $table = 'boxes';
 
-    protected $fillable = ['price', 'box_photo_id', 'box_video_id', 'isPublished','user_id','created_at'];
+    protected $fillable = ['price', 'isPublished','user_id','created_at'];
 
     public function user(): BelongsTo
     {
@@ -23,13 +25,13 @@ class Box extends Model
         return $this->user->email;
     }
 
-    public function photos(): BelongsTo
+    public function photos(): HasMany
     {
-        return $this->belongsTo(BoxPhotos::class);
+        return $this->hasMany(BoxPhotos::class);
     }
 
-    public function videos(): BelongsTo
+    public function videos(): HasMany
     {
-        return $this->belongsTo(BoxVideos::class);
+        return $this->hasMany(BoxVideos::class);
     }
 }
