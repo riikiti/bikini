@@ -11,12 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('blogs', function (Blueprint $table) {
+        Schema::create('boxes', function (Blueprint $table) {
             $table->id();
+            $table->integer('price')->default(500);
             $table->boolean('is_published')->default(true);
-            $table->foreignId('blog_photo_id')->constrained('blog_photos', 'id')->cascadeOnDelete();
-            $table->foreignId('blog_video_id')->constrained('blog_videos', 'id')->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
+
+
             $table->timestamps();
         });
     }
@@ -26,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('blogs');
+        Schema::dropIfExists('boxes');
     }
 };
