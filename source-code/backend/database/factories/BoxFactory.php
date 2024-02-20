@@ -22,12 +22,6 @@ class BoxFactory extends Factory
     {
         return [
             'price' => fake()->numberBetween(200, 1000),
-            'box_photo_id' => function () {
-                return BoxPhotos::factory()->create();
-            },
-            'box_video_id' => function () {
-                return BoxVideos::factory()->create();
-            },
             'user_id' => function () {
                 return User::factory();
             },

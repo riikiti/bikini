@@ -21,12 +21,6 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
-            'blog_photo_id' => function () {
-                return BlogPhotos::factory()->create()->id;
-            },
-            'blog_video_id' => function () {
-                return BlogVideos::factory()->create()->id;
-            },
             'user_id' => function () {
                 return User::factory();
             },

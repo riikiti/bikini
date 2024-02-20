@@ -20,5 +20,9 @@ class DatabaseSeeder extends Seeder
         $this->call(BlogSeeder::class);
         $this->call(AdminUserSeeder::class);
         $this->call(ContestSeeder::class);
+        $this->call(BlogPhotoSeeder::class);
+        $this->call(BlogVideoSeeder::class);
+        $this->call(BoxVideoSeeder::class);
+        $this->call(BoxPhotoSeeder::class);
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Box;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 
@@ -18,6 +19,9 @@ class BoxPhotosFactory extends Factory
     public function definition(): array
     {
         return [
+            'box_id' => function () {
+                return Box::factory();
+            },
             'description' => fake()->text(30),
             'image' => fake()->text(30),
             'created_at' => now(),
