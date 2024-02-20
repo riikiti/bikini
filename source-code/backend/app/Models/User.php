@@ -118,4 +118,14 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
     {
         return $this->role == static::ADMIN;
     }
+
+    public function sentMessages(): HasMany
+    {
+        return $this->hasMany(Message::class,'sender_id','id');
+    }
+
+    public function receivedMessages(): HasMany
+    {
+        return $this->hasMany(Message::class,'receiver_id','id');
+    }
 }

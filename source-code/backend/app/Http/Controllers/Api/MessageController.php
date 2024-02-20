@@ -27,6 +27,33 @@ class MessageController extends Controller
             ]]]);
 
     }
+    public function getAll(Request $request)
+    {
+        $senderUser = $request->user();
+
+// Находим всех пользователей, с которыми у текущего пользователя есть переписка
+        $userIds = Message::query()
+            ->where('sender_id', $senderUser->id)
+            ->orWhere('receiver_id', $senderUser->id)
+            ->groupBy('sender_id', 'receiver_id')
+            ->pluck('sender_id')
+            ->merge(Message::query()
+                ->where('sender_id', $senderUser->id)
+                ->orWhere('receiver_id', $senderUser->id)
+                ->groupBy('sender_id', 'receiver_id')
+                ->pluck('receiver_id'))
+            ->unique();
+
+        foreach($userIds as $key => $element) {
+            if($element == $senderUser->id) {
+                unset($userIds[$key]); // удаляем элемент из массива по ключу
+            }
+        }
+// Получаем информацию о найденных пользователях
+        $users = User::whereIn('id', $userIds)->get();
+
+        return $users;
+    }
 
     public function store(Request $request): JsonResponse
     {
