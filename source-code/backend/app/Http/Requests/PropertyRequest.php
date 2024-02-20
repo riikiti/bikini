@@ -16,7 +16,7 @@ class PropertyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'role' => 'required'
+            'role' => 'required' //todo сделать проверку на сузествующие параметры в user (model и user)
         ];
     }
 }
