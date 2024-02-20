@@ -11,5 +11,5 @@ class BlogVideos extends Model
 
     protected $table = 'blog_videos';
 
-    protected $fillable = ['video','model_id'];
+    protected $fillable = ['video','model_id','blog_id'];
 }

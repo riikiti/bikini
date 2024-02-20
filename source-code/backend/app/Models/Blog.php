@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Blog extends Model
 {
@@ -22,5 +23,13 @@ class Blog extends Model
     public function getEmailAttribute(){
         return $this->user->email;
     }
+    public function photos(): HasMany
+    {
+        return $this->hasMany(BlogPhotos::class);
+    }
 
+    public function videos(): HasMany
+    {
+        return $this->hasMany(BlogVideos::class);
+    }
 }
