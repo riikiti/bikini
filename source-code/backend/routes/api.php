@@ -3,6 +3,7 @@
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\FillModelInfoController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BoxController;
 use App\Http\Controllers\Api\ContestController;
 use App\Http\Controllers\Api\MessageController;
@@ -46,7 +47,13 @@ Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
 
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
-Route::get('/box/{box}', [BoxController::class, 'show']);
+
+Route::get('/box/{id}', [BoxController::class, 'show']);
+Route::get('/boxes/{user}', [BoxController::class, 'getAll']);
+
+Route::get('/blog/{id}', [BlogController::class, 'show']);
+Route::get('/blogs/{user}', [BlogController::class, 'getAll']);
+
 Route::get('/property', [PropertyController::class, 'index']);
 
 
