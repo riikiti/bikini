@@ -16,7 +16,7 @@ class UserResource extends JsonResource
     {
         $this->appUrl = config('app.url');
         $data = [
-            'id'=>$this->id,
+            'id' => $this->id,
             'email' => $this->email,
             'name' => $this->name,
             'avatar' => $this->avatar ? $this->appUrl . '/storage/' . $this->avatar : null,
@@ -44,6 +44,11 @@ class UserResource extends JsonResource
         $data['info']['about'] = $this->fields ? $this->fields['about'] : null;
         $data['info']['hair'] = HairColorResurce::make($this->hair);
         $data['info']['breast'] = BreastResurce::make($this->breast);
+        $data['info']['messages_status']['from_subscribers'] = $this->fields ? $this->fields['messages_status']['from_subscribers'] : null;
+        $data['info']['messages_status']['from_all_models'] = $this->fields ? $this->fields['messages_status']['from_all_models'] : null;
+        $data['info']['messages_status']['from_all_fans'] = $this->fields ? $this->fields['messages_status']['from_all_fans'] : null;
+        $data['info']['messages_status']['from_all_users'] = $this->fields ? $this->fields['messages_status']['from_all_users'] : null;
+        $data['info']['messages_status']['from_no_one'] = $this->fields ? $this->fields['messages_status']['from_no_one'] : null;
         return $data;
     }
 }

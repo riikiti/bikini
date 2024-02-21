@@ -18,8 +18,8 @@ class FillModelInfoController extends Controller
     {
         try {
             auth()->user();
-        }catch (\Error $err){
-            return response()->json(['status'=>'success','message'=>$err]);
+        } catch (\Error $err) {
+            return response()->json(['status' => 'success', 'message' => $err]);
         }
 
         $this->user = $user;
@@ -33,7 +33,7 @@ class FillModelInfoController extends Controller
     }
 
 
-    public function fillUserInfo( FillModelInfoRequest $request)
+    public function fillUserInfo(FillModelInfoRequest $request)
     {
         $this->user->fill([
             'country_id' => $request->country_id,
@@ -41,8 +41,18 @@ class FillModelInfoController extends Controller
         ])->save();
 
     }
+
     public function fillModelInfo(array &$fields, FillModelInfoRequest $request)
     {
+
+        $messages = [
+            'from_subscribers' => $request->from_subscribers,
+            'from_all_models' => $request->from_all_models,
+            'from_all_fans' => $request->from_all_fans,
+            'from_all_users' => $request->from_all_users,
+            'from_no_one' => $request->from_no_one
+        ];
+
         $fields = [
             'birthdate' => $request->birthdate,
             'height' => $request->height,
@@ -52,6 +62,7 @@ class FillModelInfoController extends Controller
             'hips' => $request->hips,
             'city' => $request->city,
             'about' => $request->about,
+            'messages_status' => $messages,
         ];
 
         $this->user->fill([

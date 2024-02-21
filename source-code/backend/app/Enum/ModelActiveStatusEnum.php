@@ -2,7 +2,7 @@
 
 namespace App\Enum;
 
-enum UsersActiveStatusEnum: string
+enum ModelActiveStatusEnum: string
 {
     case NOT_FILLED_IN = 'Не заполнены поля в профиле';
     case NOT_CONFIRMED_MODERATOR = 'Не подтвержден модератором';

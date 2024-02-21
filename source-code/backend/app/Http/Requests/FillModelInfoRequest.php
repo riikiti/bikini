@@ -37,6 +37,12 @@ class FillModelInfoRequest extends FormRequest
             'city' => 'string',
             'avatar' => 'nullable',
             'about' => 'string',
+            'from_subscribers' => 'boolean',
+            'from_all_models' => 'boolean',
+            'from_all_fans' => 'boolean',
+            'from_all_users' => 'boolean',
+            'from_no_one' => 'boolean',
+
         ];
     }
 }
