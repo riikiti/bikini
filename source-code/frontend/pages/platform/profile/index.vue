@@ -7,10 +7,25 @@
   import UserAvatar from '~/components/TheHeader/UserAvatar.vue'
   import { useUserStore } from '~/stores/user'
   import { LikeButton } from '~/components/buttons'
-
+  import AppDropzone from '~/components/app/AppDropzone/AppDropzone.vue'
+  import type { Ref } from 'vue'
+  import { ref } from 'vue'
+  import type { IPhoto } from '~/services/models'
   const text = ref('')
   const active = ref(false)
   const userStore = useUserStore()
+
+  const photos: Ref<IPhoto[]> = ref([])
+
+  const fetchPhotos = async () => {
+    fetch('/mock/mock-model-photos.json')
+      .then(response => response.json())
+      .then(data => {
+        photos.value = data.photos
+      })
+  }
+  fetchPhotos()
+  const showGallery = ref(false)
 </script>
 
 <template>
@@ -141,10 +156,23 @@
               </div>
             </tabs-content>
             <tabs-content value="blog">
-              <div class="px-8 pt-8 pb-4 shadow-sm rounded-xl bg-white dark:bg-muted"></div>
-              <div class="grid grid-cols-3 gap-8">
-                <app-dropzone />
+              <div class="px-8 pt-8 pb-4 shadow-sm rounded-xl bg-white dark:bg-muted flex gap-8">
+                <app-dropzone class="w-full" />
+                <Button class="rounded-xl">
+                  <send-horizontal :size="20" />
+                </Button>
               </div>
+              <div class="mt-4">
+                <div class="px-8 pt-8 pb-4 shadow-sm rounded-xl bg-white dark:bg-muted">
+                  <div v-if="photos.length" class="grid grid-cols-3 gap-8">
+                    <div v-for="(photoItem, index) in photos" :key="index">
+                      <gallery-card :item="photoItem" @click="showGallery = !showGallery" />
+                    </div>
+                    <gallery-dialog v-model:open="showGallery" :photos="photos" />
+                  </div>
+                </div>
+              </div>
+              <div class="grid grid-cols-3 gap-8"></div>
             </tabs-content>
             <tabs-content value="box"> Box field </tabs-content>
           </tabs>
