@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ContestResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
@@ -12,7 +13,9 @@ class ContestController extends Controller
 {
     public function index()
     {
-        return response()->json(['status' => 'success', 'data' => ContestResource::collection(Contest::all())]);
+        return response()->json([
+            'status' => 'success',
+            'data' => ContestResource::collection(Contest::all())]);
     }
 
     public function show()
@@ -22,7 +25,10 @@ class ContestController extends Controller
         $ContestModels = ContestModel::query()->where('contest_id', $contest->id)->get();
 
         if (!empty($contest)) {
-            return response()->json(['status' => 'success', 'data' => ContestResource::make($contest), 'models' => $ContestModels]);
+            return response()->json([
+                'status' => 'success',
+                'data' => ContestResource::make($contest),
+                'models' => ContestModelsResource::collection($ContestModels) ]);
         } else {
             return response()->json(['status' => 'not found']);
         }
