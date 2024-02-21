@@ -21,6 +21,7 @@ class BlogFactory extends Factory
     public function definition(): array
     {
         return [
+            'description' => fake()->text(30),
             'user_id' => function () {
                 return User::factory();
             },
