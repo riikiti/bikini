@@ -10,12 +10,19 @@ use Illuminate\Http\Request;
 
 class BoxController extends Controller
 {
-    public function show(Box $box)
+    public function show($id)
     {
+        $box = Box::query()->where('id', $id)->first();
         if (!empty($box)) {
             return response()->json(['status' => 'success', 'data' => BoxResource::make($box)]);
         } else {
             return response()->json(['status' => 'not found']);
         }
+    }
+
+    public function getAll(User $user)
+    {
+        $BoxesOfModel = Box::query()->where('user_id', $user->id)->get();
+        return BoxCompactResource::collection($BoxesOfModel);
     }
 }
