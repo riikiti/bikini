@@ -47,7 +47,7 @@ Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
 
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
-Route::post('/active-contest', [ContestController::class, 'create']);
+Route::post('/active-contest', [ContestController::class, 'store']);
 Route::patch('/active-contest', [ContestController::class, 'update']);
 
 Route::get('/box/{id}', [BoxController::class, 'show']);
