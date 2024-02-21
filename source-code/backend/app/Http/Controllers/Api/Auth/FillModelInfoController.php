@@ -13,23 +13,25 @@ class FillModelInfoController extends Controller
 {
 
     private User $user;
+    private string $msg;
+
+    public function __construct()
+    {
+        $this->middleware('auth:api', ['except' => ['login']]);
+    }
 
     public function update(FillModelInfoRequest $request, User $user)
     {
-        try {
-            auth()->user();
-        } catch (\Error $err) {
-            return response()->json(['status' => 'success', 'message' => $err]);
-        }
-
+        $this->msg = 'success';
         $this->user = $user;
         $data = [];
+        $this->refreshPassword($request);
         match ($user->role) {
             User::MODEL => $this->fillModelInfo($data, $request),
             User::USER => $this->fillUserInfo($request),
             User::ADMIN => $data = null,
         };
-        return response()->json(['status' => 'success', 'data' => UserResource::make($this->user)]);
+        return response()->json(['status' => $this->msg, 'data' => UserResource::make($this->user)]);
     }
 
 
@@ -39,7 +41,6 @@ class FillModelInfoController extends Controller
             'country_id' => $request->country_id,
             'avatar' => $request->avatar,
         ])->save();
-
     }
 
     public function fillModelInfo(array &$fields, FillModelInfoRequest $request)
@@ -72,5 +73,13 @@ class FillModelInfoController extends Controller
             'avatar' => $request->avatar,
             'fields' => $fields,
         ])->save();
+    }
+
+    public function refreshPassword(FillModelInfoRequest $request)
+    {
+        if (!empty($request->new_password && $request->new_password == $request->new_password_confirmed)) {
+            $this->user->fill(['password' => Hash::make($request->new_password)]);
+            $this->msg = 'password changed';
+        }
     }
 }

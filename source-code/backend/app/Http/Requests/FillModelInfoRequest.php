@@ -42,7 +42,8 @@ class FillModelInfoRequest extends FormRequest
             'from_all_fans' => 'boolean',
             'from_all_users' => 'boolean',
             'from_no_one' => 'boolean',
-
+            'new_password' => 'string',
+            'new_password_confirmed' => 'string'
         ];
     }
 }
