@@ -42,7 +42,7 @@ Route::apiResource('user', UserController::class)->only('index', 'show');
 Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
-Route::get('/box/{id}', [BoxController::class, 'show']);
+Route::get('/box/{box}', [BoxController::class, 'show']);
 Route::get('/property', [PropertyController::class, 'index']);
 
 

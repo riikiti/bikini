@@ -10,9 +10,8 @@ use Illuminate\Http\Request;
 
 class BoxController extends Controller
 {
-    public function show($id)
+    public function show(Box $box)
     {
-        $box = Box::query()->where('id', $id)->first();
         if (!empty($box)) {
             return response()->json(['status' => 'success', 'data' => BoxCompactResource::make($box)]);
         } else {
