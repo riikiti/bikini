@@ -2,7 +2,7 @@
 
 namespace App\Http\Resources;
 
-use App\Http\Resources\Box\BoxCompactResource;
+use App\Http\Resources\Box\BoxResource;
 use App\Models\Property\Breast;
 use App\Models\User;
 use Illuminate\Http\Request;
@@ -44,8 +44,6 @@ class UserResource extends JsonResource
         $data['info']['about'] = $this->fields ? $this->fields['about'] : null;
         $data['info']['hair'] = HairColorResurce::make($this->hair);
         $data['info']['breast'] = BreastResurce::make($this->breast);
-        $data['info']['photos'] = ModelPhotoResource::collection($this->photos);
-        $data['info']['boxes'] = BoxCompactResource::collection($this->box);
         return $data;
     }
 }

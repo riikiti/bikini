@@ -39,7 +39,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 });
 
 Route::apiResource('user', UserController::class)->only('index', 'show');
+
 Route::get('/main', [MainPageController::class, 'index']);
+Route::get('/user-photos/{user}', [UserController::class, 'showModelPhoto']);
+Route::get('/user-boxes/{user}', [UserController::class, 'showModelBoxes']);
+
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
 Route::get('/box/{id}', [BoxController::class, 'show']);

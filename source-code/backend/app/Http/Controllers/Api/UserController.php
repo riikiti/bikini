@@ -3,6 +3,9 @@
 namespace App\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\Box\BoxCompactResource;
+use App\Http\Resources\Box\BoxResource;
+use App\Http\Resources\ModelPhotoResource;
 use App\Http\Resources\UserCompactResource;
 use App\Http\Resources\UserResource;
 use App\Models\User;
@@ -15,13 +18,31 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'data' => UserCompactResource::collection(User::query()->where('role', User::MODEL)->get())]);
     }
 
-    public function show($id)
+    public function show(User $user)
     {
-        $user = User::query()->where('id', $id)->first();
         if (!empty($user)) {
             return response()->json(['status' => 'success', 'data' => UserResource::make($user)]);
         } else {
             return response()->json(['status' => 'not found']);
         }
     }
+
+    public function showModelPhoto(User $user)
+    {
+        if (!empty($user)) {
+            return response()->json(['status' => 'success', 'data' => ModelPhotoResource::collection($user->photos)]);
+        } else {
+            return response()->json(['status' => 'not found']);
+        }
+    }
+
+    public function showModelBoxes(User $user)
+    {
+        if (!empty($user)) {
+            return response()->json(['status' => 'success', 'data' => BoxCompactResource::collection($user->box)]);
+        } else {
+            return response()->json(['status' => 'not found']);
+        }
+    }
+
 }

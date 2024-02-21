@@ -15,7 +15,7 @@ class UserResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
-    protected static ?string $navigationLabel = 'Участники';
+    protected static ?string $navigationLabel = 'Пользователи';
 
     public static function table(Table $table): Table
     {
@@ -28,11 +28,10 @@ class UserResource extends Resource
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
-                    ->default(false)
                     ->options([
                         User::USER => 'Пользователь',
                         User::MODEL => 'Модель',
-                        User::MODERATOR => 'Модератор',
+                        User::ADMIN => 'Админ',
                     ]),
             ])
             ->bulkActions([

@@ -14,14 +14,20 @@ class Box extends Model
 
     protected $table = 'boxes';
 
-    protected $fillable = ['price', 'isPublished','user_id','created_at'];
+    protected $fillable = ['price', 'isPublished', 'user_id', 'created_at'];
+
+
+    protected $casts = [
+        'created_at' => 'date',
+    ];
 
     public function user(): BelongsTo
     {
         return $this->belongsTo(User::class);
     }
 
-    public function getEmailAttribute(){
+    public function getEmailAttribute()
+    {
         return $this->user->email;
     }
 
@@ -33,5 +39,10 @@ class Box extends Model
     public function videos(): HasMany
     {
         return $this->hasMany(BoxVideos::class);
+    }
+
+    public function getCreatedAttribute(): string
+    {
+        return date('d.m.Y', strtotime($this->created_at));
     }
 }
