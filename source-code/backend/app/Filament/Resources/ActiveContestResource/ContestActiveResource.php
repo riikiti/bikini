@@ -4,11 +4,41 @@ namespace app\Filament\Resources\ActiveContestResource;
 
 use App\Filament\Resources\ContestResource\Pages;
 use App\Models\Contest;
+use App\Models\ContestModel;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
+
+function models(): array
+{
+    $ActiveContest = Contest::query()
+        ->where('is_active', true)
+        ->first();
+
+    $ActiveContestModels = ContestModel::query()
+        ->where('contest_id', $ActiveContest->id)
+        ->get();
+
+    $json = json_decode($ActiveContestModels);
+    return $json;
+}
+
+function modelsId(): string
+{
+    $models = models();
+    $i = 0;
+    $string = '';
+    foreach ($models as $model){
+        $userIds[$i++] = $model->user_id;
+    }
+
+    foreach ($userIds as $key => $value){
+        $string .= $value;
+    }
+    return $string;
+
+}
 
 class ContestActiveResource extends Resource
 {
@@ -24,8 +54,7 @@ class ContestActiveResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Название'),
-                ToggleColumn::make('is_active')->label('Открыт'),
-                TextColumn::make('start')->label('Старт')->date(),
+                TextColumn::make(modelsId())->label('Старт')->date(),
                 TextColumn::make('finish')->label('Завершение')->date(),
                 TextColumn::make('created_at')->label('Создан')->date()
             ])
@@ -52,4 +81,5 @@ class ContestActiveResource extends Resource
             'index' => Pages\ListActiveContests::route('/'),
         ];
     }
+
 }
