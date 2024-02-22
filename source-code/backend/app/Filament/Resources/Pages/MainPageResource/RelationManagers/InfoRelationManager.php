@@ -12,6 +12,7 @@ use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class InfoRelationManager extends RelationManager
 {
@@ -24,7 +25,7 @@ class InfoRelationManager extends RelationManager
             ->schema([
                 Grid::make(1)
                     ->schema([
-                        Forms\Components\TextInput::make('description')
+                        TinyEditor::make('description')
                             ->required()
                             ->maxLength(255)
                             ->label('Описание'),

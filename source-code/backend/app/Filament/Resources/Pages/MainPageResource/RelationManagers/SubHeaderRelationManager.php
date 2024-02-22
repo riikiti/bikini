@@ -8,8 +8,7 @@ use Filament\Forms\Form;
 use Filament\Resources\RelationManagers\RelationManager;
 use Filament\Tables;
 use Filament\Tables\Table;
-use Illuminate\Database\Eloquent\Builder;
-use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class SubHeaderRelationManager extends RelationManager
 {
@@ -26,7 +25,7 @@ class SubHeaderRelationManager extends RelationManager
                             ->required()
                             ->maxLength(255)
                             ->label('Заголовок'),
-                        Forms\Components\TextInput::make('description')
+                        TinyEditor::make('description')
                             ->required()
                             ->maxLength(255)
                             ->label('Описание'),

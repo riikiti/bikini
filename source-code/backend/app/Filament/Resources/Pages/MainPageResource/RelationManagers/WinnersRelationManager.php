@@ -10,6 +10,7 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\SoftDeletingScope;
+use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
 class WinnersRelationManager extends RelationManager
 {
@@ -26,7 +27,7 @@ class WinnersRelationManager extends RelationManager
                             ->required()
                             ->maxLength(255)
                             ->label('Заголовок'),
-                        Forms\Components\TextInput::make('description')
+                        TinyEditor::make('description')
                             ->required()
                             ->maxLength(255)
                             ->label('Описание'),
