@@ -9,11 +9,12 @@ use App\Models\Box;
 use App\Models\BoxPhotos;
 use App\Models\BoxVideos;
 use Carbon\Carbon;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Storage;
 
 class BoxFillController extends Controller
 {
-    public function fillBoxPhoto(BoxPhotoRequest $request)
+    public function fillBoxPhoto(BoxPhotoRequest $request): JsonResponse
     {
 
         $box = new BoxPhotos();
@@ -27,7 +28,7 @@ class BoxFillController extends Controller
         ]);
     }
 
-    public function fillBoxVideo(BoxVideoRequest $request)
+    public function fillBoxVideo(BoxVideoRequest $request): JsonResponse
     {
         $box = new BoxVideos();
         $box->fill([
