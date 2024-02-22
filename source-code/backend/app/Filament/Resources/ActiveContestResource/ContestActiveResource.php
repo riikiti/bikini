@@ -10,36 +10,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
-function models(): array
-{
-    $ActiveContest = Contest::query()
-        ->where('is_active', true)
-        ->first();
-
-    $ActiveContestModels = ContestModel::query()
-        ->where('contest_id', $ActiveContest->id)
-        ->get();
-
-    $json = json_decode($ActiveContestModels);
-    return $json;
-}
-
-function modelsId(): string
-{
-    $models = models();
-    $i = 0;
-    $string = '';
-    foreach ($models as $model){
-        $userIds[$i++] = $model->user_id;
-    }
-
-    foreach ($userIds as $key => $value){
-        $string .= $value;
-    }
-    return $string;
-
-}
-
 class ContestActiveResource extends Resource
 {
     protected static ?string $model = Contest::class;
