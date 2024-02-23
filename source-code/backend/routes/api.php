@@ -4,6 +4,7 @@ use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\FillModelInfoController;
 use App\Http\Controllers\Api\Auth\RegisterController;
 use App\Http\Controllers\Api\BlogController;
+use App\Http\Controllers\Api\BlogFillController;
 use App\Http\Controllers\Api\BoxController;
 use App\Http\Controllers\Api\BoxFillController;
 use App\Http\Controllers\Api\ContestController;
@@ -47,6 +48,9 @@ Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
 Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
 Route::post('/box-photo', [BoxFillController::class, 'fillBoxPhoto']);
 Route::post('/box-video', [BoxFillController::class, 'fillBoxVideo']);
+
+Route::post('/blog-photo', [BlogFillController::class, 'fillBlogPhoto']);
+Route::post('/blog-video', [BlogFillController::class, 'fillBlogVideo']);
 
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);

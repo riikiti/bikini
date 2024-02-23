@@ -22,7 +22,8 @@ class BlogPhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'blog_id'=>'required',
+            'image'=>'required',
         ];
     }
 }

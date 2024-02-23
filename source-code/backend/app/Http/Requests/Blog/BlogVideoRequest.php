@@ -22,7 +22,8 @@ class BlogVideoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            'box_id'=>'required',
+            'video'=>'required',
         ];
     }
 }

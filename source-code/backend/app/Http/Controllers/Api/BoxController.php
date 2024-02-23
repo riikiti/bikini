@@ -36,6 +36,7 @@ class BoxController extends Controller
 
     public function getAll(User $user)
     {
+        // Нужно отдавать список с оплаченные неоплаченные
         $BoxesOfModel = Box::query()->where('user_id', $user->id)->get();
         return BoxCompactResource::collection($BoxesOfModel);
     }

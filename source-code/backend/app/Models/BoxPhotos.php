@@ -22,7 +22,7 @@ class BoxPhotos extends Model
         $this->imageHelper->setSavingPath('box-photos');
     }
 
-    public function setImageAttribute($value)
+    public function setImageAttribute($value): void
     {
         $this->attributes['image'] = $this->imageHelper->handleImageUpload(
             value: $value,

@@ -24,7 +24,6 @@ class BoxVideoRequest extends FormRequest
         return [
             'box_id'=>'required',
             'video'=>'required',
-            'description'=>'string'
         ];
     }
 }

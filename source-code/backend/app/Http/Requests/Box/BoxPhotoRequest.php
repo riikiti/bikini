@@ -24,7 +24,6 @@ class BoxPhotoRequest extends FormRequest
         return [
             'box_id'=>'required',
             'image'=>'required',
-            'description'=>'string'
         ];
     }
 }

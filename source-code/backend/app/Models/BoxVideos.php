@@ -21,7 +21,7 @@ class BoxVideos extends Model
         $this->filesHelper->setSavingPath('box-videos');
     }
 
-    public function setVideoAttribute($value)
+    public function setVideoAttribute($value): void
     {
         $this->attributes['video'] = $this->filesHelper->handleFileUpload(
             value: $value,
