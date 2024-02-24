@@ -4,11 +4,16 @@ export default defineNuxtConfig({
     strict: true
   },
   devtools: { enabled: true },
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/tailwindcss', 'shadcn-nuxt', 'nuxt-swiper'],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/tailwindcss', 'shadcn-nuxt', 'nuxt-primevue'],
   postcss: {
     plugins: {
       tailwindcss: {},
       autoprefixer: {}
+    }
+  },
+  primevue: {
+    components: {
+      include: ['Galleria', 'Carousel']
     }
   },
   shadcn: {

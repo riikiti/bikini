@@ -9,7 +9,7 @@
 
 <template>
   <div class="overflow-hidden rounded-lg">
-    <img :src="item.photo" :alt="item.description || 'Gallery photo'" />
+    <img :src="item.photo" :alt="item.description || 'gallery photo'" />
   </div>
 </template>
 

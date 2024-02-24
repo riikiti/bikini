@@ -1,7 +1,7 @@
 <script setup lang="ts"></script>
 
 <template>
-  <!--      Box Card        -->
+  <div>Profile Info</div>
 </template>
 
 <style scoped></style>

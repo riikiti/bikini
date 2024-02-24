@@ -8,5 +8,16 @@ export default {
     portfolio: 'Portfolio',
     logout: 'Logout',
     users: 'Участницы'
+  },
+  profile: {
+    platform_links: {
+      gallery: 'Галерея',
+      box: 'Box',
+      blog: 'Блог'
+    },
+    header: {
+      edit_profile: 'Редактировать профиль',
+      send: 'Отправить'
+    }
   }
 }

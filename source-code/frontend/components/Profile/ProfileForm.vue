@@ -1,7 +1,5 @@
 <script setup lang="ts"></script>
 
-<template>
-  <!--      Box Card        -->
-</template>
+<template></template>
 
 <style scoped></style>
