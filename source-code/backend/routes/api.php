@@ -58,6 +58,7 @@ Route::post('/active-contest', [ContestController::class, 'store']);
 Route::patch('/active-contest', [ContestController::class, 'update']);
 
 Route::get('/box/{id}', [BoxController::class, 'show']);
+Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
 Route::get('/boxes/{user}', [BoxController::class, 'getAll']);
 
 Route::get('/blog/{id}', [BlogController::class, 'show']);
