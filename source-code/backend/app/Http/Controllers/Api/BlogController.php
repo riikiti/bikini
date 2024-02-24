@@ -29,6 +29,7 @@ class BlogController extends Controller
             ->where('subscriber_id', $subscriber->id)
             ->where('signed_before', '>', Carbon::now())
             ->exists();
+
         if ($userBlog) {
             return response()->json(['status' => 'Payment already exists']);
         } else {
@@ -37,37 +38,24 @@ class BlogController extends Controller
         }
     }
 
-    public function show(Request $request, $id)
+
+    public function getAll(Request $request,User $user)
     {
-
-        $user = $request->user();
-
-        $checkDate = Carbon::now()->addMonths(1);
+        $subscriber = $request->user();
 
         $userBlog = BlogUsers::query()
             ->where('user_id', $user->id)
-            ->where('blog_id', $id)
-            ->where('created_at', '>', Carbon::now())
-            ->where('created_at', '<', $checkDate)
+            ->where('subscriber_id', $subscriber->id)
+            ->where('signed_before', '>', Carbon::now())
             ->exists();
-
-        if ($userBlog) {
-            $blog = Blog::query()->where('id', $id)->first();
-
-            if (!empty($blog)) {
-                return response()->json(['status' => 'success', 'data' => BlogResource::make($blog)]);
-            } else {
-                return response()->json(['status' => 'not found']);
-            }
+        //если есть подписка, выводим всё, иначе ничего
+        if($userBlog){
+            $BlogsOfModel = Blog::query()->where('user_id', $user->id)->get();
+            return BlogResource::collection($BlogsOfModel);
         } else {
-            return response()->json(['status' => 'permission denied']);
+            return response()->json(['status' => 'not paid']);
+
         }
 
-    }
-
-    public function getAll(User $user)
-    {
-        $BlogsOfModel = Blog::query()->where('user_id', $user->id)->get();
-        return BlogResource::collection($BlogsOfModel);
     }
 }
