@@ -10,3 +10,5 @@ https://erd.dbdesigner.net/designer/schema/1707518373-bikini
 https://cloud.reg.ru/panel/96912647/servers
 ## Realisation 
 https://bikini-star.com/ru
+## Doc 
+https://docs.google.com/document/d/1yEZn0Dmdf11j7NIvUgI9VGTlRYhtjxnFqPT42PAxRfA/edit
