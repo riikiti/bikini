@@ -11,5 +11,5 @@ class BlogUsers extends Model
 
     protected $table = 'blog_users';
 
-    protected $fillable = ['user_id','blog_id'];
+    protected $fillable = ['user_id','subscriber_id','signed_before'];
 }

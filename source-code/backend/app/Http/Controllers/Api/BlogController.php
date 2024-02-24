@@ -12,6 +12,31 @@ use Carbon\Carbon;
 
 class BlogController extends Controller
 {
+
+    public function payment(Request $request, User $user)
+    {
+        //находим юзера
+        $subscriber = $request->user();
+
+        //время оплаты + 1 месяц
+        $checkDate = Carbon::now()->addMonths(1);
+
+        //указывем что записать и откуда взять
+        $data = ['user_id' => $user->id, 'subscriber_id' => $subscriber->id, 'signed_before' => $checkDate];
+        //проверка на то что подписка есть и действует в данный момент
+        $userBlog = BlogUsers::query()
+            ->where('user_id', $user->id)
+            ->where('subscriber_id', $subscriber->id)
+            ->where('signed_before', '>', Carbon::now())
+            ->exists();
+        if ($userBlog) {
+            return response()->json(['status' => 'Payment already exists']);
+        } else {
+            BlogUsers::create($data);
+            return response()->json(['status' => 'ок', 'data' => $data]);
+        }
+    }
+
     public function show(Request $request, $id)
     {
 
@@ -22,8 +47,8 @@ class BlogController extends Controller
         $userBlog = BlogUsers::query()
             ->where('user_id', $user->id)
             ->where('blog_id', $id)
-            ->where('created_at','>',Carbon::now())
-            ->where('created_at','<', $checkDate)
+            ->where('created_at', '>', Carbon::now())
+            ->where('created_at', '<', $checkDate)
             ->exists();
 
         if ($userBlog) {

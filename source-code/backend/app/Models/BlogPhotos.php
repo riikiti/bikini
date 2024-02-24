@@ -12,7 +12,7 @@ class BlogPhotos extends Model
 
     protected $table = 'blog_photos';
 
-    protected $fillable = ['image','model_id','blog_id'];
+    protected $fillable = ['image','blog_id'];
 
     private ImageHelperService $imageHelper;
 

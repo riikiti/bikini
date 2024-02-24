@@ -21,7 +21,7 @@ class BlogPhotosFactory extends Factory
             'blog_id' => function () {
                 return Blog::factory();
             },
-            'image' => fake()->text(30),
+            'image' => fake()->word,
             'created_at' => now(),
         ];
     }

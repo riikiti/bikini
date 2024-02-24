@@ -14,7 +14,8 @@ return new class extends Migration
         Schema::create('blog_users', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
-            $table->foreignId('blog_id')->constrained('blogs', 'id')->cascadeOnDelete();
+            $table->foreignId('subscriber_id')->constrained('users', 'id')->cascadeOnDelete();
+            $table->date('signed_before')->nullable();
 
             $table->timestamps();
         });

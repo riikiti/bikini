@@ -1,6 +1,7 @@
 <?php
 
-namespace database\seeders;
+namespace Database\Seeders;
+
 
 use App\Models\BlogVideos;
 use Illuminate\Database\Seeder;

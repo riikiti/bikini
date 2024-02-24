@@ -2,9 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\BlogPhotos;
-use App\Models\BlogVideos;
-use App\Models\Model;
 use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 

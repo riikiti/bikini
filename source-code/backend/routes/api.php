@@ -62,6 +62,7 @@ Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
 Route::get('/boxes/{user}', [BoxController::class, 'getAll']);
 
 Route::get('/blog/{id}', [BlogController::class, 'show']);
+Route::post('/blog-pay/{user}', [BlogController::class, 'payment']);
 Route::get('/blogs/{user}', [BlogController::class, 'getAll']);
 
 Route::get('/property', [PropertyController::class, 'index']);
