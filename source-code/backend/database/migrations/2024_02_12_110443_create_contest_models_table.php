@@ -17,9 +17,9 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users', 'id')->cascadeOnDelete();
 
             $table->string('photo');
-            $table->integer('freeRating');
-            $table->integer('additionalFreeRating');
-            $table->integer('paidRating');
+            $table->integer('freeRating')->nullable();
+            $table->integer('additionalFreeRating')->nullable();
+            $table->integer('paidRating')->nullable();
 
             $table->timestamps();
         });

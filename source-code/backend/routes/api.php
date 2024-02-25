@@ -7,9 +7,9 @@ use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BlogFillController;
 use App\Http\Controllers\Api\BoxController;
 use App\Http\Controllers\Api\BoxFillController;
-use App\Http\Controllers\Api\ContestController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ModelController;
+use App\Http\Controllers\Api\Pages\ContestController;
 use App\Http\Controllers\Api\Pages\MainPageController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
@@ -46,16 +46,18 @@ Route::apiResource('user', UserController::class)->only('index', 'show');
 Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
 Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
+
 Route::post('/box-photo', [BoxFillController::class, 'fillBoxPhoto']);
 Route::post('/box-video', [BoxFillController::class, 'fillBoxVideo']);
-
 Route::post('/blog-photo', [BlogFillController::class, 'fillBlogPhoto']);
 Route::post('/blog-video', [BlogFillController::class, 'fillBlogVideo']);
 
 Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
-Route::post('/active-contest', [ContestController::class, 'store']);
-Route::patch('/active-contest', [ContestController::class, 'update']);
+Route::get('/active-contest/prize-block', [ContestController::class, 'prizesBlock']);
+Route::get('/active-contest/model-block', [ContestController::class, 'modelBlock']);
+Route::get('/active-contest/all-publications-block', [ContestController::class, 'allContestPublicationsBlock']);
+
 
 Route::get('/box/{id}', [BoxController::class, 'show']);
 Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
