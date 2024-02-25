@@ -57,6 +57,7 @@ Route::get('/active-contest', [ContestController::class, 'show']);
 Route::get('/active-contest/prize-block', [ContestController::class, 'prizesBlock']);
 Route::get('/active-contest/model-block', [ContestController::class, 'modelBlock']);
 Route::get('/active-contest/all-publications-block', [ContestController::class, 'allContestPublicationsBlock']);
+Route::get('/active-contest/winners-list', [ContestController::class, 'winnersList']);
 
 
 Route::get('/box/{id}', [BoxController::class, 'show']);

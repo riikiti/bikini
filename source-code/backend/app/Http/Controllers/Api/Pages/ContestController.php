@@ -10,6 +10,7 @@ use App\Models\ContestModel;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ContestController extends Controller
 {
@@ -66,7 +67,31 @@ class ContestController extends Controller
             ->where('contest_id', $contest->id)
             ->get();
 
-        return response()->json(['status' => 'ok', 'data' =>ContestModelsResource::collection($allPublications)]);
+        return response()->json(['status' => 'ok', 'data' => ContestModelsResource::collection($allPublications)]);
+    }
+
+    public function winnersList()
+    {
+        $contests = Contest::all();
+        $data = [];
+        $i=0;
+
+        foreach ($contests as $contest){
+            $i++;
+            //берем верхние 3 по данному конкурсу
+            $allPublications = ContestModel::where('contest_id', $contest->id)->take(3)->get();
+            // сортируем по рейтингу в порядке убывания
+            $sorted = $allPublications
+                ->sortByDesc(function ($publication) {
+                    return $publication->freeRating + $publication->additionalFreeRating + $publication->paidRating;
+                });
+            $data[] = [
+                "contest_$i" => $contest,
+                "contest_models_$i" => $sorted,
+            ];
+        }
+
+        return response()->json(['status' => 'oks', 'data' => $data]);
     }
 
     public function show()

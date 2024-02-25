@@ -18,9 +18,7 @@ class ContestModelsResource extends JsonResource
             'contest_id' => $this->contest_id,
             'user_id' => $this->user_id,
             'photo' => $this->photo,
-            'freeRating' => $this->freeRating,
-            'additionalFreeRating' => $this->additionalFreeRating,
-            'paidRating' => $this->paidRating,
+            'rating' => ($this->freeRating + $this->additionalFreeRating + $this->paidRating),
         ];
     }
 }
