@@ -128,4 +128,13 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
     {
         return $this->hasMany(Message::class,'receiver_id','id');
     }
+
+    public function fieldsAreFilled()
+    {
+        return !empty($this->avatar)
+            && !empty($this->country_id)
+            && !empty($this->hair_id)
+            && !empty($this->breast_id)
+            && !empty($this->fields);
+    }
 }

@@ -18,30 +18,36 @@ class UserController extends Controller
         return response()->json(['status' => 'success', 'data' => UserCompactResource::collection(User::query()->where('role', User::MODEL)->get())]);
     }
 
-    public function show(User $user)
+    public function show(Request $request, User $user)
     {
+        $check = $this->checkService->checkUser($request);
+
         if (!empty($user)) {
-            return response()->json(['status' => 'success', 'data' => UserResource::make($user)]);
+            return response()->json(['status' => 'success', 'data' => UserResource::make($user), 'check' => $check]);
         } else {
-            return response()->json(['status' => 'not found']);
+            return response()->json(['status' => 'not found','check' => $check]);
         }
     }
 
-    public function showModelPhoto(User $user)
+    public function showModelPhoto(Request $request,User $user)
     {
+        $check = $this->checkService->checkUser($request);
+
         if (!empty($user)) {
-            return response()->json(['status' => 'success', 'data' => ModelPhotoResource::collection($user->photos)]);
+            return response()->json(['status' => 'success', 'data' => ModelPhotoResource::collection($user->photos),'check' => $check]);
         } else {
-            return response()->json(['status' => 'not found']);
+            return response()->json(['status' => 'not found','check' => $check]);
         }
     }
 
-    public function showModelBoxes(User $user)
+    public function showModelBoxes(Request $request,User $user)
     {
+        $check = $this->checkService->checkUser($request);
+
         if (!empty($user)) {
-            return response()->json(['status' => 'success', 'data' => BoxCompactResource::collection($user->box)]);
+            return response()->json(['status' => 'success', 'data' => BoxCompactResource::collection($user->box),'check' => $check]);
         } else {
-            return response()->json(['status' => 'not found']);
+            return response()->json(['status' => 'not found','check' => $check]);
         }
     }
 

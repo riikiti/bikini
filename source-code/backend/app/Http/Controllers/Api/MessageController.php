@@ -12,6 +12,7 @@ class MessageController extends Controller
 {
     public function index(Request $request,User $user): JsonResponse
     {
+        $check = $this->checkService->checkUser($request);
         // Получаем текущего пользователя
         $senderUser = $request->user();
 
@@ -30,6 +31,8 @@ class MessageController extends Controller
     public function getAll(Request $request)
     {
         $senderUser = $request->user();
+
+        $check = $this->checkService->checkUser($request);
 
 // Находим всех пользователей, с которыми у текущего пользователя есть переписка
         $userIds = Message::query()

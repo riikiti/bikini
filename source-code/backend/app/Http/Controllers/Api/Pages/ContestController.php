@@ -2,11 +2,13 @@
 
 namespace App\Http\Controllers\Api\Pages;
 
+use App\Enum\ModelActiveStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ContestResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
+use App\Models\ModelPhoto;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -21,14 +23,16 @@ class ContestController extends Controller
             'data' => ContestResource::collection(Contest::all())]);
     }
 
-    public function prizesBlock(): JsonResponse
+    public function prizesBlock(Request $request): JsonResponse
     {
+        $check = $this->checkService->checkUser($request);
 
         $contest = Contest::query()->where('is_active', true)->first();
 
         return response()->json([
             'status' => 'ok',
             'contest' => ContestResource::make($contest),
+            'check' => $check,
         ]);
 
     }
@@ -70,13 +74,14 @@ class ContestController extends Controller
         return response()->json(['status' => 'ok', 'data' => ContestModelsResource::collection($allPublications)]);
     }
 
-    public function winnersList()
+    public function winnersList(Request $request)
     {
+        $check = $this->checkService->checkUser($request);
         $contests = Contest::all();
         $data = [];
-        $i=0;
+        $i = 0;
 
-        foreach ($contests as $contest){
+        foreach ($contests as $contest) {
             $i++;
             //берем верхние 3 по данному конкурсу
             $allPublications = ContestModel::where('contest_id', $contest->id)->take(3)->get();
@@ -91,7 +96,7 @@ class ContestController extends Controller
             ];
         }
 
-        return response()->json(['status' => 'oks', 'data' => $data]);
+        return response()->json(['status' => 'oks', 'data' => $data,'check' => $check]);
     }
 
     public function show()

@@ -9,5 +9,6 @@ class ContestModel extends Model
 {
     use HasFactory;
 
+    protected $table = 'contest_models';
     protected $guarded = false;
 }

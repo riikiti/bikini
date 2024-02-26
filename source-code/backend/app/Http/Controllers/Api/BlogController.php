@@ -18,6 +18,8 @@ class BlogController extends Controller
         //находим юзера
         $subscriber = $request->user();
 
+        $check = $this->checkService->checkUser($request);
+
         //время оплаты + 1 месяц
         $checkDate = Carbon::now()->addMonths(1);
 
@@ -34,14 +36,16 @@ class BlogController extends Controller
             return response()->json(['status' => 'Payment already exists']);
         } else {
             BlogUsers::create($data);
-            return response()->json(['status' => 'ок', 'data' => $data]);
+            return response()->json(['status' => 'ок', 'data' => $data, 'check' => $check]);
         }
     }
 
 
-    public function getAll(Request $request,User $user)
+    public function getAll(Request $request, User $user)
     {
         $subscriber = $request->user();
+
+        $check = $this->checkService->checkUser($request);
 
         $userBlog = BlogUsers::query()
             ->where('user_id', $user->id)
@@ -49,13 +53,11 @@ class BlogController extends Controller
             ->where('signed_before', '>', Carbon::now())
             ->exists();
         //если есть подписка, выводим всё, иначе ничего
-        if($userBlog){
+        if ($userBlog) {
             $BlogsOfModel = Blog::query()->where('user_id', $user->id)->get();
-            return BlogResource::collection($BlogsOfModel);
+            return response()->json(['status' => 'not paid','data' => BlogResource::collection($BlogsOfModel),'check' => $check]);
         } else {
-            return response()->json(['status' => 'not paid']);
-
+            return response()->json(['status' => 'not paid','check' => $check]);
         }
-
     }
 }
