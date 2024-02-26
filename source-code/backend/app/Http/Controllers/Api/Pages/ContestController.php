@@ -2,17 +2,14 @@
 
 namespace App\Http\Controllers\Api\Pages;
 
-use App\Enum\ModelActiveStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ContestResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
-use App\Models\ModelPhoto;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class ContestController extends Controller
 {

@@ -7,10 +7,12 @@ use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BlogFillController;
 use App\Http\Controllers\Api\BoxController;
 use App\Http\Controllers\Api\BoxFillController;
+use App\Http\Controllers\Api\FavouriteController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ModelController;
 use App\Http\Controllers\Api\Pages\ContestController;
 use App\Http\Controllers\Api\Pages\MainPageController;
+use App\Http\Controllers\Api\Pages\ModelsPageController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -44,6 +46,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 Route::apiResource('user', UserController::class)->only('index', 'show');
 
 Route::get('/main', [MainPageController::class, 'index']);
+Route::get('/models', [ModelsPageController::class, 'getAll']);
 Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
 Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
 
@@ -58,6 +61,9 @@ Route::get('/active-contest/prize-block', [ContestController::class, 'prizesBloc
 Route::get('/active-contest/model-block', [ContestController::class, 'modelBlock']);
 Route::get('/active-contest/all-publications-block', [ContestController::class, 'allContestPublicationsBlock']);
 Route::get('/active-contest/winners-list', [ContestController::class, 'winnersList']);
+
+Route::post('/favourite/{user}', [FavouriteController::class, 'addToFavourite']);
+Route::delete('/favourite/{user}', [FavouriteController::class, 'removeFromFavourite']);
 
 
 Route::get('/box/{id}', [BoxController::class, 'show']);
