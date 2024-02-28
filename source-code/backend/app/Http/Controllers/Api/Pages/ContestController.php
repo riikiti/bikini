@@ -71,7 +71,7 @@ class ContestController extends Controller
         return response()->json(['status' => 'ok', 'data' => ContestModelsResource::collection($allPublications)]);
     }
 
-    public function winnersList(Request $request)
+    public function winnersList(Request $request): JsonResponse
     {
         $check = $this->checkService->checkUser($request);
         $contests = Contest::all();

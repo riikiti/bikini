@@ -8,6 +8,7 @@ use App\Http\Resources\UserResource;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Storage;
 
 class FillModelInfoController extends Controller
 {
@@ -20,13 +21,13 @@ class FillModelInfoController extends Controller
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
-    public function update(FillModelInfoRequest $request, User $user)
+    public function update(FillModelInfoRequest $request)
     {
+        $this->user = $request->user();
         $this->msg = 'success';
-        $this->user = $user;
         $data = [];
         $this->refreshPassword($request);
-        match ($user->role) {
+        match ($this->user->role) {
             User::MODEL => $this->fillModelInfo($data, $request),
             User::USER => $this->fillUserInfo($request),
             User::ADMIN => $data = null,
@@ -37,9 +38,14 @@ class FillModelInfoController extends Controller
 
     public function fillUserInfo(FillModelInfoRequest $request)
     {
+        if ($request->avatar) {
+            $this->user->fill([
+                'avatar' => Storage::disk('public')->put('/public/avatars', $request->avatar),
+            ]);
+        }
+
         $this->user->fill([
             'country_id' => $request->country_id,
-            'avatar' => $request->avatar,
         ])->save();
     }
 
@@ -65,12 +71,16 @@ class FillModelInfoController extends Controller
             'about' => $request->about,
             'messages_status' => $messages,
         ];
+        if ($request->avatar) {
+            $this->user->fill([
+                'avatar' => Storage::disk('public')->put('/public/avatars', $request->avatar),
+            ]);
+        }
 
         $this->user->fill([
             'country_id' => $request->country,
             'hair_id' => $request->hair_color,
             'breast_id' => $request->breast,
-            'avatar' => $request->avatar,
             'fields' => $fields,
         ])->save();
     }
