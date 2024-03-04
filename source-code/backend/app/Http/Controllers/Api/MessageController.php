@@ -10,66 +10,83 @@ use Illuminate\Http\Request;
 
 class MessageController extends Controller
 {
-    public function index(Request $request,User $user): JsonResponse
+    public function index(Request $request, User $user): JsonResponse
     {
+        // короче тут не правильно работает, тут я должен получать сообщения из конкретного чата
+        //а получается так что, получаю все собщение двух юзеров
         $check = $this->checkService->checkUser($request);
-        // Получаем текущего пользователя
-        $senderUser = $request->user();
 
-        // Получаем все сообщения, связанные с этим пользователем
-        $receivedMessages = $senderUser->receivedMessages;
-        $sentMessages = $senderUser->sentMessages;
+        if ($check) {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'check' => $check
+            ]);
+        } else {
+            // Получаем текущего пользователя
+            $senderUser = $request->user();
 
-        return response()->json(['status' => 'success', 'data' =>
-            ['messages' => [
-                'receiver_user' =>$user->options(),
-                'sent_messages' => $sentMessages,
-                'received_messages' => $receivedMessages,
-            ]]]);
+            // Получаем все сообщения, связанные с этим пользователем
+            $receivedMessages = $senderUser->receivedMessages;
+            $sentMessages = $senderUser->sentMessages;
 
+            return response()->json(['status' => 'success', 'data' =>
+                ['messages' => [
+                    'receiver_user' => $user->options(),
+                    'sent_messages' => $sentMessages,
+                    'received_messages' => $receivedMessages,
+                ]]]);
+        }
     }
+
     public function getAll(Request $request)
     {
         $senderUser = $request->user();
 
         $check = $this->checkService->checkUser($request);
 
-// Находим всех пользователей, с которыми у текущего пользователя есть переписка
-        $userIds = Message::query()
-            ->where('sender_id', $senderUser->id)
-            ->orWhere('receiver_id', $senderUser->id)
-            ->groupBy('sender_id', 'receiver_id')
-            ->pluck('sender_id')
-            ->merge(Message::query()
+        if ($check) {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'check' => $check
+            ]);
+        } else {
+            // Находим всех пользователей, с которыми у текущего пользователя есть переписка
+            $userIds = Message::query()
                 ->where('sender_id', $senderUser->id)
                 ->orWhere('receiver_id', $senderUser->id)
                 ->groupBy('sender_id', 'receiver_id')
-                ->pluck('receiver_id'))
-            ->unique();
+                ->pluck('sender_id')
+                ->merge(Message::query()
+                    ->where('sender_id', $senderUser->id)
+                    ->orWhere('receiver_id', $senderUser->id)
+                    ->groupBy('sender_id', 'receiver_id')
+                    ->pluck('receiver_id'))
+                ->unique();
 
-        foreach($userIds as $key => $element) {
-            if($element == $senderUser->id) {
-                unset($userIds[$key]); // удаляем элемент из массива по ключу
+            foreach ($userIds as $key => $element) {
+                if ($element == $senderUser->id) {
+                    unset($userIds[$key]); // удаляем элемент из массива по ключу
+                }
             }
-        }
-// Получаем информацию о найденных пользователях
-        $users = User::whereIn('id', $userIds)->get();
+            // Получаем информацию о найденных пользователях
+            $users = User::whereIn('id', $userIds)->get();
 
-        return $users;
+            return $users;
+        }
+
     }
 
-    public function store(Request $request): JsonResponse
+    public function store(Request $request,User $user): JsonResponse
     {
         // Получаем данные формы
         $data = $request->validate([
-            'receiver_id' => 'required',
             'content' => 'required',
         ]);
 
         // Создаем новое сообщение
         $message = new Message([
             'sender_id' => $request->user()->id,
-            'receiver_id' => $data['receiver_id'],
+            'receiver_id' => $user->id,
             'content' => $data['content'],
         ]);
 

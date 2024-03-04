@@ -79,6 +79,6 @@ Route::get('/property', [PropertyController::class, 'index']);
 Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
     Route::get('/messages/{user}', [MessageController::class, 'index']);
     Route::get('/messages', [MessageController::class, 'getAll']);
-    Route::post('/messages', [MessageController::class, 'store']);
+    Route::post('/messages/{user}', [MessageController::class, 'store']);
 });
 

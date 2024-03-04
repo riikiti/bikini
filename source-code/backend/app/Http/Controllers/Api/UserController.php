@@ -22,33 +22,60 @@ class UserController extends Controller
     {
         $check = $this->checkService->checkUser($request);
 
-        if (!empty($user)) {
-            return response()->json(['status' => 'success', 'data' => UserResource::make($user), 'check' => $check]);
+        if ($check) {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'check' => $check
+            ]);
         } else {
-            return response()->json(['status' => 'not found','check' => $check]);
+            if (!empty($user)) {
+                return response()->json(['status' => 'success', 'data' => UserResource::make($user)]);
+            } else {
+                return response()->json(['status' => 'not found']);
+            }
         }
+
+
     }
 
     public function showModelPhoto(Request $request,User $user)
     {
         $check = $this->checkService->checkUser($request);
 
-        if (!empty($user)) {
-            return response()->json(['status' => 'success', 'data' => ModelPhotoResource::collection($user->photos),'check' => $check]);
+        if ($check) {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'check' => $check
+            ]);
         } else {
-            return response()->json(['status' => 'not found','check' => $check]);
+            if (!empty($user)) {
+                return response()->json(['status' => 'success', 'data' => ModelPhotoResource::collection($user->photos)]);
+            } else {
+                return response()->json(['status' => 'not found']);
+            }
         }
+
+
     }
 
     public function showModelBoxes(Request $request,User $user)
     {
         $check = $this->checkService->checkUser($request);
 
-        if (!empty($user)) {
-            return response()->json(['status' => 'success', 'data' => BoxCompactResource::collection($user->box),'check' => $check]);
+        if ($check) {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'check' => $check
+            ]);
         } else {
-            return response()->json(['status' => 'not found','check' => $check]);
+            if (!empty($user)) {
+                return response()->json(['status' => 'success', 'data' => BoxCompactResource::collection($user->box)]);
+            } else {
+                return response()->json(['status' => 'not found']);
+            }
         }
+
+
     }
 
 }

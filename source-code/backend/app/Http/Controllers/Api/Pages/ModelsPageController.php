@@ -9,14 +9,27 @@ use Illuminate\Http\Request;
 
 class ModelsPageController extends Controller
 {
-    public function getAll()
+    public function getAll(Request $request)
     {
+        $check = $this->checkService->checkUser($request);
+
         $models = User::query()
             ->where('role',User::MODEL)
             ->get();
 
-        return response()->json([
-            'status' => 'success',
-            'data' => UserCompactResource::collection($models)]);
+        if($check)
+        {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'check' => $check
+            ]);
+        }else{
+            return response()->json([
+                'status' => 'success',
+                'data' => UserCompactResource::collection($models),
+                'check' => $check
+            ]);
+        }
+
     }
 }

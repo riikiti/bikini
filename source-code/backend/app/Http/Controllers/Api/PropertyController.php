@@ -22,15 +22,25 @@ class PropertyController extends Controller
 
     public function index(PropertyRequest $request)
     {
-        $data = [];
-        match ($request->role) {
-            User::USER => $this->getUserProperty($data),
-            User::MODEL => $this->getModelProperty($data),
-        };
-        return response()->json([
-            'status' => 'success',
-            'data' => $data
-        ]);
+        $check = $this->checkService->checkUser($request);
+
+        if ($check) {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'check' => $check
+            ]);
+        } else {
+            $data = [];
+            match ($request->role) {
+                User::USER => $this->getUserProperty($data),
+                User::MODEL => $this->getModelProperty($data),
+            };
+            return response()->json([
+                'status' => 'success',
+                'data' => $data
+            ]);
+        }
+
     }
 
     public function getModelProperty(array &$data): array
