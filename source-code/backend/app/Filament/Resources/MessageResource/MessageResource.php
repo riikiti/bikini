@@ -23,7 +23,9 @@ class MessageResource extends Resource
     {
         return $table
             ->columns([
+                TextColumn::make('SendId')->label('id'),
                 TextColumn::make('SenderEmail')->label('Отправил'),
+                TextColumn::make('ReceiveId')->label('id'),
                 TextColumn::make('ReceiverEmail')->label('Получил'),
                 TextColumn::make('content')->label('Текст'),
                 TextColumn::make('created_at')->label('Дата отправки')->timezone('Europe/Moscow')->date('Y-m-d H:i'),
@@ -31,7 +33,7 @@ class MessageResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('Отправил')
                     ->options([
-                            4 => 'Отправил модератор'
+                        4 => 'Отправил модератор'
                     ])
                     ->attribute('sender_id'),
                 Tables\Filters\SelectFilter::make('Получил')
@@ -41,6 +43,7 @@ class MessageResource extends Resource
                     ->attribute('receiver_id'),
             ])
             ->actions([
+                // не правильно работает если получатель админ а не отправитель
                 Tables\Actions\CreateAction::make('send')
                     ->label('Написать')
                     ->model(Message::class)
@@ -52,11 +55,17 @@ class MessageResource extends Resource
                         TextInput::make('sender_id')
                             ->label('Id отправителя')
                             ->required()
-                            ->default(fn () => auth()->id()),
+                            ->default(fn() => auth()->id()),
                         TextInput::make('receiver_id')
                             ->label('Id получателя')
                             ->required()
-                            ->default(fn ($record) => $record->id),
+                            ->default(function ($record) {
+                                if ($record->ReceiveId == auth()->id()) {
+                                    return $record->SendId;
+                                }else{
+                                    return $record->ReceivedId;
+                                }
+                            }),
 
                         // ...
                     ])

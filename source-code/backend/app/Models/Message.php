@@ -33,9 +33,20 @@ class Message extends Model
     {
         return $this->senderUser->email;
     }
-
     public function getReceiverEmailAttribute()
     {
         return $this->receiverUser->email;
     }
+    public function getSendIdAttribute()
+    {
+        return $this->senderUser->id;
+    }
+    public function getReceiveIdAttribute()
+    {
+        return $this->receiverUser->id;
+    }
+//    public function getReceiverIdAttribute()
+//    {
+//        return $this->receiverUser->email;
+//    }
 }
