@@ -11,6 +11,16 @@ export default defineNuxtConfig({
       autoprefixer: {}
     }
   },
+  app: {
+    head: {
+      meta: [
+        {
+          name: 'naive-ui-style'
+        }
+      ]
+    }
+  },
+  ssr: false,
   primevue: {
     components: {
       include: ['Galleria', 'Carousel']

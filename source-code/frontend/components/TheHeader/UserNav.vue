@@ -1,55 +1,82 @@
 <script setup lang="ts">
-  import { toRefs } from 'vue'
-  import { Button } from '~/components/ui/button'
-  import type { ILinkSettings } from '~/services/models'
-  import {
-    DropdownMenu,
-    DropdownMenuTrigger,
-    DropdownMenuContent,
-    DropdownMenuSeparator,
-    DropdownMenuGroup,
-    DropdownMenuItem
-  } from '~/components/ui/dropdown-menu'
+  import { h, ref, type Component } from 'vue'
   import UserAvatar from '~/components/TheHeader/UserAvatar.vue'
   import { useUserStore } from '~/stores/user'
+  import { NDropdown, NIcon } from 'naive-ui'
+  import { useI18n, useRouter } from '#imports'
+  import { Settings, User, Wallet, LogOut } from 'lucide-vue-next'
+  import { RoutesNames } from '~/services/routes-names'
 
-  interface IProps {
-    userMenu: ILinkSettings[]
-  }
-  const props = defineProps<IProps>()
-  const { userMenu } = toRefs(props)
+  const router = useRouter()
+
+  const { t } = useI18n()
 
   const userStore = useUserStore()
-  const logoutUser = () => {
+  enum UserAction {
+    'SETTINGS',
+    'PROFILE',
+    'FINANCE',
+    'LOGOUT'
+  }
+  const renderIcon = (icon: Component) => {
+    return () => {
+      return h(NIcon, null, {
+        default: () => h(icon)
+      })
+    }
+  }
+
+  const logout = () => {
     console.log('logout')
+  }
+
+  const userOptions = ref([
+    {
+      label: () => t('header.profile'),
+      key: UserAction.PROFILE,
+      icon: renderIcon(User)
+    },
+    {
+      label: () => t('header.finance'),
+      key: UserAction.FINANCE,
+      icon: renderIcon(Wallet)
+    },
+    {
+      label: () => t('header.settings'),
+      key: UserAction.SETTINGS,
+      icon: renderIcon(Settings)
+    },
+    {
+      label: () => t('header.logout'),
+      key: UserAction.LOGOUT,
+      icon: renderIcon(LogOut)
+    }
+  ])
+
+  const selectUserOption = (key: UserAction) => {
+    switch (key) {
+      case UserAction.SETTINGS:
+        router.push(RoutesNames.SETTINGS)
+        break
+      case UserAction.FINANCE:
+        router.push(RoutesNames.FINANCE)
+        break
+      case UserAction.PROFILE:
+        router.push(RoutesNames.PROFILE)
+        break
+      case UserAction.LOGOUT:
+        logout()
+        break
+      default:
+        break
+    }
   }
 </script>
 
 <template>
-  <dropdown-menu>
-    <dropdown-menu-trigger as-child>
-      <button variant="ghost" class="relative h-8 rounded-full">
-        <user-avatar :img="userStore.avatar" :name="userStore.username" />
-      </button>
-    </dropdown-menu-trigger>
-    <dropdown-menu-content class="w-56 px-2" align="end">
-      <DropdownMenuLabel class="font-normal flex">
-        <a href="/portfolio/profile" class="flex flex-col space-y-1">
-          <p class="text-sm font-medium leading-none">{{ userStore.username }}</p>
-          <p class="text-xs leading-none text-muted-foreground">{{ userStore.email }}</p>
-        </a>
-      </DropdownMenuLabel>
-      <dropdown-menu-separator />
-      <dropdown-menu-group>
-        <dropdown-menu-item v-for="(link, index) in userMenu" :key="index">
-          <a :href="link.href">{{ link.name }}</a>
-        </dropdown-menu-item>
-        <dropdown-menu-item @click="logoutUser()">
-          <div>Logout</div>
-        </dropdown-menu-item>
-      </dropdown-menu-group>
-    </dropdown-menu-content>
-  </dropdown-menu>
+  <n-dropdown trigger="click" :options="userOptions" @select="selectUserOption">
+    <user-avatar :img="userStore.avatar" :name="userStore.name" />
+  </n-dropdown>
 </template>
 
 <style scoped></style>

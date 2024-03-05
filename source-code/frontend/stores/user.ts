@@ -1,13 +1,9 @@
 import { defineStore } from 'pinia'
+import { EUserAccountType } from '~/services/enums'
+import type { IUser } from '~/services/models'
 
-interface IUserStore {
+interface IUserStore extends IUser {
   isAuth: boolean
-  id: number
-  avatar: string
-  username: string
-  email: string
-  created_at: string
-  role: 'user' | 'model'
 }
 
 export const useUserStore = defineStore('user', {
@@ -15,10 +11,41 @@ export const useUserStore = defineStore('user', {
     isAuth: true,
     id: 1,
     avatar: 'https://www.shadcn-vue.com/avatars/01.png',
-    username: 'usertest228',
+    name: 'usertest228',
     email: 'test228@mail.ru',
     created_at: '20.02.2024',
-    role: 'user'
+    role: EUserAccountType.MODEL_ACCOUNT,
+    country: {
+      id: 1,
+      name: 'Russia',
+      icon: 'https://bikini-star.com/flag/fi.png'
+    },
+    info: {
+      birthdate: 1991,
+      height: 175,
+      weight: 68,
+      size: 88,
+      waist: 88,
+      hips: 88,
+      city: 'HELSINKI',
+      about:
+        'I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work ',
+      hair: {
+        id: 1,
+        color: 'светлые блондинка'
+      },
+      breast: {
+        id: 1,
+        size: 'AA'
+      },
+      messages_status: {
+        from_subscribers: null,
+        from_all_models: null,
+        from_all_fans: null,
+        from_all_users: null,
+        from_no_one: null
+      }
+    }
   }),
   getters: {
     currentUserId(state: IUserStore): number {

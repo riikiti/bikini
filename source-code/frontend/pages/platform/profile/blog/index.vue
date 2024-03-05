@@ -39,7 +39,7 @@
     <div class="px-8 py-4 shadow-sm rounded-xl bg-white dark:bg-muted flex flex-col gap-4">
       <!--      Post-header            -->
       <div class="flex">
-        <user-avatar :img="userStore.avatar" :name="userStore.username">
+        <user-avatar :img="userStore.avatar" :name="userStore.name">
           <template #additional>
             <div class="text-sm text-gray-400">3 hours ago</div>
           </template>

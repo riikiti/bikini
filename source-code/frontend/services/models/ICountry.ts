@@ -1,5 +1,5 @@
 export interface ICountry {
   id: number
   name: string
-  icon: string
+  icon: string | null
 }

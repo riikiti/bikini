@@ -1,15 +1,13 @@
 <script setup lang="ts">
   import { Moon } from 'lucide-vue-next'
   import { useDark, useToggle } from '@vueuse/core'
-  import GhostButton from '~/components/TheHeader/GhostButton.vue'
+  import { NButton } from 'naive-ui'
   const isDark = useDark()
   const toggleDark = useToggle(isDark)
 </script>
 
 <template>
-  <ghost-button @click="toggleDark()">
+  <n-button quaternary @click="toggleDark()">
     <moon />
-  </ghost-button>
+  </n-button>
 </template>
-
-<style scoped></style>

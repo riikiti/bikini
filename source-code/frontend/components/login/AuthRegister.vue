@@ -1,59 +1,220 @@
 <script setup lang="ts">
-  import { toTypedSchema } from '@vee-validate/zod'
-  import { useForm } from 'vee-validate'
-  import * as z from 'zod'
-  import { RadioGroup, RadioGroupItem } from '~/components/ui/radio-group'
+  import { LockKeyhole, UnlockKeyhole } from 'lucide-vue-next'
+  import {
+    type FormInst,
+    type FormItemInst,
+    type FormItemRule,
+    type FormRules,
+    type FormValidationError,
+    NButton,
+    NForm,
+    NFormItem,
+    NIcon,
+    NInput,
+    NRadioButton,
+    NRadioGroup,
+    NSelect,
+    NRow,
+    NCol,
+    useMessage
+  } from 'naive-ui'
+  import { computed, ref } from 'vue'
+  import { EUserAccountType } from '~/services/enums'
+  import { useGenerateDateArray } from '~/services/utils'
 
-  const formSchema = toTypedSchema(
-    z.object({
-      type: z.enum(['fan', 'model'], {
-        required_error: 'You need to select a notification type.'
-      }),
-      email: z
-        .string({
-          required_error: 'Email is required'
-        })
-        .min(1, { message: 'reqq' })
-        .email({ message: 'email is req' }),
-      password: z
-        .string({
-          required_error: 'Password is required'
-        })
-        .min(8, 'Password >8 lengths'),
-      refferalCode: z.string().optional(),
-      oldest: z
-        .boolean({
-          required_error: 'oldest is Required'
-        })
-        .refine(val => val, {
-          message: 'Value must be true'
-        }),
-      confirmed: z
-        .boolean({
-          required_error: 'confirmed is Required'
-        })
-        .refine(val => val, {
-          message: 'Value must be true'
-        })
+  const COUNT_OF_YEARS = 50
+
+  interface IRegisterFields {
+    email: string | null
+    password: string | null
+    confirmPassword: string | null
+    radioAccountType: EUserAccountType
+    birthday: string | number | null
+  }
+
+  const accountTypeList = [
+    {
+      value: EUserAccountType.USER_ACCOUNT,
+      label: 'Поклонник'
+    },
+    {
+      value: EUserAccountType.MODEL_ACCOUNT,
+      label: 'Модель'
+    }
+  ]
+
+  const birthdaySelect = computed(() => {
+    return useGenerateDateArray(COUNT_OF_YEARS)
+  })
+
+  const rPasswordFormItemRef = ref<FormItemInst | null>(null)
+
+  function validatePasswordStartWith(rule: FormItemRule, value: string): boolean {
+    return (
+      !!modelRef.value.password &&
+      modelRef.value.password.startsWith(value) &&
+      modelRef.value.password.length >= value.length
+    )
+  }
+  function validatePasswordSame(rule: FormItemRule, value: string): boolean {
+    return value === modelRef.value.password
+  }
+
+  const handlePasswordInput = () => {
+    if (modelRef.value.confirmPassword) {
+      rPasswordFormItemRef.value?.validate({ trigger: 'password-input' })
+    }
+  }
+
+  const modelRef = ref<IRegisterFields>({
+    email: null,
+    password: null,
+    radioAccountType: EUserAccountType.USER_ACCOUNT,
+    confirmPassword: null,
+    birthday: birthdaySelect.value[0].value
+  })
+
+  const rules: FormRules = {
+    email: [
+      { type: 'email', message: 'Invalid email address' },
+      { required: true, message: 'Email is required' }
+    ],
+    password: [
+      {
+        required: true,
+        message: 'Password is required'
+      }
+    ],
+    confirmPassword: [
+      {
+        required: true,
+        message: 'Re-entered password is required',
+        trigger: ['input', 'blur']
+      },
+      {
+        validator: validatePasswordStartWith,
+        message: 'Password is not same as re-entered password!',
+        trigger: ['input']
+      },
+      {
+        validator: validatePasswordSame,
+        message: 'Password is not same as re-entered password!',
+        trigger: ['blur', 'password-input']
+      }
+    ]
+  }
+
+  const message = useMessage()
+
+  const formRef = ref<FormInst | null>(null)
+
+  const handleValidateButtonClick = (e: MouseEvent) => {
+    e.preventDefault()
+    formRef.value?.validate((errors: Array<FormValidationError> | undefined) => {
+      if (!errors) {
+        message.success('Valid')
+      } else {
+        console.log(errors)
+        message.error('Invalid')
+      }
     })
-  )
-
-  const { handleSubmit } = useForm({
-    validationSchema: formSchema
-  })
-
-  import { FormControl, FormField, FormItem, FormMessage, FormLabel } from '~/components/ui/form'
-  import { Input } from '~/components/ui/input'
-  import { Button } from '~/components/ui/button'
-  import { Checkbox } from '~/components/ui/checkbox'
-  const onSubmit = handleSubmit(values => {
-    console.log('123', values)
-  })
+  }
 </script>
 
 <template>
   <div class="w-full">
-    <form class="w-full flex flex-col gap-6" @submit="onSubmit">
+    <div class="text-3xl mb-8 text-center font-bold">Регистрация</div>
+    <div class="w-full">
+      <n-form ref="formRef" :model="modelRef" :rules="rules" class="w-full">
+        <n-form-item label="Тип аккаунта" path="radioAccountType">
+          <n-radio-group
+            v-model:value="modelRef.radioAccountType"
+            name="acoount_type"
+            size="medium"
+            class="w-full"
+          >
+            <n-radio-button
+              v-for="(accountType, idx) in accountTypeList"
+              :key="idx"
+              class="w-1/2 flex-1 text-center"
+              :value="accountType.value"
+            >
+              {{ accountType.label }}
+            </n-radio-button>
+          </n-radio-group>
+        </n-form-item>
+        <n-form-item
+          v-if="modelRef.radioAccountType === EUserAccountType.MODEL_ACCOUNT"
+          path="birthday"
+          label="Год рождения"
+        >
+          <n-select
+            v-model:value="modelRef.birthday"
+            placeholder="Select"
+            :options="birthdaySelect"
+          />
+        </n-form-item>
+        <n-form-item path="email" label="E-mail">
+          <n-input
+            v-model:value="modelRef.email"
+            placeholder="Please enter your E-mail"
+            @keydown.enter.prevent
+          />
+        </n-form-item>
+        <n-form-item path="password" label="Пароль">
+          <n-input
+            v-model:value="modelRef.password"
+            show-password-on="click"
+            placeholder="Please enter your Password"
+            type="password"
+            @input="handlePasswordInput"
+            @keydown.enter.prevent
+          >
+            <template #password-visible-icon>
+              <n-icon :size="16" :component="h(UnlockKeyhole)" />
+            </template>
+            <template #password-invisible-icon>
+              <n-icon :size="16" :component="h(LockKeyhole)" />
+            </template>
+          </n-input>
+        </n-form-item>
+        <n-form-item path="confirmPassword" label="Поворите пароль">
+          <n-input
+            v-model:value="modelRef.confirmPassword"
+            show-password-on="click"
+            placeholder="Please repeat your Password"
+            type="password"
+            @keydown.enter.prevent
+          >
+            <template #password-visible-icon>
+              <n-icon :size="16" :component="h(UnlockKeyhole)" />
+            </template>
+            <template #password-invisible-icon>
+              <n-icon :size="16" :component="h(LockKeyhole)" />
+            </template>
+          </n-input>
+        </n-form-item>
+        <n-row :gutter="[0, 24]">
+          <n-col :span="24">
+            <div class="flex">
+              <n-button
+                :disabled="modelRef.email === null"
+                strong
+                secondary
+                type="primary"
+                class="w-full"
+                @click="handleValidateButtonClick"
+              >
+                Вход
+              </n-button>
+            </div>
+          </n-col>
+        </n-row>
+      </n-form>
+    </div>
+  </div>
+  <div class="w-full">
+    <!--    <form class="w-full flex flex-col gap-6" @submit="onSubmit">
       <FormField v-slot="{ componentField }" type="radio" name="type">
         <FormItem>
           <FormControl>
@@ -125,10 +286,6 @@
         </FormItem>
       </FormField>
       <Button type="submit"> Вход </Button>
-      <div class="flex flex-col gap-2">
-        <a href="" class="underline">Бесплатная регистрация</a>
-        <a href="" class="underline">Забыли свой пароль?</a>
-      </div>
-    </form>
+    </form>-->
   </div>
 </template>

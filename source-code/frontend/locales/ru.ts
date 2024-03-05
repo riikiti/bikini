@@ -7,7 +7,11 @@ export default {
     finance: 'Finance',
     portfolio: 'Portfolio',
     logout: 'Logout',
-    users: 'Участницы'
+    users: 'Участницы',
+    profile: 'Profile'
+  },
+  form_login: {
+    password: 'Password'
   },
   profile: {
     platform_links: {

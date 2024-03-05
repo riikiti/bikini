@@ -1,54 +1,37 @@
 <script setup lang="ts">
-  import {
-    Card,
-    CardContent,
-    CardDescription,
-    CardFooter,
-    CardHeader,
-    CardTitle
-  } from '~/components/ui/card'
-  import { Input } from '~/components/ui/input'
-  import { Label } from '~/components/ui/label'
-  import { Button } from '~/components/ui/button'
-  import AppSelect from '~/components/app/AppSelect.vue'
-  import { useForm } from 'vee-validate'
-  import { toTypedSchema } from '@vee-validate/zod'
-  import * as z from 'zod'
+  import { NCard, NTabPane, NTabs } from 'naive-ui'
+  import GeneralSettingsForm from '~/components/settings/GeneralSettingsForm.vue'
+  import ModelSettingsForm from '~/components/settings/ModelSettingsForm.vue'
+  import { useUserStore } from '~/stores/user'
+  import { EUserAccountType } from '~/services/enums'
 
-  const languages = [
-    { label: 'English', value: 'en' },
-    { label: 'French', value: 'fr' },
-    { label: 'German', value: 'de' },
-    { label: 'Spanish', value: 'es' },
-    { label: 'Portuguese', value: 'pt' },
-    { label: 'Russian', value: 'ru' },
-    { label: 'Japanese', value: 'ja' },
-    { label: 'Korean', value: 'ko' },
-    { label: 'Chinese', value: 'zh' }
-  ]
-
-  const formSchema = toTypedSchema(
-    z.object({
-      language: z.string({
-        required_error: 'Please select a language.'
-      })
-    })
-  )
-
-  const { handleSubmit, setValues, values } = useForm({
-    validationSchema: formSchema
-  })
-  const selectValue = value => {
-    setValues({
-      language: value
-    })
-  }
+  const userStore = useUserStore()
 </script>
 
 <template>
   <the-header />
   <the-wrapper class="mt-12">
-    <Card>
+    <n-tabs v-if="userStore.role === EUserAccountType.MODEL_ACCOUNT" type="segment" animated>
+      <n-tab-pane name="oasis" tab="Общие настройки">
+        <n-card title="Общие настройки" size="large">
+          <div class="text-gray-400 text-lg mb-4">
+            Для смены е-мейла обратитесь к
+            <a href="" class="underline text-gray-400">модератору</a>
+          </div>
+          <!-- todo: вынести в отдельный компонент ибо 2 формы хранить на стр такое себе         -->
+          <general-settings-form />
+        </n-card>
+      </n-tab-pane>
+      <n-tab-pane name="test" tab="Настройки модели">
+        <n-card title="Настройки модели" size="large">
+          <model-settings-form />
+        </n-card>
+      </n-tab-pane>
+    </n-tabs>
+    <n-card v-else title="Общие настройки" size="large">
+      <general-settings-form />
+    </n-card>
+    <!--    <Card>
       <CardHeader>
         <CardTitle>Settings</CardTitle>
         <CardDescription
@@ -101,7 +84,7 @@
         <Button variant="outline"> Cancel </Button>
         <Button class="dark:text-white">Save changes</Button>
       </CardFooter>
-    </Card>
+    </Card>-->
   </the-wrapper>
 </template>
 

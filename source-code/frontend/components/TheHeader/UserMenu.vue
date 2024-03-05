@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { useLocalePath, useI18n } from '#imports'
   import { RoutesNames } from '~/services/routes-names'
-  import GhostButton from '~/components/TheHeader/GhostButton.vue'
+  import { NButton, NSpace } from 'naive-ui'
 
   const { t } = useI18n()
   const localePath = useLocalePath()
@@ -23,13 +23,11 @@
 
 <template>
   <nav>
-    <ul class="flex items-center gap-2">
-      <li v-for="(link, index) in userMenu" :key="index">
-        <ghost-button :link="link.href">
-          {{ link.name }}
-        </ghost-button>
-      </li>
-    </ul>
+    <n-space>
+      <n-button v-for="(link, index) in userMenu" :key="index" quaternary tag="a">
+        {{ link.name }}
+      </n-button>
+    </n-space>
   </nav>
 </template>
 

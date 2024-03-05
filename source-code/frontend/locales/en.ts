@@ -6,8 +6,12 @@ export default {
     settings: 'Settings',
     finance: 'Finance',
     portfolio: 'Portfolio',
+    profile: 'Profile',
     logout: 'Logout',
     users: 'Users'
+  },
+  form_login: {
+    password: 'Password'
   },
   profile: {
     platform_links: {

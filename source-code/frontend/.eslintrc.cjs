@@ -22,6 +22,7 @@ module.exports = {
   },
   plugins: [],
   rules: {
+    "no-unused-vars": "off",
     'vue/multi-word-component-names': 'off',
     'prettier/prettier': [
       'warn',
