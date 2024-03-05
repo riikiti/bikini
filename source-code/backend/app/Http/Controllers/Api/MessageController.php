@@ -4,6 +4,7 @@ namespace app\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCompactResource;
+use App\Models\AdminMessages;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -24,8 +25,8 @@ class MessageController extends Controller
             // Получаем текущего пользователя
             $senderUser = $request->user();
             // Получаем все сообщения, связанные с этим пользователем
-            $receivedMessages = $senderUser->receivedMessages->where('sender_id',$user->id);
-            $sentMessages = $senderUser->sentMessages->where('receiver_id',$user->id);
+            $receivedMessages = $senderUser->receivedMessages->where('sender_id', $user->id);
+            $sentMessages = $senderUser->sentMessages->where('receiver_id', $user->id);
             return response()->json(['status' => 'success', 'data' =>
                 ['messages' => [
                     'receiver_user' => $user->options(),

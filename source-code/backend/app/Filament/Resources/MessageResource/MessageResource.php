@@ -2,21 +2,13 @@
 
 namespace app\Filament\Resources\MessageResource;
 
-use app\Filament\Resources\ContestResource\Pages;
-use App\Filament\Resources\ContestResource\RelationManagers\PrizesRelationManager;
 use App\Filament\Resources\UserResource\Pages\CreateMessages;
 use App\Filament\Resources\UserResource\Pages\ListMessages;
-use App\Models\Contest;
 use App\Models\Message;
-use Filament\Forms;
-use Filament\Forms\Components\DatePicker;
 use Filament\Forms\Components\TextInput;
-use Filament\Forms\Components\Toggle;
-use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
-use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
 
 class MessageResource extends Resource
@@ -26,16 +18,6 @@ class MessageResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left';
 
     protected static ?string $navigationLabel = 'Сообщения';
-
-    public static function form(Form $form): Form
-    {
-        return $form
-            ->schema([
-                Forms\Components\Section::make('Отправить сообщение')->schema([
-
-                ])
-            ]);
-    }
 
     public static function table(Table $table): Table
     {
@@ -47,23 +29,43 @@ class MessageResource extends Resource
                 TextColumn::make('created_at')->label('Дата отправки')->timezone('Europe/Moscow')->date('Y-m-d H:i'),
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('Отправил')
+                    ->options([
+                            4 => 'Отправил модератор'
+                    ])
+                    ->attribute('sender_id'),
+                Tables\Filters\SelectFilter::make('Получил')
+                    ->options([
+                        4 => 'Получил модератор'
+                    ])
+                    ->attribute('receiver_id'),
             ])
             ->actions([
-                //
+                Tables\Actions\CreateAction::make('send')
+                    ->label('Написать')
+                    ->model(Message::class)
+                    ->form([
+                        TextInput::make('content')
+                            ->label('Сообщение')
+                            ->required()
+                            ->maxLength(2048),
+                        TextInput::make('sender_id')
+                            ->label('Id отправителя')
+                            ->required()
+                            ->default(fn () => auth()->id()),
+                        TextInput::make('receiver_id')
+                            ->label('Id получателя')
+                            ->required()
+                            ->default(fn ($record) => $record->id),
+
+                        // ...
+                    ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
                     Tables\Actions\DeleteBulkAction::make(),
                 ]),
             ]);
-    }
-
-    public static function getRelations(): array
-    {
-        return [
-            PrizesRelationManager::class
-        ];
     }
 
     public static function getPages(): array

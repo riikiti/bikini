@@ -40,7 +40,8 @@ class UserResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\CreateAction::make()
+                Tables\Actions\CreateAction::make('send')
+                    ->label('Написать')
                     ->model(Message::class)
                     ->form([
                         TextInput::make('content')
