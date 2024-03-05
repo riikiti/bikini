@@ -4,6 +4,7 @@ namespace app\Filament\Resources\MessageResource;
 
 use app\Filament\Resources\ContestResource\Pages;
 use App\Filament\Resources\ContestResource\RelationManagers\PrizesRelationManager;
+use App\Filament\Resources\UserResource\Pages\CreateMessages;
 use App\Filament\Resources\UserResource\Pages\ListMessages;
 use App\Models\Contest;
 use App\Models\Message;

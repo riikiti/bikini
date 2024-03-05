@@ -2,12 +2,17 @@
 
 namespace app\Filament\Resources\UserResource;
 
+use App\Filament\Resources\UserResource\Pages\SendMessageUsers;
+use App\Models\Message;
 use App\Models\User;
+use Filament\Forms\Components\TextInput;
+use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
+use Illuminate\Http\Request;
 
 class UserResource extends Resource
 {
@@ -16,11 +21,11 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationLabel = 'Пользователи';
-
     public static function table(Table $table): Table
     {
         return $table
             ->columns([
+                TextColumn::make('id')->label('id')->searchable(),
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
                 TextColumn::make('role')->label('Роль'),
@@ -33,6 +38,26 @@ class UserResource extends Resource
                         User::MODEL => 'Модель',
                         User::ADMIN => 'Админ',
                     ]),
+            ])
+            ->actions([
+                Tables\Actions\CreateAction::make()
+                    ->model(Message::class)
+                    ->form([
+                        TextInput::make('content')
+                            ->label('Сообщение')
+                            ->required()
+                            ->maxLength(2048),
+                        TextInput::make('sender_id')
+                            ->label('Id отправителя')
+                            ->required()
+                            ->default(fn () => auth()->id()),
+                        TextInput::make('receiver_id')
+                            ->label('Id получателя')
+                            ->required()
+                            ->default(fn ($record) => $record->id),
+
+                        // ...
+                    ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
@@ -51,7 +76,10 @@ class UserResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListUsers::route('/')
+            'index' => Pages\ListUsers::route('/'),
         ];
+    }
+    public static function getAdminId(Request $request){
+        return $request->user()->id;
     }
 }
