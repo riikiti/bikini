@@ -55,19 +55,18 @@ class MessageResource extends Resource
                         TextInput::make('sender_id')
                             ->label('Id отправителя')
                             ->required()
-                            ->default(fn() => auth()->id()),
+                            ->default(auth()->id()),
                         TextInput::make('receiver_id')
                             ->label('Id получателя')
                             ->required()
-                            ->default(function ($record) {
-                                if ($record->ReceiveId == auth()->id()) {
-                                    return $record->SendId;
-                                }else{
-                                    return $record->ReceivedId;
+                            ->default(
+                                function ($record) {
+                                    if ($record->ReceiveId == auth()->id())
+                                        return $record->SendId;
+                                    else
+                                        return $record->ReceiveId;
                                 }
-                            }),
-
-                        // ...
+                            ),
                     ])
             ])
             ->bulkActions([
