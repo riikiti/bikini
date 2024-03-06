@@ -24,7 +24,7 @@ class ContestActiveResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Название'),
-                TextColumn::make(modelsId())->label('Старт')->date(),
+                TextColumn::make('start')->label('Старт')->date(),
                 TextColumn::make('finish')->label('Завершение')->date(),
                 TextColumn::make('created_at')->label('Создан')->date()
             ])

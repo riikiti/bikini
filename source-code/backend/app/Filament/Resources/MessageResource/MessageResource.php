@@ -33,12 +33,12 @@ class MessageResource extends Resource
             ->filters([
                 Tables\Filters\SelectFilter::make('Отправил')
                     ->options([
-                        4 => 'Отправил модератор'
+                        auth()->id() => 'Отправил модератор'
                     ])
                     ->attribute('sender_id'),
                 Tables\Filters\SelectFilter::make('Получил')
                     ->options([
-                        4 => 'Получил модератор'
+                        auth()->id() => 'Получил модератор'
                     ])
                     ->attribute('receiver_id'),
             ])

@@ -16,7 +16,6 @@ return new class extends Migration
             $table->integer('price')->default(500);
             $table->boolean('is_published')->default(true);
             $table->string('description')->nullable();
-            $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('set null');
 
 

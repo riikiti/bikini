@@ -137,4 +137,8 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
             && !empty($this->breast_id)
             && !empty($this->fields);
     }
+    public function getUserIdAttribute()
+    {
+        return $this->id;
+    }
 }

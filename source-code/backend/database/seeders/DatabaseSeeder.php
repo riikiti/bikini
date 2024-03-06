@@ -16,13 +16,13 @@ class DatabaseSeeder extends Seeder
         $this->call(BreastSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(MainPageSeeder::class);
-        $this->call(BoxSeeder::class);
-        $this->call(BlogSeeder::class);
+      //  $this->call(BoxSeeder::class);
+      //  $this->call(BlogSeeder::class);
         $this->call(AdminUserSeeder::class);
         $this->call(ContestSeeder::class);
-        $this->call(BlogPhotoSeeder::class);
-        $this->call(BlogVideoSeeder::class);
-        $this->call(BoxVideoSeeder::class);
-        $this->call(BoxPhotoSeeder::class);
+      //  $this->call(BlogPhotoSeeder::class);
+      //  $this->call(BlogVideoSeeder::class);
+      //  $this->call(BoxVideoSeeder::class);
+      //  $this->call(BoxPhotoSeeder::class);
     }
 }

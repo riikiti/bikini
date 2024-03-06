@@ -25,7 +25,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('id')->label('id')->searchable(),
+                TextColumn::make('UserId')->label('id')->searchable(),
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
                 TextColumn::make('role')->label('Роль'),
@@ -55,7 +55,7 @@ class UserResource extends Resource
                         TextInput::make('receiver_id')
                             ->label('Id получателя')
                             ->required()
-                            ->default(fn ($record) => $record->id),
+                            ->default(fn ($record) => $record->UserId),
 
                         // ...
                     ])
