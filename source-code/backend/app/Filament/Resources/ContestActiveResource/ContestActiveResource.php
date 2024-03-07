@@ -10,6 +10,7 @@ use Filament\Forms\Components\Checkbox;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\TextInputColumn;
 use Filament\Tables\Columns\ToggleColumn;
@@ -31,7 +32,7 @@ class ContestActiveResource extends Resource
             ->columns([
                 TextColumn::make('ContestName')->label('Название конкурса'),
                 TextColumn::make('UserEmail')->label('Модель'),
-                TextColumn::make('photo')->label('photo'),
+                ImageColumn::make('photo')->label('Фото')->height(96),
                 TextColumn::make('freeRating')->label('Бесплатный'),
                 TextInputColumn::make('additionalFreeRating')->label('Добавленный'),
                 TextColumn::make('paidRating')->label('Платный'),
