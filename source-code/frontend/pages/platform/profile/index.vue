@@ -119,7 +119,7 @@
 
 <template>
   <div class="flex flex-col gap-4 w-full">
-    <div>
+    <div class="px-2">
       <profile-header-desktop
         v-if="!settingsStore.isMobile"
         :user-base-statistics="userBaseStatistics"
@@ -131,28 +131,32 @@
         :user-actions="userActions"
       />
     </div>
-    <div class="bg-gray-50/60 rounded-2xl overflow-hidden shadow-lg px-8 py-12">
+    <div
+      class="bg-gray-50/60 rounded-xl overflow-hidden sm:shadow-lg px-2 sm:px-4 md:px-8 py-6 sm:py-12"
+    >
       <n-gradient-text :size="24" type="warning">
-        <div class="font-extrabold text-3xl mb-6">Активный конкурс</div>
+        <div class="font-extrabold text-2xl sm:text-3xl mb-6">Активный конкурс</div>
       </n-gradient-text>
       <div class="max-w-[600px] mx-auto">
         <profile-active-contest />
       </div>
     </div>
-    <div class="bg-gray-50/60 rounded-2xl overflow-hidden shadow-lg px-8 py-12">
+    <div
+      class="bg-gray-50/60 rounded-xl overflow-hidden sm:shadow-lg px-2 sm:px-4 md:px-8 py-6 sm:py-12"
+    >
       <n-gradient-text :size="24" type="success">
-        <div class="font-extrabold text-3xl mb-6">Галерея</div>
+        <div class="font-extrabold text-2xl sm:text-3xl mb-6">Галерея</div>
       </n-gradient-text>
       <div>
-        <div class="gap-8 columns-3">
+        <div class="gap-4 sm:gap-8 columns-2 sm:columns-3">
           <gallery-card
             v-for="(photoItem, index) in photos"
             :key="index"
             :item="photoItem"
             :class="[
-              { 'aspect-video': index === 0 || index === 4 || index === 5 || index === 7 },
+              { 'sm:aspect-video': index === 0 || index === 4 || index === 5 || index === 7 },
               {
-                'aspect-square':
+                'sm:aspect-square':
                   index === 1 || index === 2 || index === 3 || index === 6 || index === 8
               },
               'mb-6'
