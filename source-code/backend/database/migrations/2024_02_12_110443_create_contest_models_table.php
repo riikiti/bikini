@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer('freeRating')->nullable();
             $table->integer('additionalFreeRating')->nullable();
             $table->integer('paidRating')->nullable();
+            $table->boolean('isActive')->default(true);
 
             $table->timestamps();
         });

@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\ContestResource\Pages;
 
-use app\Filament\Resources\ActiveContestResource\ContestActiveResource;
+use app\Filament\Resources\ContestActiveResource\ContestActiveResource;
 use Filament\Resources\Pages\ListRecords;
 
 class ListActiveContests extends ListRecords

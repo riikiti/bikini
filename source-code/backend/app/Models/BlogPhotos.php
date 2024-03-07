@@ -14,20 +14,20 @@ class BlogPhotos extends Model
 
     protected $fillable = ['image','blog_id'];
 
-    private ImageHelperService $imageHelper;
-
-    public function __construct() {
-        $this->imageHelper = app(ImageHelperService::class);
-        $this->imageHelper->setSavingPath('blog-photos');
-    }
-
-    public function setImageAttribute($value): void
-    {
-        $this->attributes['image'] = $this->imageHelper->handleImageUpload(
-            value: $value,
-            model: $this,
-            attribute: 'image'
-        );
-        $this->save();
-    }
+//    private ImageHelperService $imageHelper;
+//
+//    public function __construct() {
+//        $this->imageHelper = app(ImageHelperService::class);
+//        $this->imageHelper->setSavingPath('blog-photos');
+//    }
+//
+//    public function setImageAttribute($value): void
+//    {
+//        $this->attributes['image'] = $this->imageHelper->handleImageUpload(
+//            value: $value,
+//            model: $this,
+//            attribute: 'image'
+//        );
+//        $this->save();
+//    }
 }

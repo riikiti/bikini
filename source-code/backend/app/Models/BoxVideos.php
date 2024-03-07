@@ -14,20 +14,20 @@ class BoxVideos extends Model
 
     protected $fillable = ['video', 'description','box_id'];
 
-    private FilesHelperService $filesHelper;
-
-    public function __construct() {
-        $this->filesHelper = app(FilesHelperService::class);
-        $this->filesHelper->setSavingPath('box-videos');
-    }
-
-    public function setVideoAttribute($value): void
-    {
-        $this->attributes['video'] = $this->filesHelper->handleFileUpload(
-            value: $value,
-            model: $this,
-            attribute: 'video'
-        );
-        $this->save();
-    }
+//    private FilesHelperService $filesHelper;
+//
+//    public function __construct() {
+//        $this->filesHelper = app(FilesHelperService::class);
+//        $this->filesHelper->setSavingPath('box-videos');
+//    }
+//
+//    public function setVideoAttribute($value): void
+//    {
+//        $this->attributes['video'] = $this->filesHelper->handleFileUpload(
+//            value: $value,
+//            model: $this,
+//            attribute: 'video'
+//        );
+//        $this->save();
+//    }
 }
