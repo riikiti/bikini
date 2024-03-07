@@ -6,7 +6,7 @@
   import ProfileHeaderDesktop from '~/components/Profile/ProfileHeader/ProfileHeaderDesktop.vue'
   import type { IUserProfileAction, IUserBaseStatistics, IPhoto } from '~/services/models'
   import ProfileActiveContest from '~/components/Profile/ProfileActiveContest.vue'
-  import { NGradientText, NGrid, NGridItem } from 'naive-ui'
+  import { NCarousel, NCarouselItem, NGradientText, NGrid, NGridItem, NModal } from 'naive-ui'
   import { GalleryCard } from '#components'
 
   definePageMeta({
@@ -64,6 +64,21 @@
       }
     }
   ])
+
+  const bodyStyle = ref({
+    width: '600px'
+  })
+  const segmented = ref({
+    content: 'soft',
+    footer: 'soft'
+  })
+  const showModal = ref(false)
+  const carouselRef = ref(null)
+  const handleGalleryModal = (id: number): void => {
+    console.log('open', id)
+    showModal.value = true
+    carouselRef.value?.to(id)
+  }
 
   const userBaseStatistics = ref<IUserBaseStatistics[]>([
     {
@@ -128,23 +143,57 @@
       <n-gradient-text :size="24" type="success">
         <div class="font-extrabold text-3xl mb-6">Галерея</div>
       </n-gradient-text>
-      <div class="gap-8 columns-3">
-        <gallery-card
-          v-for="(photoItem, index) in photos"
-          :key="index"
-          :item="photoItem"
-          :class="[
-            { 'aspect-video': index === 0 || index === 4 || index === 5 || index === 7 },
-            {
-              'aspect-square':
-                index === 1 || index === 2 || index === 3 || index === 6 || index === 8
-            },
-            'mb-6'
-          ]"
-        />
+      <div>
+        <div class="gap-8 columns-3">
+          <gallery-card
+            v-for="(photoItem, index) in photos"
+            :key="index"
+            :item="photoItem"
+            :class="[
+              { 'aspect-video': index === 0 || index === 4 || index === 5 || index === 7 },
+              {
+                'aspect-square':
+                  index === 1 || index === 2 || index === 3 || index === 6 || index === 8
+              },
+              'mb-6'
+            ]"
+            @click="handleGalleryModal(index)"
+          />
+        </div>
+        <n-modal
+          v-model:show="showModal"
+          :style="bodyStyle"
+          :bordered="false"
+          size="huge"
+          preset="card"
+          class="px-2"
+        >
+          <n-carousel
+            ref="carouselRef"
+            direction="vertical"
+            dot-placement="right"
+            mousewheel
+            style="width: 100%; height: 800px"
+          >
+            <n-carousel-item
+              v-for="(photoItem, index) in photos"
+              :key="index"
+              style="width: 100%; height: 100%"
+            >
+              <gallery-card :item="photoItem" class="h-full" />
+            </n-carousel-item>
+          </n-carousel>
+        </n-modal>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped></style>
+<style>
+  .n-modal .n-card__content {
+    @apply px-2;
+  }
+  .n-modal .n-carousel.n-carousel--right .n-carousel__dots {
+    @apply bg-black/50 p-2 rounded-[12px];
+  }
+</style>
