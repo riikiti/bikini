@@ -12,5 +12,7 @@ export const enum RoutesNames {
   EDIT_PROFILE = '/platform/profile/edit',
   PLATFORM_GALLERY = '/platform/profile/gallery',
   PLATFORM_BLOG = '/platform/profile/blog',
-  PLATFORM_BOX = '/platform/profile/box'
+  PLATFORM_BOX = '/platform/profile/box',
+  ACTIVE_CONTEST = '/platform/contest',
+  STATISTICS = '/platform/statistics'
 }

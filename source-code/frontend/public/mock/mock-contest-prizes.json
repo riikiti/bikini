@@ -1,0 +1,29 @@
+{
+  "status": "ok",
+  "contest": {
+    "name": "Самый крутой конкурс.",
+    "start": "01.02.2024",
+    "finish": "01.03.2024",
+    "active": true,
+    "prizes": [
+      {
+        "place": 1,
+        "name": "Iphone1",
+        "description": "10 minetov",
+        "image": "https://bikini-star.com/uploads/competition/14/TFmN4zejQtvx999E9keDQz2299TWT9NL4slBhdUkxIG9eQhK8vTH7ImVka8v2dYL_1679831479.jpg"
+      },
+      {
+        "place": 2,
+        "name": "Iphone1",
+        "description": "8 minetov",
+        "image": "https://bikini-star.com/uploads/competition/14/TFmN4zejQtvx999E9keDQz2299TWT9NL4slBhdUkxIG9eQhK8vTH7ImVka8v2dYL_1679831479.jpg"
+      },
+      {
+        "place": 3,
+        "name": "Iphone1",
+        "description": "3 mineta",
+        "image": "https://bikini-star.com/uploads/competition/14/TFmN4zejQtvx999E9keDQz2299TWT9NL4slBhdUkxIG9eQhK8vTH7ImVka8v2dYL_1679831479.jpg"
+      }
+    ]
+  }
+}
