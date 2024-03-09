@@ -9,7 +9,9 @@ export default {
     logout: 'Logout',
     users: 'Участницы',
     profile: 'Profile',
-    favorites: 'Favorites'
+    favorites: 'Favorites',
+    platform: 'Platform',
+    messenger: 'Messenger'
   },
   form_login: {
     password: 'Password'
