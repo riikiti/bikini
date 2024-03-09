@@ -8,7 +8,8 @@ export default {
     portfolio: 'Portfolio',
     profile: 'Profile',
     logout: 'Logout',
-    users: 'Users'
+    users: 'Users',
+    favorites: 'Favorites'
   },
   form_login: {
     password: 'Password'

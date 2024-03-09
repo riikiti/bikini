@@ -1,9 +1,11 @@
 <script setup lang="ts">
-  import { ref } from 'vue'
-  import { definePageMeta } from '#imports'
-  import { NGradientText, NImage, NImageGroup, NSpace } from 'naive-ui'
-  import type { IContestPrize, IContest } from '~/services/models'
-  import { ChevronDown } from 'lucide-vue-next'
+  import { computed, onMounted, ref } from 'vue'
+  import { definePageMeta, useUserStore } from '#imports'
+  import { NButton, NEmpty, NGradientText, NGrid, NGridItem, NIcon, NSpace } from 'naive-ui'
+  import type { IContest, IContestPlayers, IContestPrize } from '~/services/models'
+  import { Camera, ChevronDown } from 'lucide-vue-next'
+  import ContestCard from '~/components/contest/ContestCard.vue'
+  import { EUserAccountType } from '~/services/enums'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -11,7 +13,10 @@
     middleware: 'profile'
   })
 
-  const activeContest = ref<IContest>()
+  const userStore = useUserStore()
+
+  const activeContest = ref<IContest | undefined>()
+  const activePlayers = ref<IContestPlayers | null>(null)
   const fetchActiveContest = async () => {
     fetch('/mock/mock-contest-prizes.json')
       .then(response => response.json())
@@ -19,126 +24,39 @@
         activeContest.value = data.contest as IContest
       })
   }
-  fetchActiveContest()
+  const fetchActivePlayers = async () => {
+    fetch('/mock/mock-contest-players.json')
+      .then(response => response.json())
+      .then(data => {
+        activePlayers.value = data.contest as IContestPlayers
+      })
+  }
 
   const prizes = computed(() => {
-    const sorted = activeContest.value.prizes.sort((a, b) => a.place - b.place)
+    const sorted = activeContest.value?.prizes.sort(
+      (a: IContestPrize, b: IContestPrize) => a.place - b.place
+    )
     // Найти индекс элемента с place: 2
-    const indexPlace2 = sorted.findIndex(prize => prize.place === 2)
+    const indexPlace2 = sorted.findIndex((prize: IContestPrize) => prize.place === 2)
 
     // Переместить элемент с place: 2 в начало массива
     const place2Element = sorted.splice(indexPlace2, 1)[0]
     sorted.unshift(place2Element)
-    const indexPlace1 = sorted.findIndex(prize => prize.place === 1)
+    const indexPlace1 = sorted.findIndex((prize: IContestPrize) => prize.place === 1)
     const place1Element = sorted.splice(indexPlace1, 1)[0]
     const middleIndex = Math.floor(sorted.length / 2)
     sorted.splice(middleIndex, 0, place1Element)
     return sorted
   })
 
-  const lastPublishPhotos = ref([
-    {
-      contest_id: '1',
-      user: {
-        id: 5,
-        email: 'ruslan4@admi.com',
-        name: 'fdfdasgcxz33',
-        avatar: 'http://127.0.0.1:8000/storage/123',
-        created_at: '20.02.2024',
-        role: 'user',
-        country: null
-      },
-      photo: 'https://www.shadcn-vue.com/avatars/01.png',
-      freeRating: 5,
-      additionalFreeRating: 5,
-      paidRating: 10
-    },
-    {
-      contest_id: '1',
-      user: {
-        id: 5,
-        email: 'ruslan4@admi.com',
-        name: 'fdfdasgcxz33',
-        avatar: 'http://127.0.0.1:8000/storage/123',
-        created_at: '20.02.2024',
-        role: 'user',
-        country: null
-      },
-      photo:
-        'https://bikini-star.com/cache/stream/1514/_vdMqFDVdNid8KrzY_u24V0B16x_I6mfN0rkwqTJcrtOIi32B3FpwTPnwsQ9g9v8_1687335831CA-930x620.png',
-      freeRating: 1,
-      additionalFreeRating: 100,
-      paidRating: 500
-    },
-    {
-      contest_id: '1',
-      user: {
-        id: 5,
-        email: 'ruslan4@admi.com',
-        name: 'fdfdasgcxz33',
-        avatar: 'http://127.0.0.1:8000/storage/123',
-        created_at: '20.02.2024',
-        role: 'user',
-        country: null
-      },
-      photo:
-        'https://bikini-star.com/cache/stream/1514/_vdMqFDVdNid8KrzY_u24V0B16x_I6mfN0rkwqTJcrtOIi32B3FpwTPnwsQ9g9v8_1687335831CA-930x620.png',
-      freeRating: 1,
-      additionalFreeRating: 100,
-      paidRating: 500
-    },
-    {
-      contest_id: '1',
-      user: {
-        id: 5,
-        email: 'ruslan4@admi.com',
-        name: 'fdfdasgcxz33',
-        avatar: 'http://127.0.0.1:8000/storage/123',
-        created_at: '20.02.2024',
-        role: 'user',
-        country: null
-      },
-      photo:
-        'https://bikini-star.com/cache/stream/1514/_vdMqFDVdNid8KrzY_u24V0B16x_I6mfN0rkwqTJcrtOIi32B3FpwTPnwsQ9g9v8_1687335831CA-930x620.png',
-      freeRating: 1,
-      additionalFreeRating: 100,
-      paidRating: 500
-    },
-    {
-      contest_id: '1',
-      user: {
-        id: 5,
-        email: 'ruslan4@admi.com',
-        name: 'fdfdasgcxz33',
-        avatar: 'http://127.0.0.1:8000/storage/123',
-        created_at: '20.02.2024',
-        role: 'user',
-        country: null
-      },
-      photo:
-        'https://bikini-star.com/cache/stream/1514/_vdMqFDVdNid8KrzY_u24V0B16x_I6mfN0rkwqTJcrtOIi32B3FpwTPnwsQ9g9v8_1687335831CA-930x620.png',
-      freeRating: 1,
-      additionalFreeRating: 100,
-      paidRating: 500
-    },
-    {
-      contest_id: '1',
-      user: {
-        id: 5,
-        email: 'ruslan4@admi.com',
-        name: 'fdfdasgcxz33',
-        avatar: 'http://127.0.0.1:8000/storage/123',
-        created_at: '20.02.2024',
-        role: 'user',
-        country: null
-      },
-      photo:
-        'https://bikini-star.com/cache/stream/1514/_vdMqFDVdNid8KrzY_u24V0B16x_I6mfN0rkwqTJcrtOIi32B3FpwTPnwsQ9g9v8_1687335831CA-930x620.png',
-      freeRating: 1,
-      additionalFreeRating: 100,
-      paidRating: 500
-    }
-  ])
+  const isUserModelAccount = computed(() => {
+    return userStore.role === EUserAccountType.MODEL_ACCOUNT
+  })
+
+  onMounted(() => {
+    fetchActiveContest()
+    fetchActivePlayers()
+  })
 </script>
 
 <template>
@@ -172,7 +90,7 @@
         </div>
       </div>
     </n-space>
-    <div class="pb-12">
+    <div id="prizes" class="pb-12">
       <div class="text-[48px] mb-16">Наши призы</div>
       <div class="gap-8 columns-3 h-full my-8">
         <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
@@ -207,22 +125,36 @@
           <div>{{ prize.description }}</div>
         </div>
       </div>
-      <div class="flex items-center justify-center mt-16 w-full">
+      <div v-if="isUserModelAccount" class="flex items-center justify-center mt-16 w-full">
         <contest-user />
       </div>
       <div class="mt-16">
-        <div class="text-[48px] mb-16">Последние загрузки</div>
-        <n-image-group>
-          <n-space size="large">
-            <div
-              v-for="(photoItem, idx) in lastPublishPhotos"
-              :key="idx"
-              class="h-[250px] w-[250px] overflow-hidden rounded-lg"
-            >
-              <n-image :src="photoItem.photo" class="w-full h-full" width="100%" height="100%" />
-            </div>
-          </n-space>
-        </n-image-group>
+        <div class="text-[48px] mb-16">Участницы конкурса</div>
+        <n-grid
+          v-if="activePlayers && activePlayers.users.length > 0"
+          cols="2 m:3 l:4"
+          :x-gap="10"
+          :y-gap="10"
+          responsive="screen"
+        >
+          <n-grid-item v-for="(player, idx) in activePlayers.users" :key="idx">
+            <contest-card :contest-item="player" />
+          </n-grid-item>
+        </n-grid>
+        <div v-else>
+          <n-empty description="Участниц пока нет(">
+            <template #icon>
+              <n-icon :size="36" color="#19A058">
+                <Camera />
+              </n-icon>
+            </template>
+            <template v-if="isUserModelAccount" #extra>
+              <n-button size="large" type="primary" tag="a" href="#prizes" dashed>
+                Стать участницей
+              </n-button>
+            </template>
+          </n-empty>
+        </div>
       </div>
     </div>
   </div>

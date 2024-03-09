@@ -2,6 +2,7 @@
   import { h } from 'vue'
   import { ThumbsUp } from 'lucide-vue-next'
   import { NAlert, NButton, NGrid, NGridItem, NIcon, NSpace, NTooltip } from 'naive-ui'
+  import ContestCard from '~/components/contest/ContestCard.vue'
 </script>
 
 <template>

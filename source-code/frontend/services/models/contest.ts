@@ -1,3 +1,5 @@
+import type { IUser } from '~/services/models/user'
+
 export interface IContest {
   contest: IContestBlock
 }
@@ -13,4 +15,15 @@ export interface IContestPrize {
   name: string
   description: string
   image: string
+}
+
+export interface IContestPlayers {
+  name: string
+  users: IContestUser[]
+}
+export interface IContestUser {
+  id: number
+  rating: number | string
+  image: string | null
+  user: IUser
 }

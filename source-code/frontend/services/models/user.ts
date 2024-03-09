@@ -1,5 +1,5 @@
 import { EUserAccountType } from '~/services/enums'
-import { ICountry } from '~/services/models/ICountry'
+import type { ICountry } from '~/services/models/ICountry'
 
 export interface IUser {
   id: number
@@ -9,7 +9,7 @@ export interface IUser {
   created_at: string
   role: EUserAccountType
   country: ICountry | null
-  info?: {}
+  info?: IUserModelInfo
 }
 
 export interface IHair {

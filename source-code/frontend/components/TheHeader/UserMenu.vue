@@ -9,14 +9,6 @@
     {
       href: localePath(RoutesNames.USERS),
       name: t('header.users')
-    },
-    {
-      href: localePath(RoutesNames.BOX),
-      name: t('header.box')
-    },
-    {
-      href: localePath(RoutesNames.PORTFOLIO),
-      name: t('header.portfolio')
     }
   ]
 </script>
@@ -24,7 +16,7 @@
 <template>
   <nav>
     <n-space>
-      <n-button v-for="(link, index) in userMenu" :key="index" quaternary tag="a">
+      <n-button v-for="(link, index) in userMenu" :key="index" quaternary tag="a" :href="link.href">
         {{ link.name }}
       </n-button>
     </n-space>

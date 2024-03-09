@@ -5,7 +5,13 @@ import type { IPhoto } from '~/services/models/IPhoto'
 import type { IBoxPhotoItem, IBoxPostItem, IBoxVideoItem } from '~/services/models/box'
 import type { IUserModelInfo, IHair, IBreast, IUser } from '~/services/models/user'
 import type { IUserProfileAction, IUserBaseStatistics } from '~/services/models/profile'
-import type { IContest, IContestBlock, IContestPrize } from '~/services/models/contest'
+import type {
+  IContest,
+  IContestBlock,
+  IContestPrize,
+  IContestPlayers,
+  IContestUser
+} from '~/services/models/contest'
 
 export {
   ILinkSettings,
@@ -24,5 +30,7 @@ export {
   IUserBaseStatistics,
   IContest,
   IContestBlock,
-  IContestPrize
+  IContestPrize,
+  IContestPlayers,
+  IContestUser
 }

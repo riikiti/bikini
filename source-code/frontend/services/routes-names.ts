@@ -6,7 +6,7 @@ export const enum RoutesNames {
   FINANCE = '/finance',
   PORTFOLIO = '/portfolio',
   DASHBOARD = '/dashboard',
-  MESSAGES = '/messages',
+
   USERS = '/platform/users',
   PROFILE = '/platform/profile',
   EDIT_PROFILE = '/platform/profile/edit',
@@ -14,5 +14,7 @@ export const enum RoutesNames {
   PLATFORM_BLOG = '/platform/profile/blog',
   PLATFORM_BOX = '/platform/profile/box',
   ACTIVE_CONTEST = '/platform/contest',
-  STATISTICS = '/platform/statistics'
+  STATISTICS = '/platform/statistics',
+  FAVORITES = '/platform/favorites',
+  MESSENGER = '/platform/messenger'
 }

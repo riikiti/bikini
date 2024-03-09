@@ -1,7 +1,6 @@
 <script setup lang="ts">
   import SwitcherTheme from '~/components/TheHeader/SwitcherTheme.vue'
-  import { Mail } from 'lucide-vue-next'
-  import GhostButton from '~/components/TheHeader/GhostButton.vue'
+  import { Mail, Heart } from 'lucide-vue-next'
   import UserNav from '~/components/TheHeader/UserNav.vue'
   import SwitcherLocale from '~/components/TheHeader/SwitcherLocale.vue'
   import UserMenu from '~/components/TheHeader/UserMenu.vue'
@@ -48,7 +47,10 @@
       <div class="flex justify-between h-10 py-4 sm:h-16 sm:py-0">
         <div class="flex gap-2">
           <div class="shrink-0 flex items-center">
-            <nuxt-link :to="localePath(RoutesNames.DASHBOARD)" class="no-underline cursor-pointer">
+            <nuxt-link
+              :to="localePath(RoutesNames.ACTIVE_CONTEST)"
+              class="no-underline cursor-pointer"
+            >
               <div class="font-extrabold text-slate-600 text-2xl dark:text-white">
                 ★ Bikini Star
               </div>
@@ -63,7 +65,10 @@
         </div>
         <div class="flex items-center gap-2">
           <switcher-theme />
-          <n-button quaternary tag="a" href="/messages" size="medium">
+          <n-button quaternary tag="a" :href="localePath(RoutesNames.FAVORITES)" size="medium">
+            <heart />
+          </n-button>
+          <n-button quaternary tag="a" :href="localePath(RoutesNames.MESSENGER)" size="medium">
             <mail />
           </n-button>
           <user-nav v-if="!isMobile" :user-menu="userLinks" />

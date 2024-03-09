@@ -4,7 +4,7 @@ export default defineNuxtConfig({
     strict: true
   },
   devtools: { enabled: true },
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/tailwindcss', 'shadcn-nuxt', 'nuxt-primevue'],
+  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
   postcss: {
     plugins: {
       tailwindcss: {},
@@ -21,15 +21,7 @@ export default defineNuxtConfig({
     }
   },
   ssr: false,
-  primevue: {
-    components: {
-      include: ['Galleria', 'Carousel']
-    }
-  },
-  shadcn: {
-    prefix: '',
-    componentDir: './components/ui'
-  },
+
   i18n: {
     baseUrl: process.env.NUXT_PUBLIC_LANDING_API_URL,
     lazy: true,

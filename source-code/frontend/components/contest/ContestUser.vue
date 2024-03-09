@@ -18,10 +18,12 @@
 
 <template>
   <div class="w-full">
-    <n-button v-if="!isActive" type="info" size="large" class="text-3xl py-8" @click="handleModal()"
-      >Стать участником конкурса</n-button
-    >
-    <div v-else class="bg-gray-100/50 w-full py-16 py-8">
+    <n-space v-if="!isActive" justify="center">
+      <n-button type="info" size="large" class="text-3xl py-8" @click="handleModal()"
+        >Стать участником конкурса</n-button
+      >
+    </n-space>
+    <div v-else class="bg-gray-100/50 w-full py-8">
       <n-space vertical size="large" align="center">
         <div class="text-2xl">
           Я участница конкурса,мой рейтинг
