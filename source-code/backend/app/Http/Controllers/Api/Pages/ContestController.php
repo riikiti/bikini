@@ -49,7 +49,9 @@ class ContestController extends Controller
             // выходим, если записи нет / если есть, считаем рейтинг и отдаем на фронт
             if ($contestModel) {
                 $rating = $contestModel->freeRating + $contestModel->additionalFreeRating + $contestModel->paidRating;
-                return response()->json(['status' => 'ok', 'rating' => $rating]);
+                return response()->json([
+                    'status' => 'ok',
+                    'rating' => $rating]);
             } else {
                 return response()->json(['status' => 'the model is not involved']);
             }

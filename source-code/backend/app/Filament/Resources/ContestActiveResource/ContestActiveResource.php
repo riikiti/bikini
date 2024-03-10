@@ -7,6 +7,7 @@ use App\Models\Contest;
 use App\Models\ContestModel;
 use App\Models\Message;
 use Filament\Forms\Components\Checkbox;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
@@ -62,11 +63,11 @@ class ContestActiveResource extends Resource
                             ->required()
                             ->maxLength(2048)
                             ->default('Ваша публикация была снята за нарушения пользовательского соглашения, за подробной информацией обратитесь к модератору'),
-                        TextInput::make('sender_id')
+                        Hidden::make('sender_id')
                             ->label('Id отправителя')
                             ->required()
                             ->default(fn() => auth()->id()),
-                        TextInput::make('receiver_id')
+                        Hidden::make('receiver_id')
                             ->label('Id получателя')
                             ->required()
                             ->default(fn($record) => $record->ModelId),
