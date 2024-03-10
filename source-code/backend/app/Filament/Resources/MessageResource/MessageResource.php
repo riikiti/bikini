@@ -5,11 +5,13 @@ namespace app\Filament\Resources\MessageResource;
 use App\Filament\Resources\UserResource\Pages\CreateMessages;
 use App\Filament\Resources\UserResource\Pages\ListMessages;
 use App\Models\Message;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
+use Illuminate\Contracts\View\View;
 
 class MessageResource extends Resource
 {
@@ -18,7 +20,6 @@ class MessageResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left';
 
     protected static ?string $navigationLabel = 'Сообщения';
-
     public static function table(Table $table): Table
     {
         return $table
@@ -52,11 +53,11 @@ class MessageResource extends Resource
                             ->label('Сообщение')
                             ->required()
                             ->maxLength(2048),
-                        TextInput::make('sender_id')
+                        Hidden::make('sender_id')
                             ->label('Id отправителя')
                             ->required()
                             ->default(auth()->id()),
-                        TextInput::make('receiver_id')
+                        Hidden::make('receiver_id')
                             ->label('Id получателя')
                             ->required()
                             ->default(

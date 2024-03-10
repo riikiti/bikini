@@ -5,6 +5,7 @@ namespace app\Filament\Resources\UserResource;
 use App\Filament\Resources\UserResource\Pages\SendMessageUsers;
 use App\Models\Message;
 use App\Models\User;
+use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
@@ -48,11 +49,11 @@ class UserResource extends Resource
                             ->label('Сообщение')
                             ->required()
                             ->maxLength(2048),
-                        TextInput::make('sender_id')
+                        Hidden::make('sender_id')
                             ->label('Id отправителя')
                             ->required()
                             ->default(fn () => auth()->id()),
-                        TextInput::make('receiver_id')
+                        Hidden::make('receiver_id')
                             ->label('Id получателя')
                             ->required()
                             ->default(fn ($record) => $record->UserId),
