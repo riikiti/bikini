@@ -67,7 +67,7 @@
             <div class="font-bold">Страна:</div>
             <n-tooltip trigger="hover" placement="bottom">
               <template #trigger>
-                <img :src="userStore.country?.icon" class="shadow-lg" />
+                <img :src="userStore.country?.icon" class="shadow-lg w-[20px] h-[20px]" />
               </template>
               {{ userStore.country?.name }}
             </n-tooltip>

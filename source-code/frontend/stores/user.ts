@@ -18,7 +18,7 @@ export const useUserStore = defineStore('user', {
     country: {
       id: 1,
       name: 'Russia',
-      icon: 'https://bikini-star.com/flag/fi.png'
+      icon: 'https://www.flagcolorcodes.com/data/flag-of-russia.png'
     },
     info: {
       birthdate: 1991,

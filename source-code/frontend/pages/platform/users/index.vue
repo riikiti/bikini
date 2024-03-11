@@ -30,8 +30,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -45,8 +44,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -60,8 +58,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -75,8 +72,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -90,8 +86,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -105,8 +100,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -120,8 +114,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -135,8 +128,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -150,8 +142,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -165,8 +156,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -180,8 +170,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -195,8 +184,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -210,8 +198,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -225,8 +212,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -240,8 +226,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     },
     {
       id: 1,
@@ -255,68 +240,7 @@
       rating: 5000,
       modelInFavourite: true,
       activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
-    },
-    {
-      id: 1,
-      username: 'Ket',
-      actions: {
-        canSendMessage: true,
-        canWiningContest: false,
-        hasBoxContent: false,
-        hasBlogContent: false
-      },
-      rating: 5000,
-      modelInFavourite: true,
-      activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
-    },
-    {
-      id: 1,
-      username: 'Ket',
-      actions: {
-        canSendMessage: true,
-        canWiningContest: false,
-        hasBoxContent: false,
-        hasBlogContent: false
-      },
-      rating: 5000,
-      modelInFavourite: true,
-      activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
-    },
-    {
-      id: 1,
-      username: 'Ket',
-      actions: {
-        canSendMessage: true,
-        canWiningContest: false,
-        hasBoxContent: false,
-        hasBlogContent: false
-      },
-      rating: 5000,
-      modelInFavourite: true,
-      activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
-    },
-    {
-      id: 1,
-      username: 'Ket',
-      actions: {
-        canSendMessage: true,
-        canWiningContest: false,
-        hasBoxContent: false,
-        hasBlogContent: false
-      },
-      rating: 5000,
-      modelInFavourite: true,
-      activeCommunicatation: false,
-      avatar:
-        'https://bikini-star.com/cache/avatar/2850/NhM9YhNWjKdRG-FYUkDsyu_6aDerRLxMN-UPWYhlZeMC89bk6GAHhg8jUsE0wexn_1693299126CA-158x158.jpg'
+      avatar: 'https://cdnimg103.lizhi.fm/user/2017/02/04/2583325032200238082_160x160.jpg'
     }
   ]
   // /all-users -param-> userId ->result: <array> etc check reference doc
@@ -329,7 +253,7 @@
       class="rounded overflow-hidden relative bg-white dark:bg-muted border shadow-accent"
     >
       <div class="absolute top-2 left-2 z-20">
-        <n-tag round strong type="primary" :bordered="false">
+        <n-tag round strong :bordered="false">
           <template #icon>
             <n-icon :component="h(Trophy)" />
           </template>
