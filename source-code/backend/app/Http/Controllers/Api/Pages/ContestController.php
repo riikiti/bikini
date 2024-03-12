@@ -69,18 +69,10 @@ class ContestController extends Controller
             ->where('contest_id', $contest->id)
             ->where('user_id', auth()->user()->id)
             ->first();
-        //почему нулл то блятт
-        dd($request->image);
         if ($request->hasFile('image')) {
-
-            $data = [
-                //      'photo' => Storage::disk('public')->put('/public/ContestPhotos', $request->file('image')),
-                'user_id' => auth()->user()->id,
-                'contest_id' => $contest->id,
-            ];
-
-            $contestModel->update($data);
-
+            $photo = Storage::disk('public')->put('/public/ContestPhotos', $request->file('image'));
+            $contestModel->photo = $photo;
+            $contestModel->save();
             return response()->json([
                 'status' => 'ok',
                 'contest_model' => ContestModelsResource::make($contestModel),
