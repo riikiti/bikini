@@ -28,7 +28,8 @@
     email: string | null
     password: string | null
     confirmPassword: string | null
-    radioAccountType: EUserAccountType
+    name: string | null
+    role: EUserAccountType
     birthday: string | number | null
   }
 
@@ -69,7 +70,8 @@
   const modelRef = ref<IRegisterFields>({
     email: null,
     password: null,
-    radioAccountType: EUserAccountType.USER_ACCOUNT,
+    name: null,
+    role: EUserAccountType.USER_ACCOUNT,
     confirmPassword: null,
     birthday: birthdaySelect.value[0].value
   })
@@ -78,6 +80,12 @@
     email: [
       { type: 'email', message: 'Invalid email address' },
       { required: true, message: 'Email is required' }
+    ],
+    name: [
+      {
+        required: true,
+        message: 'Password is required'
+      }
     ],
     password: [
       {
@@ -107,15 +115,17 @@
   const message = useMessage()
 
   const formRef = ref<FormInst | null>(null)
-
+  const emits = defineEmits<{
+    (e: 'validated', data: IRegisterFields): void
+    (e: 'rejected', data: FormValidationError): void
+  }>()
   const handleValidateButtonClick = (e: MouseEvent) => {
     e.preventDefault()
     formRef.value?.validate((errors: Array<FormValidationError> | undefined) => {
       if (!errors) {
-        message.success('Valid')
+        emits('validated', modelRef.value)
       } else {
-        console.log(errors)
-        message.error('Invalid')
+        emits('rejected', errors)
       }
     })
   }
@@ -126,10 +136,10 @@
     <div class="text-3xl mb-8 text-center font-bold">Регистрация</div>
     <div class="w-full">
       <n-form ref="formRef" :model="modelRef" :rules="rules" class="w-full">
-        <n-form-item label="Тип аккаунта" path="radioAccountType">
+        <n-form-item label="Тип аккаунта" path="role">
           <n-radio-group
-            v-model:value="modelRef.radioAccountType"
-            name="acoount_type"
+            v-model:value="modelRef.role"
+            name="acount_type"
             size="medium"
             class="w-full"
           >
@@ -143,11 +153,14 @@
             </n-radio-button>
           </n-radio-group>
         </n-form-item>
-        <n-form-item
-          v-if="modelRef.radioAccountType === EUserAccountType.MODEL_ACCOUNT"
-          path="birthday"
-          label="Год рождения"
-        >
+        <n-form-item path="name" label="Имя пользователя">
+          <n-input
+            v-model:value="modelRef.name"
+            placeholder="Please enter your name"
+            @keydown.enter.prevent
+          />
+        </n-form-item>
+        <n-form-item path="birthday" label="Год рождения">
           <n-select
             v-model:value="modelRef.birthday"
             placeholder="Select"
@@ -212,80 +225,5 @@
         </n-row>
       </n-form>
     </div>
-  </div>
-  <div class="w-full">
-    <!--    <form class="w-full flex flex-col gap-6" @submit="onSubmit">
-      <FormField v-slot="{ componentField }" type="radio" name="type">
-        <FormItem>
-          <FormControl>
-            <RadioGroup class="flex flex-col space-y-1" v-bind="componentField">
-              <FormItem class="flex items-center space-y-0 gap-x-3">
-                <FormControl>
-                  <RadioGroupItem value="fan" />
-                </FormControl>
-                <FormLabel class="font-normal"> Поклоник </FormLabel>
-              </FormItem>
-              <FormItem class="flex items-center space-y-0 gap-x-3">
-                <FormControl>
-                  <RadioGroupItem value="model" />
-                </FormControl>
-                <FormLabel class="font-normal"> Участница </FormLabel>
-              </FormItem>
-            </RadioGroup>
-          </FormControl>
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="email">
-        <FormItem>
-          <FormControl>
-            <Input type="text" placeholder="E-мейл" v-bind="componentField" />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="password">
-        <FormItem>
-          <FormControl>
-            <Input type="text" placeholder="Пароль" v-bind="componentField" />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ componentField }" name="refferalCode">
-        <FormLabel>Реферальный код</FormLabel>
-        <FormItem>
-          <FormControl>
-            <Input type="text" v-bind="componentField" />
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-        <FormDescription>
-          Реферальный код не обязательное поле и можете оставить пустым
-        </FormDescription>
-      </FormField>
-      <FormField v-slot="{ value, handleChange }" type="checkbox" name="oldest">
-        <FormItem class="flex flex-col items-start gap-x-3">
-          <FormControl class="space-y-0 flex items-center">
-            <label class="flex items-center">
-              <Checkbox :checked="value" @update:checked="handleChange" />
-              <div class="ml-3">Да, мне 18 лет</div>
-            </label>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
-      <FormField v-slot="{ value, handleChange }" type="checkbox" name="confirmed">
-        <FormItem class="flex flex-col items-start gap-x-3">
-          <FormControl class="space-y-0 flex items-center">
-            <label class="flex items-center">
-              <Checkbox :checked="value" @update:checked="handleChange" />
-              <div class="ml-3">Условия прочитал и согласен</div>
-            </label>
-          </FormControl>
-          <FormMessage />
-        </FormItem>
-      </FormField>
-      <Button type="submit"> Вход </Button>
-    </form>-->
   </div>
 </template>

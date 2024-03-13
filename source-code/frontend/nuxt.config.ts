@@ -21,7 +21,12 @@ export default defineNuxtConfig({
     }
   },
   ssr: false,
-
+  runtimeConfig: {
+    public: {
+      apiUrl: 'http://127.0.0.1:8000',
+      authTokenKey: 'JWT_SECRET'
+    }
+  },
   i18n: {
     baseUrl: process.env.NUXT_PUBLIC_LANDING_API_URL,
     lazy: true,

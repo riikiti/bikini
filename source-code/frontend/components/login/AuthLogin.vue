@@ -14,7 +14,6 @@
   } from 'naive-ui'
   import { ref, h } from 'vue'
   import { LockKeyhole, UnlockKeyhole } from 'lucide-vue-next'
-
   interface ILoginFields {
     email: string | null
     password: string | null
@@ -42,14 +41,18 @@
 
   const formRef = ref<FormInst | null>(null)
 
+  const emits = defineEmits<{
+    (e: 'validated', data: ILoginFields): void
+    (e: 'rejected', data: FormValidationError): void
+  }>()
+
   const handleValidateButtonClick = (e: MouseEvent) => {
     e.preventDefault()
     formRef.value?.validate((errors: Array<FormValidationError> | undefined) => {
       if (!errors) {
-        message.success('Valid')
+        emits('validated', modelRef.value)
       } else {
-        console.log(errors)
-        message.error('Invalid')
+        emits('rejected', errors)
       }
     })
   }

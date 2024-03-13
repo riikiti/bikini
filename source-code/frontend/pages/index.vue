@@ -5,6 +5,12 @@
   import AuthLogin from '~/components/login/AuthLogin.vue'
   import { NCard } from 'naive-ui'
   import { ref } from 'vue'
+  import { useAuthStore } from '~/stores/auth'
+  import { useRouter } from '#imports'
+  import { RoutesNames } from '~/services/routes-names'
+
+  const authStore = useAuthStore()
+  const router = useRouter()
 
   const isLoginForm = ref<boolean>(true)
   const isResetForm = ref<boolean>(false)
@@ -21,6 +27,29 @@
       isResetForm.value = true
       isLoginForm.value = false
     }
+  }
+
+  const login = async data => {
+    await authStore.login(data)
+    if (authStore.isAuth) {
+      await router.push(RoutesNames.ACTIVE_CONTEST)
+    }
+  }
+  const register = async data => {
+    console.log(data)
+    const newData = {
+      email: data.email,
+      password: data.password,
+      confirm_password: data.confirmPassword,
+      name: data.name,
+      role: data.role,
+      birthdate: data.birthday
+    }
+    await authStore.register(newData)
+    if (authStore.isAuth) {
+      await router.push(RoutesNames.ACTIVE_CONTEST)
+    }
+    console.log(newData)
   }
 </script>
 
@@ -60,8 +89,8 @@
   >
     <n-card size="medium" class="max-w-[360px]">
       <template v-if="!isResetForm">
-        <auth-login v-if="isLoginForm" />
-        <auth-register v-else />
+        <auth-login v-if="isLoginForm" @validated="login($event)" />
+        <auth-register v-else @validated="register($event)" />
       </template>
       <auth-reset-password v-if="isResetForm" />
       <div class="flex flex-col gap-2 mt-2">

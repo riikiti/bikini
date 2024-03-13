@@ -43,3 +43,13 @@ export interface IUserModelInfo {
   breast: IBreast | null
   messages_status?: IUserModelMessageRules | null
 }
+
+export interface IUserLogin {
+  email: string
+  password: string
+}
+
+export interface IUserRegister {
+  email: string
+  password: string
+}
