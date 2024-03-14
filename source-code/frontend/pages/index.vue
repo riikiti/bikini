@@ -4,10 +4,14 @@
   import AuthResetPassword from '~/components/login/AuthResetPassword.vue'
   import AuthLogin from '~/components/login/AuthLogin.vue'
   import { NCard } from 'naive-ui'
-  import { ref } from 'vue'
+  import { ref, onMounted } from 'vue'
   import { useAuthStore } from '~/stores/auth'
-  import { useRouter } from '#imports'
+  import { useRouter, definePageMeta } from '#imports'
   import { RoutesNames } from '~/services/routes-names'
+
+  definePageMeta({
+    middleware: ['auth']
+  })
 
   const authStore = useAuthStore()
   const router = useRouter()
@@ -51,6 +55,10 @@
     }
     console.log(newData)
   }
+
+  onMounted(async () => {
+    authStore.refresh()
+  })
 </script>
 
 <template>

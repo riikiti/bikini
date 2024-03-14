@@ -15,7 +15,7 @@
   definePageMeta({
     layout: 'profile-layout',
     key: 'detail_messge',
-    middleware: 'profile'
+    middleware: 'auth'
   })
 
   const route = useRoute()

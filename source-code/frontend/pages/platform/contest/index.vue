@@ -10,7 +10,7 @@
   definePageMeta({
     layout: 'profile-layout',
     key: 'contest',
-    middleware: 'profile'
+    middleware: 'auth'
   })
 
   const userStore = useUserStore()

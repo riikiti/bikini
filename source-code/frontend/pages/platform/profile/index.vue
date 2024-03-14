@@ -12,7 +12,7 @@
   definePageMeta({
     layout: 'profile-layout',
     key: 'gallery',
-    middleware: 'profile'
+    middleware: ['auth']
   })
 
   const userStore = useUserStore()
