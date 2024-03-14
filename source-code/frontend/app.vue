@@ -11,15 +11,21 @@
     NModalProvider,
     NNotificationProvider
   } from 'naive-ui'
-
+  const userStore = useUserStore()
+  const authStore = useAuthStore()
   const settingsStore = useSettingsStore()
   const { isMobile } = storeToRefs(settingsStore)
+
   onMounted(() => {
     const mq = window.matchMedia('(max-width: 640px)')
     isMobile.value = mq.matches
     mq.addEventListener('change', () => {
       isMobile.value = mq.matches
     })
+  })
+
+  onMounted(async () => {
+    await userStore.fetchUser()
   })
 </script>
 <template>

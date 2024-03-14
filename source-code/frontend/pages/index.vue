@@ -4,8 +4,9 @@
   import AuthResetPassword from '~/components/login/AuthResetPassword.vue'
   import AuthLogin from '~/components/login/AuthLogin.vue'
   import { NCard } from 'naive-ui'
-  import { ref, onMounted } from 'vue'
+  import { ref } from 'vue'
   import { useAuthStore } from '~/stores/auth'
+  import { useUserStore } from '~/stores/user'
   import { useRouter, definePageMeta } from '#imports'
   import { RoutesNames } from '~/services/routes-names'
 
@@ -14,6 +15,7 @@
   })
 
   const authStore = useAuthStore()
+  const userStore = useUserStore()
   const router = useRouter()
 
   const isLoginForm = ref<boolean>(true)
@@ -36,11 +38,11 @@
   const login = async data => {
     await authStore.login(data)
     if (authStore.isAuth) {
+      await userStore.fetchUser()
       await router.push(RoutesNames.ACTIVE_CONTEST)
     }
   }
   const register = async data => {
-    console.log(data)
     const newData = {
       email: data.email,
       password: data.password,
@@ -51,14 +53,10 @@
     }
     await authStore.register(newData)
     if (authStore.isAuth) {
+      await userStore.fetchUser()
       await router.push(RoutesNames.ACTIVE_CONTEST)
     }
-    console.log(newData)
   }
-
-  onMounted(async () => {
-    authStore.refresh()
-  })
 </script>
 
 <template>

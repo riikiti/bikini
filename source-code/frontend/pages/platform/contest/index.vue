@@ -6,6 +6,7 @@
   import { Camera, ChevronDown } from 'lucide-vue-next'
   import ContestCard from '~/components/contest/ContestCard.vue'
   import { EUserAccountType } from '~/services/enums'
+  import contestRepository from '~/services/repository/contestRepository'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -15,14 +16,15 @@
 
   const userStore = useUserStore()
 
-  const activeContest = ref<IContest | undefined>()
+  const activeContest = ref(null)
   const activePlayers = ref<IContestPlayers | null>(null)
   const fetchActiveContest = async () => {
-    fetch('/mock/mock-contest-prizes.json')
-      .then(response => response.json())
-      .then(data => {
-        activeContest.value = data.contest as IContest
-      })
+    const response = await contestRepository.prizeList()
+    const { data } = response
+    activeContest.value = data.contest
+    const response2 = await contestRepository.currentUserList()
+    console.log(response2)
+    //todo работаю над 2 блоком херня на беке не проверить участие модели)
   }
   const fetchActivePlayers = async () => {
     fetch('/mock/mock-contest-players.json')
@@ -31,31 +33,29 @@
         activePlayers.value = data.contest as IContestPlayers
       })
   }
-
   const prizes = computed(() => {
-    const sorted = activeContest.value?.prizes.sort(
-      (a: IContestPrize, b: IContestPrize) => a.place - b.place
-    )
-    // Найти индекс элемента с place: 2
-    const indexPlace2 = sorted.findIndex((prize: IContestPrize) => prize.place === 2)
+    if (activeContest.value.prizes) {
+      const sorted = activeContest.value.prizes.sort(
+        (a: IContestPrize, b: IContestPrize) => a.place - b.place
+      )
+      // Найти индекс элемента с place: 2
+      const indexPlace2 = sorted.findIndex((prize: IContestPrize) => prize.place === 2)
 
-    // Переместить элемент с place: 2 в начало массива
-    const place2Element = sorted.splice(indexPlace2, 1)[0]
-    sorted.unshift(place2Element)
-    const indexPlace1 = sorted.findIndex((prize: IContestPrize) => prize.place === 1)
-    const place1Element = sorted.splice(indexPlace1, 1)[0]
-    const middleIndex = Math.floor(sorted.length / 2)
-    sorted.splice(middleIndex, 0, place1Element)
-    return sorted
+      // Переместить элемент с place: 2 в начало массива
+      const place2Element = sorted.splice(indexPlace2, 1)[0]
+      sorted.unshift(place2Element)
+      const indexPlace1 = sorted.findIndex((prize: IContestPrize) => prize.place === 1)
+      const place1Element = sorted.splice(indexPlace1, 1)[0]
+      const middleIndex = Math.floor(sorted.length / 2)
+      sorted.splice(middleIndex, 0, place1Element)
+      return sorted
+    }
+    return []
   })
 
-  const isUserModelAccount = computed(() => {
-    return userStore.role === EUserAccountType.MODEL_ACCOUNT
-  })
-
-  onMounted(() => {
-    fetchActiveContest()
-    fetchActivePlayers()
+  onMounted(async () => {
+    await fetchActiveContest()
+    await fetchActivePlayers()
   })
 </script>
 
@@ -74,11 +74,11 @@
         <span class="text-3xl text-center"
           >c
           <n-gradient-text type="info">
-            <div>{{ activeContest.start }}</div>
+            <div>{{ activeContest?.start }}</div>
           </n-gradient-text>
           по
           <n-gradient-text type="error">
-            <div>{{ activeContest.finish }}</div>
+            <div>{{ activeContest?.finish }}</div>
           </n-gradient-text>
         </span>
       </div>
@@ -92,7 +92,7 @@
     </n-space>
     <div id="prizes" class="pb-12">
       <div class="text-[48px] mb-16">Наши призы</div>
-      <div class="gap-8 columns-3 h-full my-8">
+      <div v-if="prizes" class="gap-8 columns-3 h-full my-8">
         <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
           <div class="relative">
             <div
@@ -125,7 +125,10 @@
           <div>{{ prize.description }}</div>
         </div>
       </div>
-      <div v-if="isUserModelAccount" class="flex items-center justify-center mt-16 w-full">
+      <div
+        v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT"
+        class="flex items-center justify-center mt-16 w-full"
+      >
         <contest-user />
       </div>
       <div class="mt-16">
@@ -148,7 +151,7 @@
                 <Camera />
               </n-icon>
             </template>
-            <template v-if="isUserModelAccount" #extra>
+            <template v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT" #extra>
               <n-button size="large" type="primary" tag="a" href="#prizes" dashed>
                 Стать участницей
               </n-button>

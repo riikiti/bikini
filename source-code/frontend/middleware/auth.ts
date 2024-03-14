@@ -1,7 +1,6 @@
 import { defineNuxtRouteMiddleware, useRuntimeConfig, abortNavigation } from '#imports'
 import { navigateTo } from '#imports'
 import { RoutesNames } from '~/services/routes-names'
-import { useAuthStore } from '#imports'
 
 export default defineNuxtRouteMiddleware(to => {
   const { authTokenKey } = useRuntimeConfig().public

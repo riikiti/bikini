@@ -2,14 +2,14 @@ import { defineStore } from 'pinia'
 import { useRuntimeConfig } from '#imports'
 import personalRepository from '~/services/repository/personalRepository'
 import type { IUserLogin, IUserRegister } from '~/services/models/user'
-const { authTokenKey } = useRuntimeConfig().public
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuth: false,
-    authTokenKey: authTokenKey,
+    authTokenKey: 'JWT_SECRET',
     refreshTimerId: null,
-    refreshDelayMinutes: 30
+    refreshDelayMinutes: 30,
+    user: null
   }),
   actions: {
     async refresh() {
