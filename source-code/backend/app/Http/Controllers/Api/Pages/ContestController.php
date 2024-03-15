@@ -128,7 +128,7 @@ class ContestController extends Controller
             }
 
         } else {
-            return response()->json(['status' => 'not model']);
+            return response()->json(['status' => 'not model','contest_model' => null]);
         }
     }
 
