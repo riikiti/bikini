@@ -59,6 +59,11 @@ Route::get('/contest', [ContestController::class, 'index']);
 Route::get('/active-contest', [ContestController::class, 'show']);
 Route::get('/active-contest/prize-block', [ContestController::class, 'prizesBlock']);
 Route::get('/active-contest/model-block', [ContestController::class, 'modelBlock']);
+
+Route::post('/active-contest/add-photo', [ContestController::class, 'addPhoto']);
+Route::patch('/active-contest/update-photo', [ContestController::class, 'updatePhoto']);
+Route::delete('/active-contest/delete-photo', [ContestController::class, 'deletePhoto']);
+
 Route::get('/active-contest/all-publications-block', [ContestController::class, 'allContestPublicationsBlock']);
 Route::get('/active-contest/winners-list', [ContestController::class, 'winnersList']);
 

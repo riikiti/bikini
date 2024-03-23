@@ -5,11 +5,13 @@ namespace App\Http\Controllers\Api\Pages;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ContestResource;
+use App\Http\Resources\UserResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class ContestController extends Controller
 {
@@ -34,31 +36,99 @@ class ContestController extends Controller
 
     }
 
+    //хз вроде работает
+    public function addPhoto(Request $request): JsonResponse
+    {
+        $contest = Contest::query()->where('is_active', true)->first();
+        $contestModel = ContestModel::query()
+            ->where('contest_id', $contest->id)
+            ->where('user_id', auth()->user()->id)
+            ->exists();
+        if ($contestModel) {
+            return response()->json([
+                'status' => 'photo already exists',
+            ]);
+        } else {
+            $data = [
+                'photo' => Storage::disk('public')->put('/public/ContestPhotos', $request->file('image')),
+                'user_id' => auth()->user()->id,
+                'contest_id' => $contest->id,
+            ];
+            return response()->json([
+                'status' => 'ok',
+                'contest_model' => ContestModelsResource::make(ContestModel::create($data)),
+            ]);
+        }
+
+    }
+
+    public function updatePhoto(Request $request): JsonResponse
+    {
+        $contest = Contest::query()->where('is_active', true)->first();
+        $contestModel = ContestModel::query()
+            ->where('contest_id', $contest->id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+        if ($request->hasFile('image')) {
+            $photo = Storage::disk('public')->put('/public/ContestPhotos', $request->file('image'));
+            $contestModel->photo = $photo;
+            $contestModel->save();
+            return response()->json([
+                'status' => 'ok',
+                'contest_model' => ContestModelsResource::make($contestModel),
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'No image file provided',
+            ], 400);
+        }
+    }
+
+    public function deletePhoto(Request $request): JsonResponse
+    {
+        $contest = Contest::query()->where('is_active', true)->first();
+        $contestModel = ContestModel::query()
+            ->where('contest_id', $contest->id)
+            ->where('user_id', auth()->user()->id)
+            ->first();
+        if ($contestModel) {
+            $contestModel->delete();
+            return response()->json([
+                'status' => 'ok',
+            ]);
+        } else {
+            return response()->json([
+                'status' => 'photo not found',
+            ]);
+        }
+
+
+    }
+
+
     public function modelBlock(Request $request): JsonResponse
     {
-        $user = $request->user();
         // Если юзер не модель, ему этот блок не нужен
-        if ($user->role == User::MODEL) {
+        if (auth()->user()->role == User::MODEL) {
             //активный конкурс
             $contest = Contest::query()->where('is_active', true)->first();
             //получаем запись о конкурсе данной модели
             $contestModel = ContestModel::query()
                 ->where('contest_id', $contest->id)
-                ->where('user_id', $user->id)
+                ->where('user_id', auth()->user()->id)
                 ->first();
             // выходим, если записи нет / если есть, считаем рейтинг и отдаем на фронт
             if ($contestModel) {
-                $rating = $contestModel->freeRating + $contestModel->additionalFreeRating + $contestModel->paidRating;
                 return response()->json([
                     'status' => 'ok',
-                    'rating' => $rating]);
+                    'contest_model' => ContestModelsResource::make($contestModel),
+                ]);
             } else {
                 return response()->json(['status' => 'the model is not involved']);
             }
 
         } else {
-            return response()->json(['status' => 'not model']);
-
+            return response()->json(['status' => 'not model','contest_model' => null]);
         }
     }
 
@@ -95,7 +165,7 @@ class ContestController extends Controller
             ];
         }
 
-        return response()->json(['status' => 'oks', 'data' => $data,'check' => $check]);
+        return response()->json(['status' => 'oks', 'data' => $data, 'check' => $check]);
     }
 
     public function show()
@@ -112,20 +182,5 @@ class ContestController extends Controller
         } else {
             return response()->json(['status' => 'not found']);
         }
-    }
-
-    public function storePhoto()
-    {
-//
-    }
-
-    public function updatePhoto()
-    {
-//
-    }
-
-    public function deletePhoto()
-    {
-
     }
 }
