@@ -13,6 +13,7 @@ use App\Http\Controllers\Api\ModelController;
 use App\Http\Controllers\Api\Pages\ContestController;
 use App\Http\Controllers\Api\Pages\MainPageController;
 use App\Http\Controllers\Api\Pages\ModelsPageController;
+use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Http\Request;
@@ -87,3 +88,5 @@ Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
     Route::post('/messages/{user}', [MessageController::class, 'store']);
 });
 
+Route::post('/payment/create',[PaymentController::class,'create']);
+Route::get('/payment/callback',[PaymentController::class,'callback'])->name('payment.callback');
