@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\ContestCompactResource;
 use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ContestResource;
 use App\Http\Resources\UserResource;
@@ -124,11 +125,14 @@ class ContestController extends Controller
                     'contest_model' => ContestModelsResource::make($contestModel),
                 ]);
             } else {
-                return response()->json(['status' => 'the model is not involved']);
+                return response()->json([
+                    'status' => 'the model is not involved',
+                    'contest_model'=>null
+                    ]);
             }
 
         } else {
-            return response()->json(['status' => 'not model','contest_model' => null]);
+            return response()->json(['status' => 'not model']);
         }
     }
 
@@ -140,7 +144,13 @@ class ContestController extends Controller
             ->where('contest_id', $contest->id)
             ->get();
 
-        return response()->json(['status' => 'ok', 'data' => ContestModelsResource::collection($allPublications)]);
+        return response()->json([
+                'status' => 'ok',
+                'contest' => [
+                    'name' => $contest->name,
+                    'users' => ContestModelsResource::collection($allPublications),
+                ]]
+        );
     }
 
     public function winnersList(Request $request): JsonResponse

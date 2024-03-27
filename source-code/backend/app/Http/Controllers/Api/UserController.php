@@ -5,9 +5,12 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\Box\BoxCompactResource;
 use App\Http\Resources\Box\BoxResource;
+use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ModelPhotoResource;
 use App\Http\Resources\UserCompactResource;
 use App\Http\Resources\UserResource;
+use App\Models\Contest;
+use App\Models\ContestModel;
 use App\Models\User;
 use Illuminate\Http\Request;
 
@@ -15,7 +18,12 @@ class UserController extends Controller
 {
     public function index()
     {
-        return response()->json(['status' => 'success', 'data' => UserCompactResource::collection(User::query()->where('role', User::MODEL)->get())]);
+        return response()->json([
+            'status' => 'success',
+            'data' => UserCompactResource::collection(
+                User::query()
+                    ->where('role', User::MODEL)
+                    ->get())]);
     }
 
     public function show(Request $request, User $user)
@@ -28,17 +36,35 @@ class UserController extends Controller
                 'check' => $check
             ]);
         } else {
-            if (!empty($user)) {
-                return response()->json(['status' => 'success', 'data' => UserResource::make($user)]);
+            $contest = Contest::query()->where('is_active', true)->first();
+
+            $model = ContestModel::query()
+                ->where('contest_id', $contest->id)
+                ->where('user_id', $user->id)
+                ->exists();
+            if ($model) {
+                $model = ContestModel::query()
+                    ->where('contest_id', $contest->id)
+                    ->where('user_id', $user->id)
+                    ->first();
+                return response()->json([
+                    'status' => 'success',
+                    'data' => [
+                        'user' => UserResource::make($user),
+                        'contest_photo' => ContestModelsResource::make($model)
+                    ],]);
             } else {
-                return response()->json(['status' => 'not found']);
+                return response()->json([
+                    'status' => 'success',
+                    'data' => UserResource::make($user),
+                ]);
             }
         }
 
 
     }
 
-    public function showModelPhoto(Request $request,User $user)
+    public function showModelPhoto(Request $request, User $user)
     {
         $check = $this->checkService->checkUser($request);
 
@@ -58,7 +84,7 @@ class UserController extends Controller
 
     }
 
-    public function showModelBoxes(Request $request,User $user)
+    public function showModelBoxes(Request $request, User $user)
     {
         $check = $this->checkService->checkUser($request);
 
