@@ -7,8 +7,6 @@ export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuth: false,
     authTokenKey: 'JWT_SECRET',
-    refreshTimerId: null,
-    refreshDelayMinutes: 30,
     user: null
   }),
   actions: {
@@ -19,12 +17,13 @@ export const useAuthStore = defineStore('auth', {
         const newToken = data.token.original.access_token
         localStorage.setItem(this.authTokenKey, newToken)
         this.isAuth = true
-        if (this.refreshTimerId === null) {
-          this.startRefreshInterval()
-        }
       } catch (e) {
         console.log(e)
       }
+    },
+    getToken() {
+      const token = localStorage.getItem(this.authTokenKey)
+      return token
     },
     async login(params: IUserLogin) {
       const response = await personalRepository.login(params)
@@ -32,9 +31,6 @@ export const useAuthStore = defineStore('auth', {
       const newToken = data.token.original.access_token
       localStorage.setItem(this.authTokenKey, newToken)
       this.isAuth = true
-      if (this.refreshTimerId === null) {
-        this.startRefreshInterval()
-      }
     },
     logout() {
       this.removeToken()
@@ -42,14 +38,6 @@ export const useAuthStore = defineStore('auth', {
     removeToken() {
       localStorage.removeItem(this.authTokenKey)
       this.isAuth = false
-      this.stopRefreshInterval()
-    },
-    startRefreshInterval() {
-      this.refreshTimerId = setInterval(this.refresh, 1000 * 60 * this.refreshDelayMinutes)
-    },
-    stopRefreshInterval() {
-      clearInterval(this.refreshTimerId)
-      this.refreshTimerId = null
     },
     async register(params: IUserRegister) {
       const response = await personalRepository.register(params)
@@ -57,9 +45,6 @@ export const useAuthStore = defineStore('auth', {
       const newToken = data.token.original.access_token
       localStorage.setItem(this.authTokenKey, newToken)
       this.isAuth = true
-      if (this.refreshTimerId === null) {
-        this.startRefreshInterval()
-      }
     }
   }
 })

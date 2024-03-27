@@ -1,30 +1,49 @@
 <script setup lang="ts">
-  import { NButton, NModal, NSpace, type UploadFileInfo, useMessage } from 'naive-ui'
-  import ContestUserUpload from '~/components/contest/ContestUserUpload.vue'
+  import { NButton, NModal, NSpace, useMessage } from 'naive-ui'
   import { ref } from 'vue'
 
+  interface IProps {
+    isEdit: boolean
+  }
+
+  const props = defineProps<IProps>()
   const emits = defineEmits<{
-    (e: 'close'): void
+    (e: 'formsave', data: any): void
   }>()
 
   const message = useMessage()
   const onPositiveClick = () => {
     message.success('Submit')
-    emits('close')
+    emits('formsave', file.value)
   }
   const onNegativeClick = () => {
     message.success('Cancel')
-    emits('close')
+    emits('formclose')
   }
 
-  const uploadFiles = ref<UploadFileInfo>([
-    {
-      id: 'react',
-      name: '我是react.png',
-      status: 'finished',
-      url: 'https://www.shadcn-vue.com/avatars/01.png'
+  const file = ref(null)
+
+  const setFileUpload = data => {
+    file.value = data
+    console.log('file-upload: ', file.value)
+  }
+
+  const config = ref({
+    add: {
+      route: '/api/active-contest/add-photo',
+      method: 'POST'
+    },
+    update: {
+      route: '/api/active-contest/update-photo',
+      method: 'POST'
     }
-  ])
+  })
+
+  const activeConfig = computed(() => {
+    return config.value[props.isEdit ? 'update' : 'add']
+  })
+
+  console.log(activeConfig)
 </script>
 
 <template>
@@ -33,7 +52,11 @@
       <div>Конкурс</div>
     </template>
     <div>
-      <contest-user-upload :file-list="uploadFiles" />
+      <file-upload
+        :route="activeConfig.route"
+        :method="activeConfig.method"
+        @uploaded="setFileUpload"
+      />
     </div>
     <template #action>
       <n-space size="large">

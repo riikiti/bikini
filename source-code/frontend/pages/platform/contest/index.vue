@@ -17,14 +17,17 @@
   const userStore = useUserStore()
 
   const activeContest = ref(null)
+  const contestBlock = ref(null)
   const activePlayers = ref<IContestPlayers | null>(null)
   const fetchActiveContest = async () => {
     const response = await contestRepository.prizeList()
     const { data } = response
     activeContest.value = data.contest
-    const response2 = await contestRepository.currentUserList()
-    console.log(response2)
-    //todo работаю над 2 блоком херня на беке не проверить участие модели)
+  }
+  const fetchActiveModel = async () => {
+    const { data } = await contestRepository.currentUserList()
+    contestBlock.value = data
+    console.log(contestBlock)
   }
   const fetchActivePlayers = async () => {
     fetch('/mock/mock-contest-players.json')
@@ -54,8 +57,14 @@
   })
 
   onMounted(async () => {
-    await fetchActiveContest()
-    await fetchActivePlayers()
+    const [contestData, modelData] = await Promise.all([
+      contestRepository.prizeList(),
+      contestRepository.currentUserList()
+    ])
+
+    activeContest.value = contestData.data.contest
+    contestBlock.value = modelData.data
+    console.log('cooo: ', contestBlock.value)
   })
 </script>
 
@@ -126,10 +135,13 @@
         </div>
       </div>
       <div
-        v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT"
+        v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT && contestBlock"
         class="flex items-center justify-center mt-16 w-full"
       >
-        <contest-user />
+        <contest-user
+          :is-active="!!contestBlock?.contest_model"
+          :contest-user="contestBlock?.contest_model"
+        />
       </div>
       <div class="mt-16">
         <div class="text-[48px] mb-16">Участницы конкурса</div>

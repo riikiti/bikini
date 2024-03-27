@@ -4,16 +4,28 @@
   import { ContestUserModal } from '#components'
   import { RoutesNames } from '~/services/routes-names'
 
+  interface IProps {
+    isActive: boolean
+    contestUser: unknown
+  }
+
+  const props = defineProps<IProps>()
+
+  const isEditForm = ref(false)
+
+  const handleEditForm = () => {
+    isEditForm.value = true
+    handleModal()
+  }
+
   const showModal = ref(false)
   const handleModal = () => {
     showModal.value = !showModal.value
   }
   const handleCloseModal = () => {
     showModal.value = false
+    isEditForm.value = false
   }
-
-  const isActive = ref(true)
-  const rating = ref(200)
 </script>
 
 <template>
@@ -28,8 +40,11 @@
         <div class="text-2xl">
           Я участница конкурса,мой рейтинг
           <n-gradient-text gradient="linear-gradient(to right, #8a2387, #e94057, #f27121)">
-            {{ rating }}
+            {{ contestUser.rating }}
           </n-gradient-text>
+        </div>
+        <div>
+          <img :src="contestUser.photo" alt="" class="w-[150px] h-[150px]" />
         </div>
         <n-space class="mt-6">
           <n-button
@@ -41,7 +56,7 @@
             dashed
             >Мой Профиль</n-button
           >
-          <n-button class="uppercase" type="primary" size="large" dashed @click="handleModal()"
+          <n-button class="uppercase" type="primary" size="large" dashed @click="handleEditForm"
             >Обновить фото</n-button
           >
           <n-button
@@ -57,7 +72,12 @@
       </n-space>
     </div>
   </div>
-  <contest-user-modal v-model:show="showModal" @close="handleCloseModal()" />
+  <contest-user-modal
+    v-model:show="showModal"
+    :is-edit="isEditForm"
+    @formsave="handleCloseModal()"
+    @close="handleCloseModal()"
+  />
 </template>
 
 <style scoped></style>
