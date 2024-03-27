@@ -16,7 +16,7 @@ class CheckService
         $flag = false;
         $check = [];
 
-        if (!$user->approved) {
+       /* if (!$user->approved) {
             $flag = true;
             $check[] = [
                 'answer_1' => ModelActiveStatusEnum::NOT_CONFIRMED_MODERATOR,
@@ -41,7 +41,7 @@ class CheckService
             $check[] = [
                 'title' => 'Ваш профиль неактивен. Причины:',
             ];
-        }
+        }*/
 
         return $check;
     }

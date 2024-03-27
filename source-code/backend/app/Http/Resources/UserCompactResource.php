@@ -4,6 +4,7 @@ namespace App\Http\Resources;
 
 use App\Models\Contest;
 use App\Models\ContestModel;
+use App\Models\Favourite;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
@@ -16,6 +17,7 @@ class UserCompactResource extends JsonResource
     {
         $this->appUrl = config('app.url');
         $contest = ContestModel::query()->where('user_id', $this->id)->where('isActive', true)->first();
+        $favorite = Favourite::query()->where('user_id', auth()->user()->id)->where('model_id', $this->id)->first();
         $data = [
             'id' => $this->id,
             'name' => $this->name,
@@ -23,6 +25,7 @@ class UserCompactResource extends JsonResource
             'country' => CountryResurce::make($this->country),
         ];
         $data['active_contest'] = isset($contest) ? true : false;
+        $data['is_favorite'] = isset($favorite) ? true : false;
         if ($this->role == User::MODEL) {
             $this->initModelInfo($data);
         }
@@ -31,7 +34,7 @@ class UserCompactResource extends JsonResource
         ];
     }
 
-
+//todo избранное и победительницы
     public function initModelInfo(array &$data): array
     {
         $data['info']['messages_status']['from_subscribers'] = $this->fields ? $this->fields['messages_status']['from_subscribers'] : null;
