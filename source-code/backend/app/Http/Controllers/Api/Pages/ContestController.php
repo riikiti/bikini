@@ -3,10 +3,8 @@
 namespace App\Http\Controllers\Api\Pages;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\ContestCompactResource;
 use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ContestResource;
-use App\Http\Resources\UserResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
 use App\Models\User;
@@ -85,7 +83,7 @@ class ContestController extends Controller
         }
     }
 
-    public function deletePhoto(Request $request): JsonResponse
+    public function deletePhoto(): JsonResponse
     {
         $contest = Contest::query()->where('is_active', true)->first();
         $contestModel = ContestModel::query()
@@ -107,7 +105,7 @@ class ContestController extends Controller
     }
 
 
-    public function modelBlock(Request $request): JsonResponse
+    public function modelBlock(): JsonResponse
     {
         // Если юзер не модель, ему этот блок не нужен
         if (auth()->user()->role == User::MODEL) {
@@ -177,7 +175,6 @@ class ContestController extends Controller
 
         return response()->json(['status' => 'oks', 'data' => $data, 'check' => $check]);
     }
-
     public function show()
     {
         $contest = Contest::query()->where('is_active', true)->first();
