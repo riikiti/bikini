@@ -8,9 +8,11 @@
   interface IProps {
     contestItem: IContestUser
     contestName?: string
+    isEndingContest?: boolean
   }
   const props = withDefaults(defineProps<IProps>(), {
-    contestName: ''
+    contestName: '',
+    isEndingContest: false
   })
 
   const { contestItem } = toRefs(props)
@@ -41,7 +43,7 @@
         class="w-full h-full"
       />
     </div>
-    <n-grid :x-gap="12" :y-gap="12" :cols="3" class="w-full mt-4">
+    <n-grid v-if="!isEndingContest" :x-gap="12" :y-gap="12" :cols="3" class="w-full mt-4">
       <n-grid-item>
         <n-space vertical>
           <n-tooltip trigger="hover" placement="bottom">

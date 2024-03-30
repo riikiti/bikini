@@ -18,16 +18,10 @@
   const userStore = useUserStore()
 
   const activeContest = ref(null)
-
   const fetchActiveContest = async () => {
-    try {
-      const response = await contestRepository.prizeList()
-      const { data } = response
-      activeContest.value = data.contest ?? {}
-      console.log(activeContest.value)
-    } catch (e) {
-      console.log(e)
-    }
+    const response = await contestRepository.prizeList()
+    const { data } = response
+    activeContest.value = data.contest
   }
 
   const prizes = computed(() => {
@@ -50,8 +44,8 @@
     return []
   })
 
-  onMounted(() => {
-    fetchActiveContest()
+  onMounted(async () => {
+    await fetchActiveContest()
   })
 </script>
 
@@ -61,10 +55,41 @@
       <n-gradient-text type="success">
         <div class="text-[64px]">{{ activeContest.name }}</div>
       </n-gradient-text>
-      <div class="text-3xl max-w-[1024px] text-center text-gray-500">
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Modi molestiae natus recusandae.
-        Dolorem inventore perspiciatis quibusdam? Adipisci aliquid commodi dicta dolor, facilis,
-        fugit nam obcaecati sapiente tempore ut velit, voluptas.
+      <div v-if="prizes">
+        <div class="text-3xl font-bold my-8 mb-16 text-center">Победительницы</div>
+        <div class="gap-8 columns-3 h-full my-8">
+          <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
+            <div class="relative">
+              <div
+                :class="[
+                  'w-[200px] h-[200px] rounded-full shadow-lg flex overflow-hidden relative',
+                  { '-mt-12': prize.place === 1 }
+                ]"
+              >
+                <img :src="prize.image" alt="" />
+              </div>
+              <div
+                :class="[
+                  'absolute w-[48px] h-[48px] rounded-full  bottom-2 left-1/2 transform -translate-x-1/2 translate-y-1/2 flex items-center justify-center font-bold text-2xl',
+                  {
+                    'bg-yellow-300': prize.place === 1
+                  },
+                  {
+                    'bg-cyan-400': prize.place === 2
+                  },
+                  {
+                    'bg-violet-400': prize.place === 3
+                  }
+                ]"
+              >
+                {{ prize.place }}
+              </div>
+            </div>
+
+            <div class="text-2xl text-center mt-3">{{ prize.name }}</div>
+            <div>{{ prize.description }}</div>
+          </div>
+        </div>
       </div>
       <div class="mt-6">
         <span class="text-3xl text-center"
@@ -121,15 +146,9 @@
           <div>{{ prize.description }}</div>
         </div>
       </div>
-      <div
-        v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT"
-        class="flex items-center justify-center mt-16 w-full"
-      >
-        <contest-user />
-      </div>
       <div class="mt-16">
-        <div class="text-xl md:text-[48px] mb-16">Участницы конкурса</div>
-        <contest-active-users :is-active-contest="activeContest.active" />
+        <div class="text-xl md:text-[48px] mb-16">Участницы прошеддего конкурса</div>
+        <contest-active-users :is-active-contest="false" />
       </div>
     </div>
   </div>

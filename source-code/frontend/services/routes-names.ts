@@ -16,5 +16,6 @@ export const enum RoutesNames {
   ACTIVE_CONTEST = '/platform/contest',
   STATISTICS = '/platform/statistics',
   FAVORITES = '/platform/favorites',
-  MESSENGER = '/platform/messenger'
+  MESSENGER = '/platform/messenger',
+  WINNER_PAGE = '/platform/contest-winner'
 }
