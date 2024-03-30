@@ -17,6 +17,10 @@ const personalRepository = {
   profile: () => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/me')
+  },
+  like: params => {
+    const { $http } = useNuxtApp()
+    console.log('user id: ', params)
   }
 }
 export default personalRepository

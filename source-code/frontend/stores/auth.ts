@@ -14,6 +14,7 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await personalRepository.refresh()
         const { data } = response
+        console.log('ttL: ', data)
         const newToken = data.token.original.access_token
         localStorage.setItem(this.authTokenKey, newToken)
         this.isAuth = true

@@ -7,6 +7,7 @@
   import ContestCard from '~/components/contest/ContestCard.vue'
   import { EUserAccountType } from '~/services/enums'
   import contestRepository from '~/services/repository/contestRepository'
+  import ContestActiveUsers from '~/components/contest/ContestActiveUsers.vue'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -17,25 +18,12 @@
   const userStore = useUserStore()
 
   const activeContest = ref(null)
-  const contestBlock = ref(null)
-  const activePlayers = ref<IContestPlayers | null>(null)
   const fetchActiveContest = async () => {
     const response = await contestRepository.prizeList()
     const { data } = response
     activeContest.value = data.contest
   }
-  const fetchActiveModel = async () => {
-    const { data } = await contestRepository.currentUserList()
-    contestBlock.value = data
-    console.log(contestBlock)
-  }
-  const fetchActivePlayers = async () => {
-    fetch('/mock/mock-contest-players.json')
-      .then(response => response.json())
-      .then(data => {
-        activePlayers.value = data.contest as IContestPlayers
-      })
-  }
+
   const prizes = computed(() => {
     if (activeContest.value.prizes) {
       const sorted = activeContest.value.prizes.sort(
@@ -57,14 +45,7 @@
   })
 
   onMounted(async () => {
-    const [contestData, modelData] = await Promise.all([
-      contestRepository.prizeList(),
-      contestRepository.currentUserList()
-    ])
-
-    activeContest.value = contestData.data.contest
-    contestBlock.value = modelData.data
-    console.log('cooo: ', contestBlock.value)
+    await fetchActiveContest()
   })
 </script>
 
@@ -135,42 +116,12 @@
         </div>
       </div>
       <div
-        v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT && contestBlock"
+        v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT"
         class="flex items-center justify-center mt-16 w-full"
       >
-        <contest-user
-          :is-active="!!contestBlock?.contest_model"
-          :contest-user="contestBlock?.contest_model"
-        />
+        <contest-user />
       </div>
-      <div class="mt-16">
-        <div class="text-[48px] mb-16">Участницы конкурса</div>
-        <n-grid
-          v-if="activePlayers && activePlayers.users.length > 0"
-          cols="2 m:3 l:4"
-          :x-gap="10"
-          :y-gap="10"
-          responsive="screen"
-        >
-          <n-grid-item v-for="(player, idx) in activePlayers.users" :key="idx">
-            <contest-card :contest-item="player" />
-          </n-grid-item>
-        </n-grid>
-        <div v-else>
-          <n-empty description="Участниц пока нет(">
-            <template #icon>
-              <n-icon :size="36" color="#19A058">
-                <Camera />
-              </n-icon>
-            </template>
-            <template v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT" #extra>
-              <n-button size="large" type="primary" tag="a" href="#prizes" dashed>
-                Стать участницей
-              </n-button>
-            </template>
-          </n-empty>
-        </div>
-      </div>
+      <contest-active-users class="mt-16" />
     </div>
   </div>
 </template>

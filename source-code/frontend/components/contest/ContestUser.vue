@@ -3,19 +3,29 @@
   import { ref } from 'vue'
   import { ContestUserModal } from '#components'
   import { RoutesNames } from '~/services/routes-names'
-
-  interface IProps {
-    isActive: boolean
-    contestUser: unknown
-  }
-
-  const props = defineProps<IProps>()
+  import contestRepository from '~/services/repository/contestRepository'
 
   const isEditForm = ref(false)
 
   const handleEditForm = () => {
     isEditForm.value = true
     handleModal()
+  }
+
+  const contestUser = ref(null)
+
+  const fetchActiveModel = async () => {
+    console.log('saver')
+    const { data } = await contestRepository.currentUserList()
+    contestUser.value = data.contest_model
+    console.log(contestUser.value)
+  }
+
+  const currentModel = computed(() => contestUser.value)
+
+  const save = async () => {
+    await fetchActiveModel()
+    handleCloseModal()
   }
 
   const showModal = ref(false)
@@ -26,11 +36,14 @@
     showModal.value = false
     isEditForm.value = false
   }
+  onMounted(async () => {
+    await fetchActiveModel()
+  })
 </script>
 
 <template>
   <div class="w-full">
-    <n-space v-if="!isActive" justify="center">
+    <n-space v-if="!currentModel" justify="center">
       <n-button type="info" size="large" class="text-3xl py-8" @click="handleModal()"
         >Стать участником конкурса</n-button
       >
@@ -40,11 +53,11 @@
         <div class="text-2xl">
           Я участница конкурса,мой рейтинг
           <n-gradient-text gradient="linear-gradient(to right, #8a2387, #e94057, #f27121)">
-            {{ contestUser.rating }}
+            {{ currentModel.rating }}
           </n-gradient-text>
         </div>
         <div>
-          <img :src="contestUser.photo" alt="" class="w-[150px] h-[150px]" />
+          <img :src="currentModel.photo" alt="" class="w-[150px] h-[150px]" />
         </div>
         <n-space class="mt-6">
           <n-button
@@ -75,7 +88,7 @@
   <contest-user-modal
     v-model:show="showModal"
     :is-edit="isEditForm"
-    @formsave="handleCloseModal()"
+    @formsave="save"
     @close="handleCloseModal()"
   />
 </template>

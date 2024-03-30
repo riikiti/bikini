@@ -1,8 +1,11 @@
 import { useRuntimeConfig, defineNuxtPlugin } from '#imports'
 import axios, { type AxiosInstance } from 'axios'
 import { stringify } from 'qs'
+import { useAuthStore } from '#imports'
+
 export default defineNuxtPlugin(() => {
   const { apiUrl, authTokenKey } = useRuntimeConfig().public
+  const authStore = useAuthStore()
   const http = axios.create({
     baseURL: apiUrl,
     paramsSerializer: params => stringify(params)
@@ -19,6 +22,21 @@ export default defineNuxtPlugin(() => {
     },
     function (error) {
       return Promise.reject(error)
+    }
+  )
+  http.interceptors.response.use(
+    response => response,
+    async error => {
+      if (error.response.data.message === 'Token has expired') {
+        await authStore.refresh()
+        const token = localStorage.getItem(authTokenKey)
+        error.config.headers.authorization = `Bearer ${token}`
+        return http.request(error.config)
+      }
+      if (error.response.status === 401) {
+        authStore.removeToken()
+        return Promise.reject(error)
+      }
     }
   )
 
