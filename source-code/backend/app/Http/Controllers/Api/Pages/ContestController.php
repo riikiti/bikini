@@ -156,10 +156,8 @@ class ContestController extends Controller
         $check = $this->checkService->checkUser($request);
         $contests = Contest::all();
         $data = [];
-        $i = 0;
 
         foreach ($contests as $contest) {
-            $i++;
             //берем верхние 3 по данному конкурсу
             $allPublications = ContestModel::where('contest_id', $contest->id)->take(3)->get();
             // сортируем по рейтингу в порядке убывания
@@ -168,8 +166,8 @@ class ContestController extends Controller
                     return $publication->freeRating + $publication->additionalFreeRating + $publication->paidRating;
                 });
             $data[] = [
-                "contest_$i" => $contest,
-                "contest_models_$i" => $sorted,
+                "contest" => $contest,
+                "contest_models" => $sorted,
             ];
         }
 
