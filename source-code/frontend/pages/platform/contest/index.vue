@@ -15,7 +15,8 @@
     middleware: 'auth'
   })
 
-  const userStore = useUserStore()
+  const userStore = useAuthStore()
+  const { user } = storeToRefs(userStore)
 
   const activeContest = ref(null)
 
@@ -122,7 +123,7 @@
         </div>
       </div>
       <div
-        v-if="userStore.accountType === EUserAccountType.MODEL_ACCOUNT"
+        v-if="user.role === EUserAccountType.MODEL_ACCOUNT"
         class="flex items-center justify-center mt-16 w-full"
       >
         <contest-user />

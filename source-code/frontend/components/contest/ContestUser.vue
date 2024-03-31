@@ -39,6 +39,7 @@
   onMounted(async () => {
     await fetchActiveModel()
   })
+  /*todo refetch all active users*/
 </script>
 
 <template>
