@@ -8,6 +8,7 @@
   import ProfileActiveContest from '~/components/Profile/ProfileActiveContest.vue'
   import { NCarousel, NCarouselItem, NGradientText, NGrid, NGridItem, NModal } from 'naive-ui'
   import { GalleryCard } from '#components'
+  import { storeToRefs } from 'pinia'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -15,11 +16,12 @@
     middleware: ['auth']
   })
 
-  const userStore = useUserStore()
+  const userStore = useAuthStore()
+  const { user } = storeToRefs(userStore)
   const settingsStore = useSettingsStore()
-
+  console.log(user)
   const modelYear = computed(() => {
-    return new Date().getFullYear() - userStore.info?.birthdate || null
+    return new Date().getFullYear() - user.value.info?.birthdate || null
   })
 
   const userActions = ref<IUserProfileAction[]>([
@@ -87,19 +89,19 @@
     },
     {
       header: 'Рост',
-      value: `${userStore.info?.height} см`
+      value: `${user.value.info?.height} см`
     },
     {
       header: 'Цвет волос',
-      value: userStore.info?.hair.color
+      value: user.value.info?.hair.color
     },
     {
       header: 'Размер бюстгалтера',
-      value: userStore.info?.breast.size
+      value: user.value.info?.breast.size
     },
     {
       header: 'Вес',
-      value: `${userStore.info?.weight} кг`
+      value: `${user.value.info?.weight} кг`
     }
   ])
   const photos: Ref<IPhoto[]> = ref([])

@@ -25,8 +25,11 @@
   interface IProps {
     route: string
     method: string
+    name?: string
   }
-  const props = defineProps<IProps>()
+  const props = withDefaults(defineProps<IProps>(), {
+    name: 'image'
+  })
 
   const emits = defineEmits<{
     (e: 'uploaded', file: any): void
@@ -56,7 +59,7 @@
 
 <template>
   <file-pond
-    name="image"
+    :name="name"
     :allow-multiple="false"
     accept-file-types="image/png, imgage/jpeg"
     :server="serverConfig"

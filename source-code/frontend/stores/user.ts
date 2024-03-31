@@ -18,16 +18,7 @@ export const useUserStore = defineStore('user', {
       }
     }
   },
-  actions: {
-    async fetchUser() {
-      try {
-        const response = await personalRepository.profile()
-        this.user = response.data.user.original
-      } catch (error) {
-        console.log(error)
-      }
-    }
-  }
+  actions: {}
 })
 
 /*isAuth: true,

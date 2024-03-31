@@ -6,7 +6,6 @@
   import { NCard } from 'naive-ui'
   import { ref } from 'vue'
   import { useAuthStore } from '~/stores/auth'
-  import { useUserStore } from '~/stores/user'
   import { useRouter, definePageMeta } from '#imports'
   import { RoutesNames } from '~/services/routes-names'
 
@@ -15,7 +14,6 @@
   })
 
   const authStore = useAuthStore()
-  const userStore = useUserStore()
   const router = useRouter()
 
   const isLoginForm = ref<boolean>(true)
@@ -38,7 +36,7 @@
   const login = async data => {
     await authStore.login(data)
     if (authStore.isAuth) {
-      await userStore.fetchUser()
+      await authStore.profile()
       await router.push(RoutesNames.ACTIVE_CONTEST)
     }
   }
@@ -53,7 +51,7 @@
     }
     await authStore.register(newData)
     if (authStore.isAuth) {
-      await userStore.fetchUser()
+      await authStore.profile()
       await router.push(RoutesNames.ACTIVE_CONTEST)
     }
   }

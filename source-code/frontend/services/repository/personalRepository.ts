@@ -18,6 +18,11 @@ const personalRepository = {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/me')
   },
+  settingsList: async () => {
+    const { $http } = useNuxtApp()
+    const response = await $http.get('api/property?role=model')
+    return response.data.data
+  },
   like: params => {
     const { $http } = useNuxtApp()
     console.log('user id: ', params)

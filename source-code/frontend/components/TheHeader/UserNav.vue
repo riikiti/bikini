@@ -1,17 +1,20 @@
 <script setup lang="ts">
   import { h, ref, type Component } from 'vue'
   import UserAvatar from '~/components/TheHeader/UserAvatar.vue'
-  import { useUserStore } from '~/stores/user'
   import { NDropdown, NIcon } from 'naive-ui'
   import { useI18n, useRouter } from '#imports'
   import { Settings, User, Wallet, LogOut } from 'lucide-vue-next'
   import { RoutesNames } from '~/services/routes-names'
+  import { useAuthStore } from '#imports'
+  import { storeToRefs } from 'pinia'
 
   const router = useRouter()
 
   const { t } = useI18n()
 
-  const userStore = useUserStore()
+  const userStore = useAuthStore()
+  const { user } = storeToRefs(userStore)
+
   enum UserAction {
     'SETTINGS',
     'PROFILE',
@@ -27,7 +30,8 @@
   }
 
   const logout = () => {
-    console.log('logout')
+    userStore.logout()
+    router.push(RoutesNames.MAIN)
   }
 
   const userOptions = ref([
@@ -74,9 +78,11 @@
 </script>
 
 <template>
-  <n-dropdown trigger="click" :options="userOptions" @select="selectUserOption">
-    <user-avatar :img="userStore.avatar" :name="userStore.name" />
-  </n-dropdown>
+  <div v-if="user">
+    <n-dropdown trigger="click" :options="userOptions" @select="selectUserOption">
+      <user-avatar :img="user.avatar" :name="user.name" />
+    </n-dropdown>
+  </div>
 </template>
 
 <style scoped></style>

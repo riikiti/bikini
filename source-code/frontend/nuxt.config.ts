@@ -4,7 +4,12 @@ export default defineNuxtConfig({
     strict: true
   },
   devtools: { enabled: true },
-  modules: ['@pinia/nuxt', '@nuxtjs/i18n', '@nuxtjs/tailwindcss'],
+  modules: [
+    '@pinia/nuxt',
+    '@pinia-plugin-persistedstate/nuxt',
+    '@nuxtjs/i18n',
+    '@nuxtjs/tailwindcss'
+  ],
   postcss: {
     plugins: {
       tailwindcss: {},

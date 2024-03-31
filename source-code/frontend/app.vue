@@ -11,7 +11,6 @@
     NModalProvider,
     NNotificationProvider
   } from 'naive-ui'
-  const userStore = useUserStore()
   const authStore = useAuthStore()
   const settingsStore = useSettingsStore()
   const { isMobile } = storeToRefs(settingsStore)
@@ -23,9 +22,8 @@
       isMobile.value = mq.matches
     })
   })
-
   onMounted(async () => {
-    await userStore.fetchUser()
+    await authStore.profile()
   })
 </script>
 <template>

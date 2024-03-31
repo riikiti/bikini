@@ -1,8 +1,8 @@
 <script setup lang="ts">
   import { EUserAccountType } from '~/services/enums'
-  import { useUserStore } from '~/stores/user'
   import type { IUserBaseStatistics, IUserProfileAction } from '~/services/models'
   import { NButton, NEllipsis, NGrid, NGridItem, NIcon, NSpace, NTooltip } from 'naive-ui'
+  import { storeToRefs } from 'pinia'
 
   interface IProps {
     userActions: IUserProfileAction[]
@@ -11,7 +11,8 @@
 
   const props = defineProps<IProps>()
 
-  const userStore = useUserStore()
+  const userStore = useAuthStore()
+  const user = storeToRefs(userStore)
 </script>
 
 <template>
@@ -21,15 +22,16 @@
         <n-space align="center" size="large">
           <n-space vertical>
             <div class="h-[150px] w-[150px] rounded-full overflow-hidden">
-              <img :src="userStore.avatar" :alt="userStore.name" class="w-full h-full" />
+              <img v-if="user.avatar" :src="user.avatar" :alt="user.name" class="w-full h-full" />
+              <img v-else src="~/assets/images/profile/user-default.png" class="w-full h-full" />
             </div>
-            <div class="mt-4 font-bold text-2xl">{{ userStore.name }}</div>
+            <div class="mt-4 font-bold text-2xl">{{ user.name }}</div>
           </n-space>
           <n-space vertical>
             <div v-for="(userAction, idx) in userActions" :key="idx">
               <n-tooltip trigger="hover" placement="bottom">
                 <template #trigger>
-                  <n-button @click="userAction.callback(userStore.id)">
+                  <n-button @click="userAction.callback(user.id)">
                     <n-icon :size="24" :component="userAction.component" />
                   </n-button>
                 </template>
@@ -39,12 +41,12 @@
           </n-space>
         </n-space>
       </n-grid-item>
-      <n-grid-item v-if="userStore.role === EUserAccountType.MODEL_ACCOUNT" :span="2">
+      <n-grid-item v-if="user.role === EUserAccountType.MODEL_ACCOUNT" :span="2">
         <n-space justify="center">
           <div class="mt-[74px]">
-            <div>{{ userStore.info?.size }} cm</div>
-            <div class="mt-1">{{ userStore.info?.waist }} cm</div>
-            <div class="mt-1">{{ userStore.info?.hips }} cm</div>
+            <div>{{ user.info?.size }} cm</div>
+            <div class="mt-1">{{ user.info?.waist }} cm</div>
+            <div class="mt-1">{{ user.info?.hips }} cm</div>
           </div>
           <div class="h-full">
             <img
@@ -61,24 +63,24 @@
           </n-space>
         </n-space>
       </n-grid-item>
-      <n-grid-item v-if="userStore.role === EUserAccountType.MODEL_ACCOUNT" :span="2">
+      <n-grid-item v-if="user.role === EUserAccountType.MODEL_ACCOUNT" :span="2">
         <n-space vertical class="h-full">
           <n-space size="medium">
             <div class="font-bold">Страна:</div>
             <n-tooltip trigger="hover" placement="bottom">
               <template #trigger>
-                <img :src="userStore.country?.icon" class="shadow-lg w-[20px] h-[20px]" />
+                <img :src="user.country?.icon" class="shadow-lg w-[20px] h-[20px]" />
               </template>
-              {{ userStore.country?.name }}
+              {{ user.country?.name }}
             </n-tooltip>
           </n-space>
           <n-space size="medium">
             <div class="font-bold">Город:</div>
-            <div>{{ userStore.info?.city }}</div>
+            <div>{{ user.info?.city }}</div>
           </n-space>
           <div>
             <n-ellipsis expand-trigger="click" line-clamp="3" :tooltip="false">
-              {{ userStore.info?.about }}
+              {{ user.info?.about }}
             </n-ellipsis>
           </div>
         </n-space>

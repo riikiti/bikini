@@ -6,6 +6,7 @@
   import UserAvatar from '~/components/TheHeader/UserAvatar.vue'
   import { useUserStore } from '~/stores/user'
   import { useI18n } from '#imports'
+  import { storeToRefs } from 'pinia'
 
   interface IProps {
     userMenu: ILinkSettings[]
@@ -13,7 +14,8 @@
   const props = defineProps<IProps>()
 
   const { t } = useI18n()
-  const userStore = useUserStore()
+  const userStore = useAuthStore()
+  const user = storeToRefs(userStore)
   const { userMenu } = toRefs(props)
   const isOpen = ref(false)
   const toggleOpen = () => {
@@ -31,7 +33,7 @@
       class="fixed right-0 bottom-0 left-0 top-11 bg-white dark:bg-background z-50"
     >
       <div class="flex flex-col px-4 py-2 border-b">
-        <user-avatar :img="userStore.avatar" :name="userStore.name" :email="userStore.email" />
+        <user-avatar :img="user.avatar" :name="user.name" :email="user.email" />
       </div>
       <div class="mt-2">
         <div v-for="(link, index) in userMenu" :key="index" class="px-4 py-2 border-b">

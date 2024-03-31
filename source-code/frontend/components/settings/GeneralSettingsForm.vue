@@ -2,11 +2,13 @@
   import { NButton, NForm, NFormItem, NInput, NModal, NSelect, NSpace, NUpload } from 'naive-ui'
   import { computed, ref } from 'vue'
   import { useGenerateDateArray } from '~/services/utils'
-  import { useUserStore } from '~/stores/user'
   import type { UploadFileInfo } from 'naive-ui'
   import { COUNT_OF_YEARS } from '~/services/constants'
+  import { storeToRefs } from 'pinia'
+  import personalRepository from '~/services/repository/personalRepository.ts'
 
-  const userStore = useUserStore()
+  const userStore = useAuthStore()
+  const { user } = storeToRefs(userStore)
 
   const countryList = [
     { label: 'English', value: 6 },
@@ -19,6 +21,14 @@
     { label: 'Korean', value: 8 },
     { label: 'Chinese', value: 9 }
   ]
+
+  interface IProps {
+    settingsList: unknown
+  }
+
+  const props = defineProps<IProps>()
+
+  const { settingsList } = toRefs(props)
 
   const birthdaySelect = computed(() => {
     return useGenerateDateArray(COUNT_OF_YEARS)
@@ -40,6 +50,19 @@
       url: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
     }
   ])
+
+  const countries = computed(() => {
+    return (
+      settingsList.value?.countries.reduce((acc, val) => {
+        acc.push({
+          label: val.name,
+          value: val.id
+        })
+        return acc
+      }, []) ?? []
+    )
+  })
+
   ///
 
   interface ISettingsFields {
@@ -53,35 +76,38 @@
   }
 
   const modelRef = ref<ISettingsFields>({
-    name: userStore.name,
+    name: user.value.name,
     password: null,
     confirmPassword: null,
-    birthday: userStore.birthday,
-    country: userStore.country?.id ?? null,
+    birthday: user.value.birthday,
+    country: user.value.country?.id ?? null,
     city: null,
-    about: userStore.about
+    about: user.value.about
   })
+
+  const file = ref(null)
+
+  console.log(user)
+
+  const config = ref({
+    route: `/api/auth/fill/${user.value.id}`,
+    method: 'POST'
+  })
+
+  console.log(config.value)
+
+  const setFileUpload = data => {
+    file.value = data
+    console.log('file-upload: ', file.value)
+  }
 </script>
 
 <template>
+  <n-space vertical>
+    <div>Аватар</div>
+    <file-upload :route="config.route" :method="config.method" @uploaded="setFileUpload" />
+  </n-space>
   <n-form :model="modelRef">
-    <n-form-item label="Аватар">
-      <n-upload
-        action="https://www.mocky.io/v2/5e4bafc63100007100d8b70f"
-        :default-file-list="previewFileList"
-        list-type="image-card"
-        :multiple="false"
-        @preview="handlePreview"
-      />
-      <n-modal
-        v-model:show="showModalRef"
-        preset="card"
-        style="width: 600px"
-        title="A Cool Picture"
-      >
-        <img :src="previewImageUrlRef" style="width: 100%" />
-      </n-modal>
-    </n-form-item>
     <n-form-item label="Описание">
       <n-input
         v-model:value="modelRef.about"
@@ -107,7 +133,7 @@
           v-model:value="modelRef.country"
           filterable
           placeholder="Страна"
-          :options="countryList"
+          :options="countries"
         />
       </n-form-item>
       <n-form-item label="Город">

@@ -7,23 +7,31 @@
     NGridItem,
     NInput,
     NInputNumber,
-    NModal,
     NSelect,
-    NSpace,
-    NUpload
+    NSpace
   } from 'naive-ui'
   import { computed, ref } from 'vue'
   import { useGenerateDateArray } from '~/services/utils'
-  import { useUserStore } from '~/stores/user'
-  import type { UploadFileInfo } from 'naive-ui'
+
   import {
     COUNT_MIN_HEIGHT,
     COUNT_MIN_HIPS,
+    COUNT_MIN_WAIST,
     COUNT_MIN_WEIGHT,
     COUNT_OF_YEARS
   } from '~/services/constants'
+  import { storeToRefs } from 'pinia'
 
-  const userStore = useUserStore()
+  const userStore = useAuthStore()
+  const { user } = storeToRefs(userStore)
+
+  interface IProps {
+    settingsList: unknown
+  }
+
+  const props = defineProps<IProps>()
+
+  const { settingsList } = toRefs(props)
 
   const countryList = [
     { label: 'English', value: 6 },
@@ -52,14 +60,37 @@
   }
 
   const modelRef = ref<ISettingsFields>({
-    height: userStore.info?.height ?? null,
-    weight: userStore.info?.weight ?? null,
-    waist: userStore.info?.waist ?? null,
-    hips: userStore.info?.hips ?? null,
-    birthdate: userStore.info?.birthdate ?? null,
-    size: userStore.info?.size ?? null,
-    country: userStore.country?.id ?? null,
-    city: userStore.info?.city ?? null
+    height: user.value.info?.height ?? null,
+    weight: user.value.info?.weight ?? null,
+    waist: user.value.info?.waist ?? null,
+    hips: user.value.info?.hips ?? null,
+    birthdate: user.value.info?.birthdate ?? null,
+    size: user.value.info?.size ?? null,
+    country: user.value.country?.id ?? null,
+    city: user.value.info?.city ?? null
+  })
+
+  const breasts = computed(() => {
+    return (
+      settingsList.value?.breasts?.reduce((acc, val) => {
+        acc.push({
+          label: val.size,
+          value: val.id
+        })
+        return acc
+      }, []) ?? []
+    )
+  })
+  const hairs = computed(() => {
+    return (
+      settingsList.value?.hair_colors?.reduce((acc, val) => {
+        acc.push({
+          label: val.color,
+          value: val.id
+        })
+        return acc
+      }, []) ?? []
+    )
   })
 </script>
 
@@ -141,40 +172,15 @@
     <n-grid :x-gap="12" :y-gap="8" :cols="2">
       <n-grid-item>
         <n-form-item path="birthdate" label="Цвет волос">
-          <n-select
-            v-model:value="modelRef.birthdate"
-            placeholder="Select"
-            :options="birthdaySelect"
-          />
+          <n-select v-model:value="modelRef.birthdate" placeholder="Select" :options="hairs" />
         </n-form-item>
       </n-grid-item>
       <n-grid-item>
         <n-form-item path="birthdate" label="Размер бюстгалтера">
-          <n-select
-            v-model:value="modelRef.birthdate"
-            placeholder="Select"
-            :options="birthdaySelect"
-          />
+          <n-select v-model:value="modelRef.birthdate" placeholder="Select" :options="breasts" />
         </n-form-item>
       </n-grid-item>
     </n-grid>
-    <n-space size="large" item-class="w-1/2" :wrap="false">
-      <n-form-item label="Страна">
-        <n-select
-          v-model:value="modelRef.country"
-          filterable
-          placeholder="Страна"
-          :options="countryList"
-        />
-      </n-form-item>
-      <n-form-item label="Город">
-        <n-input
-          v-model:value="modelRef.city"
-          placeholder="Please enter your city"
-          @keydown.enter.prevent
-        />
-      </n-form-item>
-    </n-space>
     <n-space>
       <n-button type="info">Сохранить</n-button>
     </n-space>

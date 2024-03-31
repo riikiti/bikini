@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { definePageMeta } from '#imports'
   import usersRepository from '~/services/repository/usersRepository'
-  import { RoutesNames } from '~/services/routes-names'
+  import { ref, onMounted } from 'vue'
 
   definePageMeta({
     layout: 'profile-layout',
