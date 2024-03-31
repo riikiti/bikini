@@ -90,7 +90,7 @@
   console.log(user)
 
   const config = ref({
-    route: `/api/auth/fill/${user.value.id}`,
+    route: `/api/auth/fill`,
     method: 'POST'
   })
 
