@@ -1,0 +1,180 @@
+{
+  "status": "ok",
+  "contest": {
+    "name": "Декабрь 2023.",
+    "users": [
+      {
+        "id": 1,
+        "rating": 9,
+        "image": "https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg",
+        "user": {
+          "id": 1,
+          "avatar": "https://www.shadcn-vue.com/avatars/01.png",
+          "name": "Polina",
+          "email": "test228@mail.ru",
+          "created_at": "20.02.2024",
+          "role": "model",
+          "country": {
+            "id": 1,
+            "name": "Russia",
+            "icon": "https://bikini-star.com/flag/fi.png"
+          },
+          "info": {
+            "birthdate": 1991,
+            "height": 175,
+            "weight": 68,
+            "size": 88,
+            "waist": 88,
+            "hips": 88,
+            "city": "HELSINKI",
+            "about": "I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work ",
+            "hair": {
+              "id": 1,
+              "color": "светлые блондинка"
+            },
+            "breast": {
+              "id": 1,
+              "size": "AA"
+            },
+            "messages_status": {
+              "from_subscribers": null,
+              "from_all_models": null,
+              "from_all_fans": null,
+              "from_all_users": null,
+              "from_no_one": null
+            }
+          }
+        }
+      },
+      {
+        "id": 2,
+        "rating": 9,
+        "image": "https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg",
+        "user": {
+          "id": 1,
+          "avatar": "https://www.shadcn-vue.com/avatars/01.png",
+          "name": "Arkadiy",
+          "email": "test228@mail.ru",
+          "created_at": "20.02.2024",
+          "role": "model",
+          "country": {
+            "id": 1,
+            "name": "Russia",
+            "icon": "https://bikini-star.com/flag/fi.png"
+          },
+          "info": {
+            "birthdate": 1991,
+            "height": 175,
+            "weight": 68,
+            "size": 88,
+            "waist": 88,
+            "hips": 88,
+            "city": "HELSINKI",
+            "about": "I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work ",
+            "hair": {
+              "id": 1,
+              "color": "светлые блондинка"
+            },
+            "breast": {
+              "id": 1,
+              "size": "AA"
+            },
+            "messages_status": {
+              "from_subscribers": null,
+              "from_all_models": null,
+              "from_all_fans": null,
+              "from_all_users": null,
+              "from_no_one": null
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "rating": 200,
+        "image": "https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg",
+        "user": {
+          "id": 1,
+          "avatar": "https://www.shadcn-vue.com/avatars/01.png",
+          "name": "Valera",
+          "email": "test228@mail.ru",
+          "created_at": "20.02.2024",
+          "role": "model",
+          "country": {
+            "id": 1,
+            "name": "Russia",
+            "icon": "https://bikini-star.com/flag/fi.png"
+          },
+          "info": {
+            "birthdate": 1991,
+            "height": 175,
+            "weight": 68,
+            "size": 88,
+            "waist": 88,
+            "hips": 88,
+            "city": "HELSINKI",
+            "about": "I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work ",
+            "hair": {
+              "id": 1,
+              "color": "светлые блондинка"
+            },
+            "breast": {
+              "id": 1,
+              "size": "AA"
+            },
+            "messages_status": {
+              "from_subscribers": null,
+              "from_all_models": null,
+              "from_all_fans": null,
+              "from_all_users": null,
+              "from_no_one": null
+            }
+          }
+        }
+      },
+      {
+        "id": 3,
+        "rating": 12,
+        "image": "https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg",
+        "user": {
+          "id": 1,
+          "avatar": "https://www.shadcn-vue.com/avatars/01.png",
+          "name": "Diana",
+          "email": "test228@mail.ru",
+          "created_at": "20.02.2024",
+          "role": "model",
+          "country": {
+            "id": 1,
+            "name": "Russia",
+            "icon": "https://bikini-star.com/flag/fi.png"
+          },
+          "info": {
+            "birthdate": 2000,
+            "height": 175,
+            "weight": 68,
+            "size": 88,
+            "waist": 88,
+            "hips": 88,
+            "city": "HELSINKI",
+            "about": "I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work I would describe myself as positive, self-sufficient, supportive of other people, passionate about my work ",
+            "hair": {
+              "id": 1,
+              "color": "светлые блондинка"
+            },
+            "breast": {
+              "id": 1,
+              "size": "AA"
+            },
+            "messages_status": {
+              "from_subscribers": null,
+              "from_all_models": null,
+              "from_all_fans": null,
+              "from_all_users": null,
+              "from_no_one": null
+            }
+          }
+        }
+      }
+    ]
+  }
+}
