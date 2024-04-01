@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api\Auth;
 
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
+use App\Http\Resources\UserCompactResource;
 
 class AuthController extends Controller
 {
@@ -28,7 +29,7 @@ class AuthController extends Controller
 
     public function me()
     {
-        return response()->json(['status' => 'success', 'user' => response()->json(auth()->user())]);
+        return response()->json(['status' => 'success', 'user' => response()->json(UserCompactResource::make(auth()->user()))]);
     }
 
 
