@@ -66,14 +66,6 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
         'options' => 'array',
     ];
 
-    private ImageHelperService $imageHelper;
-
-    public function __construct()
-    {
-        $this->imageHelper = app(ImageHelperService::class);
-        $this->imageHelper->setSavingPath('avatars');
-    }
-
     public function options(){
         return $this->options = ['id' => $this->id,'name'=> $this->name,'avatar' => $this->avatar];
     }
@@ -151,14 +143,4 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
         return $this->id;
     }
 
-
-    public function setAvatarAttribute($value): void
-    {
-        $this->attributes['avatar'] = $this->imageHelper->handleImageUpload(
-            value: $value,
-            model: $this,
-            attribute: 'avatar'
-        );
-        $this->save();
-    }
 }

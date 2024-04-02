@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\FillModelInfoRequest;
 use App\Http\Resources\UserResource;
 use App\Models\User;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
@@ -40,7 +41,10 @@ class FillModelInfoController extends Controller
     {
         if ($request->avatar) {
             $this->user->fill([
-                'avatar' => Storage::disk('public')->put('/public/avatars', $request->avatar),
+
+                $name = md5(Carbon::now()) . '_' . $request->avatar->getClientOriginalName(),
+                $path = Storage::disk('public')->putFileAs('images', $request->avatar, $name),
+                'avatar' => $path,
             ]);
         }
 
@@ -51,7 +55,6 @@ class FillModelInfoController extends Controller
 
     public function fillModelInfo(array &$fields, FillModelInfoRequest $request)
     {
-
         $messages = [
             'from_subscribers' => $request->from_subscribers,
             'from_all_models' => $request->from_all_models,
