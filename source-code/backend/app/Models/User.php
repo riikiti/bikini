@@ -6,6 +6,7 @@ namespace App\Models;
 use App\Models\Property\Breast;
 use App\Models\Property\Country;
 use App\Models\Property\HairColor;
+use App\Services\Helpers\Images\ImageHelperService;
 use Filament\Panel;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
@@ -64,6 +65,14 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
         'fields' => 'array',
         'options' => 'array',
     ];
+
+    private ImageHelperService $imageHelper;
+
+    public function __construct()
+    {
+        $this->imageHelper = app(ImageHelperService::class);
+        $this->imageHelper->setSavingPath('avatars');
+    }
 
     public function options(){
         return $this->options = ['id' => $this->id,'name'=> $this->name,'avatar' => $this->avatar];
@@ -140,5 +149,16 @@ class User extends Authenticatable implements JWTSubject, FilamentUser
     public function getUserIdAttribute()
     {
         return $this->id;
+    }
+
+
+    public function setAvatarAttribute($value): void
+    {
+        $this->attributes['avatar'] = $this->imageHelper->handleImageUpload(
+            value: $value,
+            model: $this,
+            attribute: 'avatar'
+        );
+        $this->save();
     }
 }

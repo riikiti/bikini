@@ -25,8 +25,8 @@ class UserCompactResource extends JsonResource
             'name' => $this->name,
             'avatar' => $this->avatar ? $this->appUrl . '/storage/' . $this->avatar : null,
             'country' => CountryResurce::make($this->country),
-            'role'=>auth()->user()->role,
-            'info'=>$this->fields,
+            'role' => auth()->user()->role,
+            'info' => $this->fields,
         ];
         $data['active_contest'] = isset($contest);
         $data['is_favorite'] = isset($favorite);
