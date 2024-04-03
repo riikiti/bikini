@@ -25,8 +25,8 @@ class UserCompactResource extends JsonResource
             'name' => $this->name,
             'avatar' => $this->avatar ? $this->appUrl . '/storage/' . $this->avatar : null,
             'country' => CountryResurce::make($this->country),
-            'role' => auth()->user()->role,
-            'info' => $this->fields,
+            'role' => $this->role,
+            'info' => $this->fields
         ];
         $data['active_contest'] = isset($contest);
         $data['is_favorite'] = isset($favorite);
@@ -34,9 +34,7 @@ class UserCompactResource extends JsonResource
         if ($this->role == User::MODEL) {
             $this->initModelInfo($data);
         }
-        return [
-            $data
-        ];
+        return $data;
     }
 
 //todo избранное и победительницы
