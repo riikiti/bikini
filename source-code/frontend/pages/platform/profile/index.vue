@@ -93,11 +93,11 @@
     },
     {
       header: 'Цвет волос',
-      value: user.value.info?.hair.color
+      value: user.value.info?.hair?.color
     },
     {
       header: 'Размер бюстгалтера',
-      value: user.value.info?.breast.size
+      value: user.value.info?.breast?.size ?? null
     },
     {
       header: 'Вес',

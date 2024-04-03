@@ -1,11 +1,22 @@
 <script setup lang="ts">
-  import { NButton, NForm, NFormItem, NInput, NModal, NSelect, NSpace, NUpload } from 'naive-ui'
-  import { computed, ref } from 'vue'
+  import {
+    NButton,
+    NForm,
+    NFormItem,
+    NIcon,
+    NInput,
+    NModal,
+    NSelect,
+    NSpace,
+    NUpload
+  } from 'naive-ui'
+  import { computed, ref, h } from 'vue'
   import { useGenerateDateArray } from '~/services/utils'
   import type { UploadFileInfo } from 'naive-ui'
   import { COUNT_OF_YEARS } from '~/services/constants'
   import { storeToRefs } from 'pinia'
   import personalRepository from '~/services/repository/personalRepository.ts'
+  import { LockKeyhole, UnlockKeyhole } from 'lucide-vue-next'
 
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
@@ -73,17 +84,40 @@
     country: number | null
     city: string | null
     about: string | null
+    avatar: string | null
   }
 
   const modelRef = ref<ISettingsFields>({
     name: user.value.name,
-    password: null,
-    confirmPassword: null,
+    password: '',
+    confirmPassword: '',
     birthday: user.value.birthday,
     country: user.value.country?.id ?? null,
-    city: null,
-    about: user.value.about
+    city: user.value.info?.city,
+    about: user.value.info?.about,
+    avatar: user.value.avatar ?? null
   })
+
+  console.log('model: ', modelRef.value)
+
+  const rPasswordFormItemRef = ref<FormItemInst | null>(null)
+
+  function validatePasswordStartWith(rule: FormItemRule, value: string): boolean {
+    return (
+      !!modelRef.value.password &&
+      modelRef.value.password.startsWith(value) &&
+      modelRef.value.password.length >= value.length
+    )
+  }
+  function validatePasswordSame(rule, value) {
+    return value === modelRef.value.password
+  }
+
+  const handlePasswordInput = () => {
+    if (modelRef.value.confirmPassword) {
+      rPasswordFormItemRef.value?.validate({ trigger: 'password-input' })
+    }
+  }
 
   const file = ref(null)
 
@@ -91,23 +125,35 @@
 
   const config = ref({
     route: `/api/auth/fill`,
-    method: 'POST'
+    method: 'POST',
+    name: 'avatar'
   })
 
   console.log(config.value)
 
   const setFileUpload = data => {
     file.value = data
+    modelRef.value.avatar = data
     console.log('file-upload: ', file.value)
+  }
+  const formRef = ref(null)
+  const save = async () => {
+    const response = await personalRepository.save(modelRef.value)
+    console.log('save: ', response)
   }
 </script>
 
 <template>
   <n-space vertical>
     <div>Аватар</div>
-    <file-upload :route="config.route" :method="config.method" @uploaded="setFileUpload" />
+    <file-upload
+      :name="config.name"
+      :route="config.route"
+      :method="config.method"
+      @uploaded="setFileUpload"
+    />
   </n-space>
-  <n-form :model="modelRef">
+  <n-form ref="formRef" :model="modelRef">
     <n-form-item label="Описание">
       <n-input
         v-model:value="modelRef.about"
@@ -145,23 +191,42 @@
       </n-form-item>
     </n-space>
     <n-space size="large" item-class="w-1/2" :wrap="false">
-      <n-form-item label="Пароль">
+      <n-form-item label="Пароль" path="password">
         <n-input
-          v-model:value="modelRef.city"
-          placeholder="Please enter your city"
+          v-model:value="modelRef.password"
+          show-password-on="click"
+          placeholder="Please enter your Password"
+          type="password"
+          @input="handlePasswordInput"
           @keydown.enter.prevent
-        />
+        >
+          <template #password-visible-icon>
+            <n-icon :size="16" :component="h(UnlockKeyhole)" />
+          </template>
+          <template #password-invisible-icon>
+            <n-icon :size="16" :component="h(LockKeyhole)" />
+          </template>
+        </n-input>
       </n-form-item>
-      <n-form-item label="Повторить пароль">
+      <n-form-item label="Повторить пароль" path="confirmPassword">
         <n-input
-          v-model:value="modelRef.city"
-          placeholder="Please enter your city"
+          v-model:value="modelRef.confirmPassword"
+          show-password-on="click"
+          placeholder="Please repeat your Password"
+          type="password"
           @keydown.enter.prevent
-        />
+        >
+          <template #password-visible-icon>
+            <n-icon :size="16" :component="h(UnlockKeyhole)" />
+          </template>
+          <template #password-invisible-icon>
+            <n-icon :size="16" :component="h(LockKeyhole)" />
+          </template>
+        </n-input>
       </n-form-item>
     </n-space>
     <n-space>
-      <n-button type="info">Сохранить</n-button>
+      <n-button type="info" @click="save">Сохранить</n-button>
     </n-space>
   </n-form>
 </template>
