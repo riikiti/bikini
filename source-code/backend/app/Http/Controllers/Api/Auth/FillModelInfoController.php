@@ -70,20 +70,20 @@ class FillModelInfoController extends Controller
                 'city' => $request->city,
                 'about' => $request->about,
                 'messages_status' => [
-                    'from_subscribers' => $request->messages_status['from_subscribers'],
-                    'from_all_models' => $request->messages_status['from_all_models'],
-                    'from_all_fans' => $request->messages_status['from_all_fans'],
-                    'from_all_users' => $request->messages_status['from_all_users'],
-                    'from_no_one' => $request->messages_status['from_no_one']
+                    'from_subscribers' => $request->messages_status['from_subscribers'] ?? null,
+                    'from_all_models' => $request->messages_status['from_all_models'] ?? null,
+                    'from_all_fans' => $request->messages_status['from_all_fans'] ?? null,
+                    'from_all_users' => $request->messages_status['from_all_users'] ?? null,
+                    'from_no_one' => $request->messages_status['from_no_one'] ?? null
                 ],
             ];
+            $this->user->fill([
+                'country_id' => $request->country,
+                'hair_id' => $request->hair_color,
+                'breast_id' => $request->breast,
+                'fields' => $fields,
+            ])->save();
         }
-        $this->user->fill([
-            'country_id' => $request->country,
-            'hair_id' => $request->hair_color,
-            'breast_id' => $request->breast,
-            'fields' => $fields,
-        ])->save();
     }
 
     public function refreshPassword(FillModelInfoRequest $request)
