@@ -115,11 +115,11 @@
   }
 
   const message_statuses = reactive({
-    from_all_fans: false,
-    from_all_models: false,
-    from_all_users: false,
-    from_no_one: false,
-    from_subscribers: false
+    from_all_fans: user.value.info?.messages_status?.from_all_fans ?? false,
+    from_all_models: user.value.info?.messages_status?.from_all_models ?? false,
+    from_all_users: user.value.info?.messages_status?.from_all_users ?? false,
+    from_no_one: user.value.info?.messages_status?.from_no_one ?? false,
+    from_subscribers: user.value.info?.messages_status?.from_subscribers ?? false
   })
 
   const blockAllUser = value => {

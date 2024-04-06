@@ -7,6 +7,8 @@
 
   const isEditForm = ref(false)
 
+  const userStore = useAuthStore()
+
   const handleEditForm = () => {
     isEditForm.value = true
     handleModal()
@@ -25,6 +27,7 @@
 
   const save = async () => {
     await fetchActiveModel()
+    await userStore.profile()
     handleCloseModal()
   }
 
