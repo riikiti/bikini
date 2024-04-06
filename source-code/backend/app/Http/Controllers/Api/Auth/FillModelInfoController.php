@@ -65,11 +65,11 @@ class FillModelInfoController extends Controller
             'city' => $request->city,
             'about' => $request->about,
             'messages_status' => [
-                'from_subscribers' => $request->from_subscribers,
-                'from_all_models' => $request->from_all_models,
-                'from_all_fans' => $request->from_all_fans,
-                'from_all_users' => $request->from_all_users,
-                'from_no_one' => $request->from_no_one
+                'from_subscribers' => $request->messages_status['from_subscribers'],
+                'from_all_models' => $request->messages_status['from_all_models'],
+                'from_all_fans' => $request->messages_status['from_all_fans'],
+                'from_all_users' => $request->messages_status['from_all_users'],
+                'from_no_one' => $request->messages_status['from_no_one']
             ],
         ];
         if ($request->hasFile('avatar')) {

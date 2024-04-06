@@ -37,11 +37,11 @@ class FillModelInfoRequest extends FormRequest
             'city' => 'string',
             'avatar' => 'nullable',
             'about' => 'string',
-            'from_subscribers' => 'boolean',
-            'from_all_models' => 'boolean',
-            'from_all_fans' => 'boolean',
-            'from_all_users' => 'boolean',
-            'from_no_one' => 'boolean',
+            'messages_status.from_subscribers' => 'boolean',
+            'messages_status.from_all_models' => 'boolean',
+            'messages_status.from_all_fans' => 'boolean',
+            'messages_status.from_all_users' => 'boolean',
+            'messages_status.from_no_one' => 'boolean',
             'new_password' => 'string',
             'new_password_confirmed' => 'string'
         ];

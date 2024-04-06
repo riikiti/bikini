@@ -33,9 +33,7 @@ class UserCompactResource extends JsonResource
         $data['active_contest'] = isset($contest) ? ContestCompactResource::make($contest) : false;
         $data['is_favorite'] = $favorite ?? false;
         $data['is_winner'] = $isWinner;
-        if ($this->role == User::MODEL) {
-            $this->initModelInfo($data);
-        }
+        $this->initModelInfo($data);
         return $data;
     }
 
