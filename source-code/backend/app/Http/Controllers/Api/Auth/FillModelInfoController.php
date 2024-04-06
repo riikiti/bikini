@@ -78,6 +78,12 @@ class FillModelInfoController extends Controller
             ]);
         }
 
+        if ($request->hasFile('avatar')) {
+            $this->user->fill([
+                'avatar' => Storage::disk('public')->put('/avatars', $request->file('avatar')),
+            ]);
+        }
+
         $this->user->fill([
             'country_id' => $request->country,
             'hair_id' => $request->hair_color,
