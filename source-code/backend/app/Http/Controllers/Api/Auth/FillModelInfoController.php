@@ -60,6 +60,9 @@ class FillModelInfoController extends Controller
                 'avatar' => Storage::disk('public')->put('/avatars', $request->file('avatar')),
             ]);
         } else {
+            $this->user->fill([
+                'avatar' => Storage::disk('public')->put('/avatars', $request->file('avatar')),
+            ]);
             $fields = [
                 'birthdate' => $request->birthdate,
                 'height' => $request->height,
