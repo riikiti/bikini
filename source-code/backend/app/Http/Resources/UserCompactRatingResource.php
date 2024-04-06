@@ -28,17 +28,16 @@ class UserCompactRatingResource extends JsonResource
             'avatar' => $this->avatar ? $this->appUrl . '/storage/' . $this->avatar : null,
             'country' => CountryResurce::make($this->country),
         ];
-        if($contestModel)
+        if ($contestModel) {
             $data['rating'] = ($contestModel->freeRating + $contestModel->additionalFreeRating + $contestModel->paidRating);
+        }
         $data['active_contest'] = isset($contest);
         $data['is_favorite'] = isset($favorite);
         $data['is_winner'] = $isWinner;
         if ($this->role == User::MODEL) {
             $this->initModelInfo($data);
         }
-        return [
-            $data
-        ];
+        return $data;
     }
 
 //todo избранное и победительницы
