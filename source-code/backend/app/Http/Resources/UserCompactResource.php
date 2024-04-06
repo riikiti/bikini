@@ -27,9 +27,9 @@ class UserCompactResource extends JsonResource
             'country' => CountryResurce::make($this->country),
             'role' => $this->role,
             'info' => $this->fields,
-            'hair_color' => $this->hair ? HairColorResurce::make($this->hair) : null,
-            'breast' => $this->breast ? BreastResurce::make($this->breast) : null,
         ];
+        $data['info']['hair_color'] = $this->hair ? HairColorResurce::make($this->hair) : null;
+        $data['info']['breast'] = $this->breast ? BreastResurce::make($this->breast) : null;
         $data['active_contest'] = isset($contest) ? ContestCompactResource::make($contest) : false;
         $data['is_favorite'] = $favorite ?? false;
         $data['is_winner'] = $isWinner;
