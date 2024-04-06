@@ -17,23 +17,32 @@ class ContestModel extends Model
 
     public function Contests(): BelongsTo
     {
-        return $this->belongsTo(Contest::class,'contest_id','id');
+        return $this->belongsTo(Contest::class, 'contest_id', 'id');
     }
 
     public function getContestNameAttribute()
     {
         return $this->Contests->name;
     }
+
     public function users(): BelongsTo
     {
-        return $this->belongsTo(User::class,'user_id','id');
+        return $this->belongsTo(User::class, 'user_id', 'id');
     }
+
     public function getUserEmailAttribute()
     {
         return $this->users->email;
     }
+
     public function getModelIdAttribute()
     {
         return $this->users->id;
     }
+
+    public function getRatingAttribute()
+    {
+        return $this->freeRating + $this->additionalRating + $this->paidRating;
+    }
+
 }
