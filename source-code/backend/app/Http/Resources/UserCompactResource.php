@@ -30,7 +30,7 @@ class UserCompactResource extends JsonResource
             'hair_color' => HairColorResurce::make($this->hair),
             'breast' => BreastResurce::make($this->breast),
         ];
-        $data['active_contest'] = isset($contest);
+        $data['active_contest'] = ContestResource::make($contest) ?? false;
         $data['is_favorite'] = isset($favorite);
         $data['is_winner'] = $isWinner;
         if ($this->role == User::MODEL) {
