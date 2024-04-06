@@ -27,11 +27,11 @@ class UserCompactResource extends JsonResource
             'country' => CountryResurce::make($this->country),
             'role' => $this->role,
             'info' => $this->fields,
-            'hair_color' => HairColorResurce::make($this->hair),
-            'breast' => BreastResurce::make($this->breast),
+            'hair_color' => $this->hair ? HairColorResurce::make($this->hair) : null,
+            'breast' => $this->breast ? BreastResurce::make($this->breast) : null,
         ];
-        $data['active_contest'] = ContestResource::make($contest) ?? false;
-        $data['is_favorite'] = isset($favorite);
+        $data['active_contest'] = $contest ?? false;
+        $data['is_favorite'] = $favorite ?? false;
         $data['is_winner'] = $isWinner;
         if ($this->role == User::MODEL) {
             $this->initModelInfo($data);
