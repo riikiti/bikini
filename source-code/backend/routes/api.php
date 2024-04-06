@@ -49,7 +49,10 @@ Route::apiResource('user', UserController::class)->only('index', 'show');
 
 Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/models', [ModelsPageController::class, 'getAll']);
+Route::post('/gallery-photo', [UserController::class, 'addPhoto']);
+
 Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
+
 Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
 
 Route::post('/box-photo', [BoxFillController::class, 'fillBoxPhoto']);

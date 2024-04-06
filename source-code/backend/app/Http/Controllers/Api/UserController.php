@@ -11,8 +11,11 @@ use App\Http\Resources\UserCompactResource;
 use App\Http\Resources\UserResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
+use App\Models\ModelPhoto;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
 {
@@ -60,6 +63,25 @@ class UserController extends Controller
                 ]);
             }
         }
+
+
+    }
+
+    public function addPhoto(Request $request): JsonResponse
+    {
+        $data = $request->validate([
+            'description' => 'nullable'
+        ]);
+        $data = [
+            'image' => Storage::disk('public')->put('/public/ModelPhotos', $request->file('image')),
+            'description' => $data['description'],
+            'user_id' => auth()->user()->id,
+        ];
+
+        return response()->json([
+            'status' => 'ok',
+            'model_photo' => ModelPhotoResource::make(ModelPhoto::create($data))
+        ]);
 
 
     }
