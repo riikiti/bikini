@@ -19,7 +19,7 @@
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
   const settingsStore = useSettingsStore()
-  console.log(user)
+  console.log('user: ', user.value)
   const modelYear = computed(() => {
     return new Date().getFullYear() - user.value.info?.birthdate || null
   })

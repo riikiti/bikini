@@ -26,9 +26,11 @@
     route: string
     method: string
     name?: string
+    files?: any[]
   }
   const props = withDefaults(defineProps<IProps>(), {
-    name: 'image'
+    name: 'image',
+    files: () => []
   })
 
   const emits = defineEmits<{
@@ -60,6 +62,7 @@
 <template>
   <file-pond
     :name="name"
+    :files="files"
     :allow-multiple="false"
     accept-file-types="image/png, imgage/jpeg"
     :server="serverConfig"

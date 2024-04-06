@@ -21,6 +21,7 @@
     COUNT_OF_YEARS
   } from '~/services/constants'
   import { storeToRefs } from 'pinia'
+  import personalRepository from '~/services/repository/personalRepository'
 
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
@@ -53,10 +54,14 @@
     height: number | null
     weight: number | null
     birthdate: string | number | null
-    waist: number | string
+    waist: number | string | null
     country: number | null
     size: number | null
+    hips: number | null
     city: string | null
+    about: string | null
+    hair_color: number | null
+    breast: number | null
   }
 
   const modelRef = ref<ISettingsFields>({
@@ -67,7 +72,10 @@
     birthdate: user.value.info?.birthdate ?? null,
     size: user.value.info?.size ?? null,
     country: user.value.country?.id ?? null,
-    city: user.value.info?.city ?? null
+    hair: user.value.info?.hair?.id ?? null,
+    breast: user.value.info?.breast?.id ?? null,
+    city: user.value.info?.city ?? null,
+    about: user.value.info?.about ?? null
   })
 
   const breasts = computed(() => {
@@ -92,6 +100,11 @@
       }, []) ?? []
     )
   })
+  const save = async () => {
+    const response = await personalRepository.save(modelRef.value)
+    await userStore.profile()
+    console.log('save: ', response)
+  }
 </script>
 
 <template>
@@ -172,17 +185,17 @@
     <n-grid :x-gap="12" :y-gap="8" :cols="2">
       <n-grid-item>
         <n-form-item path="birthdate" label="Цвет волос">
-          <n-select v-model:value="modelRef.birthdate" placeholder="Select" :options="hairs" />
+          <n-select v-model:value="modelRef.hair_color" placeholder="Select" :options="hairs" />
         </n-form-item>
       </n-grid-item>
       <n-grid-item>
         <n-form-item path="birthdate" label="Размер бюстгалтера">
-          <n-select v-model:value="modelRef.birthdate" placeholder="Select" :options="breasts" />
+          <n-select v-model:value="modelRef.breast" placeholder="Select" :options="breasts" />
         </n-form-item>
       </n-grid-item>
     </n-grid>
     <n-space>
-      <n-button type="info">Сохранить</n-button>
+      <n-button type="info" @click="save">Сохранить</n-button>
     </n-space>
   </n-form>
 </template>
