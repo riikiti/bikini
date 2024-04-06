@@ -74,9 +74,9 @@ class FillModelInfoController extends Controller
             'about' => $request->about,
             'messages_status' => $messages,
         ];
-        if ($request->avatar) {
+        if ($request->hasFile('avatar')) {
             $this->user->fill([
-                'avatar' => Storage::disk('public')->put('/public/avatars', $request->avatar),
+                'avatar' => Storage::disk('public')->put('/public/avatars', $request->file('avatar')),
             ]);
         }
 
