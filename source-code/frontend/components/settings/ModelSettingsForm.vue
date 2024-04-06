@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import {
     NButton,
+    NCheckbox,
     NForm,
     NFormItem,
     NGrid,
@@ -72,7 +73,7 @@
     birthdate: user.value.info?.birthdate ?? null,
     size: user.value.info?.size ?? null,
     country: user.value.country?.id ?? null,
-    hair: user.value.info?.hair?.id ?? null,
+    hair_color: user.value.info?.hair_color?.id ?? null,
     breast: user.value.info?.breast?.id ?? null,
     city: user.value.info?.city ?? null,
     about: user.value.info?.about ?? null
@@ -101,10 +102,45 @@
     )
   })
   const save = async () => {
-    const response = await personalRepository.save(modelRef.value)
+    console.log('fsdafas: ', message_statuses)
+    const messages_status = JSON.parse(JSON.stringify(message_statuses))
+
+    const text = { ...modelRef.value, messages_status }
+
+    console.log('fsdafs ff', text)
+
+    const response = await personalRepository.save(text)
     await userStore.profile()
     console.log('save: ', response)
   }
+
+  const message_statuses = reactive({
+    from_all_fans: false,
+    from_all_models: false,
+    from_all_users: false,
+    from_no_one: false,
+    from_subscribers: false
+  })
+
+  const blockAllUser = value => {
+    if (value) {
+      Object.keys(message_statuses).map(item => {
+        if (item === 'from_no_one') {
+          message_statuses[item] = true
+        } else {
+          message_statuses[item] = false
+        }
+      })
+    } else {
+      Object.keys(message_statuses).map(item => {
+        message_statuses[item] = false
+      })
+    }
+  }
+
+  const isBlockedCheckbox = computed(() => {
+    return message_statuses.from_all_users || message_statuses.from_no_one
+  })
 </script>
 
 <template>
@@ -192,6 +228,83 @@
         <n-form-item path="birthdate" label="Размер бюстгалтера">
           <n-select v-model:value="modelRef.breast" placeholder="Select" :options="breasts" />
         </n-form-item>
+      </n-grid-item>
+    </n-grid>
+    <n-grid :x-gap="12" :y-gap="8" :cols="1">
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_subscribers"
+            :disabled="isBlockedCheckbox"
+          >
+            <div class="uppercase">Рекомендуем</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="uppercase text-lg">ОТ МОИХ ПОДПИСЧИКОВ</div>
+          <div>
+            Только те кто заплатил вам за подписку на ваш блог или купил ваш платный бокс смогут
+            написать вам сообщение. Если вы загрузили бесплатный бокс то пользователи так же смогут
+            вам писать.
+          </div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_all_models"
+            :disabled="isBlockedCheckbox"
+            ><div class="uppercase">ОТ ВСЕХ МОДЕЛЕЙ</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>
+            Другие участницы не смогут написать сообщение. Только аккаунты зарегестрированные как
+            “МОДЕЛИ” смогут написать вам сообщение.
+          </div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_all_fans"
+            :disabled="isBlockedCheckbox"
+          >
+            <div class="uppercase">ОТ ВСЕХ ФАНОВ</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>
+            Другие участницы не смогут написать сообщение. Только аккаунты зарегестрированные как
+            “ФАН” смогут написать вам сообщение.
+          </div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_all_users"
+            :disabled="message_statuses.from_no_one"
+          >
+            <div class="uppercase">ОТ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>Любой зарегестрированный пользователь сможет написать вам сообщение.</div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_no_one"
+            @update:checked="blockAllUser($event)"
+          >
+            <div class="uppercase">НИ ОТ КОГО</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>Ни кто не сможет вам написать сообщение</div>
+        </div>
       </n-grid-item>
     </n-grid>
     <n-space>
