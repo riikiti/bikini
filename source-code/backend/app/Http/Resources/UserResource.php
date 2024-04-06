@@ -29,7 +29,7 @@ class UserResource extends JsonResource
             $this->initModelInfo($data);
         }
 
-        return [$data];
+        return $data;
     }
 
     public function initModelInfo(array &$data): array
