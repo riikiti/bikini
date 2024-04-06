@@ -55,29 +55,29 @@ class FillModelInfoController extends Controller
 
     public function fillModelInfo(array &$fields, FillModelInfoRequest $request)
     {
-        $fields = [
-            'birthdate' => $request->birthdate,
-            'height' => $request->height,
-            'weight' => $request->weight,
-            'size' => $request->size,
-            'waist' => $request->waist,
-            'hips' => $request->hips,
-            'city' => $request->city,
-            'about' => $request->about,
-            'messages_status' => [
-                'from_subscribers' => $request->messages_status['from_subscribers'],
-                'from_all_models' => $request->messages_status['from_all_models'],
-                'from_all_fans' => $request->messages_status['from_all_fans'],
-                'from_all_users' => $request->messages_status['from_all_users'],
-                'from_no_one' => $request->messages_status['from_no_one']
-            ],
-        ];
-        if ($request->avatar) {
+        if ($request->hasFile('avatar')) {
             $this->user->fill([
                 'avatar' => Storage::disk('public')->put('/avatars', $request->file('avatar')),
             ]);
+        } else {
+            $fields = [
+                'birthdate' => $request->birthdate,
+                'height' => $request->height,
+                'weight' => $request->weight,
+                'size' => $request->size,
+                'waist' => $request->waist,
+                'hips' => $request->hips,
+                'city' => $request->city,
+                'about' => $request->about,
+                'messages_status' => [
+                    'from_subscribers' => $request->messages_status['from_subscribers'],
+                    'from_all_models' => $request->messages_status['from_all_models'],
+                    'from_all_fans' => $request->messages_status['from_all_fans'],
+                    'from_all_users' => $request->messages_status['from_all_users'],
+                    'from_no_one' => $request->messages_status['from_no_one']
+                ],
+            ];
         }
-
         $this->user->fill([
             'country_id' => $request->country,
             'hair_id' => $request->hair_color,
