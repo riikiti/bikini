@@ -76,7 +76,7 @@ class FillModelInfoController extends Controller
         ];
         if ($request->hasFile('avatar')) {
             $this->user->fill([
-                'avatar' => Storage::disk('public')->put('/public/avatars', $request->file('avatar')),
+                'avatar' => Storage::disk('public')->put('/avatars', $request->file('avatar')),
             ]);
         }
 
