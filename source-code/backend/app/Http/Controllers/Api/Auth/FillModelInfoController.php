@@ -55,14 +55,6 @@ class FillModelInfoController extends Controller
 
     public function fillModelInfo(array &$fields, FillModelInfoRequest $request)
     {
-        $messages = [
-            'from_subscribers' => $request->from_subscribers,
-            'from_all_models' => $request->from_all_models,
-            'from_all_fans' => $request->from_all_fans,
-            'from_all_users' => $request->from_all_users,
-            'from_no_one' => $request->from_no_one
-        ];
-
         $fields = [
             'birthdate' => $request->birthdate,
             'height' => $request->height,
@@ -72,7 +64,13 @@ class FillModelInfoController extends Controller
             'hips' => $request->hips,
             'city' => $request->city,
             'about' => $request->about,
-            'messages_status' => $messages,
+            'messages_status' => [
+                'from_subscribers' => $request->from_subscribers,
+                'from_all_models' => $request->from_all_models,
+                'from_all_fans' => $request->from_all_fans,
+                'from_all_users' => $request->from_all_users,
+                'from_no_one' => $request->from_no_one
+            ],
         ];
         if ($request->hasFile('avatar')) {
             $this->user->fill([
