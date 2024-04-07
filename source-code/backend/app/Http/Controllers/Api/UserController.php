@@ -69,12 +69,9 @@ class UserController extends Controller
 
     public function addPhoto(Request $request): JsonResponse
     {
-        $data = $request->validate([
-            'description' => 'nullable'
-        ]);
+
         $data = [
             'image' => Storage::disk('public')->put('/public/ModelPhotos', $request->file('image')),
-            'description' => $data['description'],
             'user_id' => auth()->user()->id,
         ];
 

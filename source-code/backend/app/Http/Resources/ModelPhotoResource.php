@@ -14,7 +14,6 @@ class ModelPhotoResource extends JsonResource
         $this->appUrl = config('app.url');
         return [
             'photo' => $this->image ? $this->appUrl.'/storage/'.$this->image : null,
-            'description' => $this->description
         ];
     }
 }
