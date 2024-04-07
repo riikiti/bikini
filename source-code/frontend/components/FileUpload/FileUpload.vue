@@ -8,6 +8,7 @@
   import FilePondPluginFilePoster from 'filepond-plugin-file-poster'
 
   const authStore = useAuthStore()
+  const { apiUrl } = useRuntimeConfig().public
 
   /*  import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
   import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
@@ -46,7 +47,7 @@
   }
 
   const serverConfig = reactive({
-    url: 'http://127.0.0.1:8000',
+    url: apiUrl,
     timeout: 7000,
     process: {
       url: props.route,
