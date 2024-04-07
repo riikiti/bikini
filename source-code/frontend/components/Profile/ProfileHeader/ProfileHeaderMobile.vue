@@ -11,7 +11,7 @@
   const props = defineProps<IProps>()
 
   const userStore = useAuthStore()
-  const user = storeToRefs(userStore)
+  const { user } = storeToRefs(userStore)
 </script>
 
 <template>

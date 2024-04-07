@@ -3,14 +3,22 @@
   import { ThumbsUp } from 'lucide-vue-next'
   import { NAlert, NButton, NGrid, NGridItem, NIcon, NSpace, NTooltip } from 'naive-ui'
   import ContestCard from '~/components/contest/ContestCard.vue'
+
+  interface IProps {
+    activeContest: unknown
+  }
+  const props = defineProps<IProps>()
+
+  const userStore = useAuthStore()
+
+  const { user } = storeToRefs(userStore)
 </script>
 
 <template>
   <n-space align="center" vertical justify="center">
     <div class="flex flex-col p-4 rounded-lg overflow-hidden shadow-lg">
       <div class="mb-2 flex justify-between items-center">
-        <div>Конкурс: Декабрь 2023</div>
-        <n-alert title="Рейтинг: 9" type="success" />
+        <n-alert :title="`Рейтинг: ${activeContest.rating}`" type="success" />
       </div>
       <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" class="max-h-[500px]" />
       <n-grid :x-gap="12" :y-gap="12" :cols="3" class="w-full mt-4">

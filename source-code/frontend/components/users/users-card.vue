@@ -60,7 +60,7 @@
         width="100%"
         height="100%"
         object-fit="cover"
-        class="w-full"
+        class="w-full h-full"
       />
       <img
         v-else

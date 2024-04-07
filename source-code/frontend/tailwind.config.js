@@ -6,6 +6,5 @@ module.exports = {
   corePlugins: {
     preflight: false
   },
-  darkMode: ['class', '[data-theme="dark"]'],
-  plugins: [animate]
+  darkMode: ['class', '[data-theme="dark"]']
 }

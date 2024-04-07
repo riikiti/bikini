@@ -134,24 +134,34 @@
   const setFileUpload = data => {
     file.value = data
     modelRef.value.avatar = data
-    console.log('file-upload: ', file.value)
+    console.log('file-upload: ', JSON.parse(file.value))
   }
+
   const formRef = ref(null)
   const save = async () => {
     const response = await personalRepository.save(modelRef.value)
+    await userStore.profile()
     console.log('save: ', response)
   }
 </script>
 
 <template>
-  <n-space vertical>
+  <n-space vertical class="mb-4">
     <div>Аватар</div>
-    <file-upload
-      :name="config.name"
-      :route="config.route"
-      :method="config.method"
-      @uploaded="setFileUpload"
-    />
+    <n-space vertical class="border-gray-400 border-solid p-2 rounded">
+      <img
+        v-if="user.avatar"
+        :src="user.avatar"
+        alt=""
+        class="max-w-[200px] h-[200px] rounded-lg"
+      />
+      <file-upload
+        :name="config.name"
+        :route="config.route"
+        :method="config.method"
+        @uploaded="setFileUpload"
+      />
+    </n-space>
   </n-space>
   <n-form ref="formRef" :model="modelRef">
     <n-form-item label="Описание">

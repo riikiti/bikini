@@ -51,7 +51,7 @@
               :to="localePath(RoutesNames.ACTIVE_CONTEST)"
               class="no-underline cursor-pointer"
             >
-              <div class="font-extrabold text-slate-600 text-2xl dark:text-white">
+              <div class="font-extrabold text-slate-600 text-lg md:text-2xl dark:text-white">
                 ★ Bikini Star
               </div>
             </nuxt-link>
@@ -64,7 +64,6 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <switcher-theme />
           <n-button quaternary tag="a" :href="localePath(RoutesNames.FAVORITES)" size="medium">
             <heart />
           </n-button>

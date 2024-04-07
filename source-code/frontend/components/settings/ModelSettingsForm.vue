@@ -1,6 +1,7 @@
 <script setup lang="ts">
   import {
     NButton,
+    NCheckbox,
     NForm,
     NFormItem,
     NGrid,
@@ -21,6 +22,7 @@
     COUNT_OF_YEARS
   } from '~/services/constants'
   import { storeToRefs } from 'pinia'
+  import personalRepository from '~/services/repository/personalRepository'
 
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
@@ -53,10 +55,14 @@
     height: number | null
     weight: number | null
     birthdate: string | number | null
-    waist: number | string
+    waist: number | string | null
     country: number | null
     size: number | null
+    hips: number | null
     city: string | null
+    about: string | null
+    hair_color: number | null
+    breast: number | null
   }
 
   const modelRef = ref<ISettingsFields>({
@@ -67,7 +73,10 @@
     birthdate: user.value.info?.birthdate ?? null,
     size: user.value.info?.size ?? null,
     country: user.value.country?.id ?? null,
-    city: user.value.info?.city ?? null
+    hair_color: user.value.info?.hair_color?.id ?? null,
+    breast: user.value.info?.breast?.id ?? null,
+    city: user.value.info?.city ?? null,
+    about: user.value.info?.about ?? null
   })
 
   const breasts = computed(() => {
@@ -91,6 +100,46 @@
         return acc
       }, []) ?? []
     )
+  })
+  const save = async () => {
+    console.log('fsdafas: ', message_statuses)
+    const messages_status = JSON.parse(JSON.stringify(message_statuses))
+
+    const text = { ...modelRef.value, messages_status }
+
+    console.log('fsdafs ff', text)
+
+    const response = await personalRepository.save(text)
+    await userStore.profile()
+    console.log('save: ', response)
+  }
+
+  const message_statuses = reactive({
+    from_all_fans: user.value.info?.messages_status?.from_all_fans ?? false,
+    from_all_models: user.value.info?.messages_status?.from_all_models ?? false,
+    from_all_users: user.value.info?.messages_status?.from_all_users ?? false,
+    from_no_one: user.value.info?.messages_status?.from_no_one ?? false,
+    from_subscribers: user.value.info?.messages_status?.from_subscribers ?? false
+  })
+
+  const blockAllUser = value => {
+    if (value) {
+      Object.keys(message_statuses).map(item => {
+        if (item === 'from_no_one') {
+          message_statuses[item] = true
+        } else {
+          message_statuses[item] = false
+        }
+      })
+    } else {
+      Object.keys(message_statuses).map(item => {
+        message_statuses[item] = false
+      })
+    }
+  }
+
+  const isBlockedCheckbox = computed(() => {
+    return message_statuses.from_all_users || message_statuses.from_no_one
   })
 </script>
 
@@ -172,17 +221,94 @@
     <n-grid :x-gap="12" :y-gap="8" :cols="2">
       <n-grid-item>
         <n-form-item path="birthdate" label="Цвет волос">
-          <n-select v-model:value="modelRef.birthdate" placeholder="Select" :options="hairs" />
+          <n-select v-model:value="modelRef.hair_color" placeholder="Select" :options="hairs" />
         </n-form-item>
       </n-grid-item>
       <n-grid-item>
         <n-form-item path="birthdate" label="Размер бюстгалтера">
-          <n-select v-model:value="modelRef.birthdate" placeholder="Select" :options="breasts" />
+          <n-select v-model:value="modelRef.breast" placeholder="Select" :options="breasts" />
         </n-form-item>
       </n-grid-item>
     </n-grid>
+    <n-grid :x-gap="12" :y-gap="8" :cols="1">
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_subscribers"
+            :disabled="isBlockedCheckbox"
+          >
+            <div class="uppercase">Рекомендуем</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div class="uppercase text-lg">ОТ МОИХ ПОДПИСЧИКОВ</div>
+          <div>
+            Только те кто заплатил вам за подписку на ваш блог или купил ваш платный бокс смогут
+            написать вам сообщение. Если вы загрузили бесплатный бокс то пользователи так же смогут
+            вам писать.
+          </div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_all_models"
+            :disabled="isBlockedCheckbox"
+            ><div class="uppercase">ОТ ВСЕХ МОДЕЛЕЙ</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>
+            Другие участницы не смогут написать сообщение. Только аккаунты зарегестрированные как
+            “МОДЕЛИ” смогут написать вам сообщение.
+          </div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_all_fans"
+            :disabled="isBlockedCheckbox"
+          >
+            <div class="uppercase">ОТ ВСЕХ ФАНОВ</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>
+            Другие участницы не смогут написать сообщение. Только аккаунты зарегестрированные как
+            “ФАН” смогут написать вам сообщение.
+          </div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_all_users"
+            :disabled="message_statuses.from_no_one"
+          >
+            <div class="uppercase">ОТ ВСЕХ ПОЛЬЗОВАТЕЛЕЙ</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>Любой зарегестрированный пользователь сможет написать вам сообщение.</div>
+        </div>
+      </n-grid-item>
+      <n-grid-item>
+        <div class="flex gap-2">
+          <n-checkbox
+            v-model:checked="message_statuses.from_no_one"
+            @update:checked="blockAllUser($event)"
+          >
+            <div class="uppercase">НИ ОТ КОГО</div>
+          </n-checkbox>
+        </div>
+        <div class="flex flex-col gap-2">
+          <div>Ни кто не сможет вам написать сообщение</div>
+        </div>
+      </n-grid-item>
+    </n-grid>
     <n-space>
-      <n-button type="info">Сохранить</n-button>
+      <n-button type="info" @click="save">Сохранить</n-button>
     </n-space>
   </n-form>
 </template>

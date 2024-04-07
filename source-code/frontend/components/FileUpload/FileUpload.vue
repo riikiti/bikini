@@ -8,6 +8,7 @@
   import FilePondPluginFilePoster from 'filepond-plugin-file-poster'
 
   const authStore = useAuthStore()
+  const { apiUrl } = useRuntimeConfig().public
 
   /*  import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
   import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
@@ -26,9 +27,11 @@
     route: string
     method: string
     name?: string
+    files?: any[]
   }
   const props = withDefaults(defineProps<IProps>(), {
-    name: 'image'
+    name: 'image',
+    files: () => []
   })
 
   const emits = defineEmits<{
@@ -44,7 +47,7 @@
   }
 
   const serverConfig = reactive({
-    url: 'http://127.0.0.1:8000',
+    url: apiUrl,
     timeout: 7000,
     process: {
       url: props.route,
@@ -60,6 +63,7 @@
 <template>
   <file-pond
     :name="name"
+    :files="files"
     :allow-multiple="false"
     accept-file-types="image/png, imgage/jpeg"
     :server="serverConfig"
