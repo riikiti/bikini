@@ -5,6 +5,9 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserCompactResource;
+use App\Models\User;
+use Illuminate\Http\Request;
+
 
 class AuthController extends Controller
 {
@@ -29,7 +32,18 @@ class AuthController extends Controller
 
     public function me()
     {
-        return response()->json(['status' => 'success', 'user' => response()->json(UserCompactResource::make(auth()->user()))]);
+        // короче я проверял на других роутах такая запись работает, тут не хочет
+        $user = User::find(auth()->user()->id);
+        $check = $this->checkService->checkUser($user);
+        if ($check) {
+            return response()->json([
+                'status' => 'profile is not approved',
+                'user' => response()->json(UserCompactResource::make(auth()->user())),
+                'check' => $check,
+            ]);
+        } else {
+            return response()->json(['status' => 'success', 'user' => response()->json(UserCompactResource::make(auth()->user()))]);
+        }
     }
 
 

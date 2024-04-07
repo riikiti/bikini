@@ -15,7 +15,6 @@ class BoxController extends Controller
 {
     public function payment(Request $request, $id): JsonResponse
     {
-        $check = $this->checkService->checkUser($request);
         //находим юзера
         $user = $request->user();
         //указывем что записать и откуда взять
@@ -33,22 +32,20 @@ class BoxController extends Controller
         if($isBox)
         {
             if ($isBoxUser) {
-                return response()->json(['status' => 'Payment already exists','check' => $check]);
+                return response()->json(['status' => 'Payment already exists']);
             } else {
                 BoxUsers::create($data);
-                return response()->json(['status' => 'ок', 'data' => $data,'check' => $check]);
+                return response()->json(['status' => 'ок', 'data' => $data]);
             }
 
         } else {
-            return response()->json(['status' => 'boxing doesnt exist','check' => $check]);
+            return response()->json(['status' => 'boxing doesnt exist']);
         }
     }
 
     public function show(Request $request, $id)
     {
         $user = $request->user();
-
-        $check = $this->checkService->checkUser($request);
 
         $userBox = BoxUsers::query()
             ->where('user_id', $user->id)
@@ -58,12 +55,12 @@ class BoxController extends Controller
         if ($userBox) {
             $box = Box::query()->where('id', $id)->first();
             if (!empty($box)) {
-                return response()->json(['status' => 'success', 'data' => BoxResource::make($box),'check' => $check]);
+                return response()->json(['status' => 'success', 'data' => BoxResource::make($box)]);
             } else {
-                return response()->json(['status' => 'not found','check' => $check]);
+                return response()->json(['status' => 'not found']);
             }
         } else {
-            return response()->json(['status' => 'permission denied','check' => $check]);
+            return response()->json(['status' => 'permission denied']);
         }
 
     }

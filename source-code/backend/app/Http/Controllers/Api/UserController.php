@@ -29,39 +29,35 @@ class UserController extends Controller
                     ->get())]);
     }
 
-    public function show(Request $request, User $user)
+    public function show(User $user)
     {
-        $check = $this->checkService->checkUser($request);
+        $contest = Contest::query()->where('is_active', true)->first();
+        $modelPhoto = ContestModel::query()
+            ->where('contest_id', $contest->id)
+            ->where('user_id', $user->id)
+            ->first();
 
-        if ($check) {
+        if ($user->role === $user::MODEL && isset($modelPhoto)) {
+
             return response()->json([
-                'status' => 'profile is not approved',
-                'check' => $check
-            ]);
+                'status' => 'success',
+                'data' => [
+                    'user' => UserResource::make($user),
+                    'contest_photo' => ContestModelsResource::make($modelPhoto),
+                    'gallery_photo' => ModelPhotoResource::collection($user->photos)
+                ],]);
+        } elseif ($user->role === $user::MODEL) {
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'user' => UserResource::make($user),
+                    'gallery_photo' => ModelPhotoResource::collection($user->photos)
+                ],]);
         } else {
-            $contest = Contest::query()->where('is_active', true)->first();
-
-            $model = ContestModel::query()
-                ->where('contest_id', $contest->id)
-                ->where('user_id', $user->id)
-                ->exists();
-            if ($model) {
-                $model = ContestModel::query()
-                    ->where('contest_id', $contest->id)
-                    ->where('user_id', $user->id)
-                    ->first();
-                return response()->json([
-                    'status' => 'success',
-                    'data' => [
-                        'user' => UserResource::make($user),
-                        'contest_photo' => ContestModelsResource::make($model)
-                    ],]);
-            } else {
-                return response()->json([
-                    'status' => 'success',
-                    'data' => UserResource::make($user),
-                ]);
-            }
+            return response()->json([
+                'status' => 'success',
+                'data' => UserResource::make($user),
+            ]);
         }
 
 
@@ -83,10 +79,9 @@ class UserController extends Controller
 
     }
 
-    public function showModelPhoto(Request $request, User $user)
+    public function showModelPhoto(User $user)
     {
-        $check = $this->checkService->checkUser($request);
-
+        $check = $this->checkService->checkUser($user);
         if ($check) {
             return response()->json([
                 'status' => 'profile is not approved',

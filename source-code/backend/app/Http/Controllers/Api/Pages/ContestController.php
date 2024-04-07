@@ -23,14 +23,12 @@ class ContestController extends Controller
 
     public function prizesBlock(Request $request): JsonResponse
     {
-        $check = $this->checkService->checkUser($request);
 
         $contest = Contest::query()->where('is_active', true)->first();
 
         return response()->json([
             'status' => 'ok',
             'contest' => ContestResource::make($contest),
-            'check' => $check,
         ]);
 
     }
@@ -153,7 +151,6 @@ class ContestController extends Controller
 
     public function winnersList(Request $request): JsonResponse
     {
-        $check = $this->checkService->checkUser($request);
         $contests = Contest::all();
         $data = [];
 
@@ -171,7 +168,7 @@ class ContestController extends Controller
             ];
         }
 
-        return response()->json(['status' => 'oks', 'data' => $data, 'check' => $check]);
+        return response()->json(['status' => 'oks', 'data' => $data]);
     }
     public function show()
     {

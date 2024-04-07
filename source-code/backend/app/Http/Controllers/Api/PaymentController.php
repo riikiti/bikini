@@ -5,8 +5,6 @@ namespace App\Http\Controllers\Api;
 use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Models\Transaction;
-use App\Services\CheckService;
-use App\Services\Helpers\Payment\PaymentHelper;
 use App\Services\Helpers\Payment\PaymentHelperService;
 use Illuminate\Http\Request;
 use YooKassa\Model\Notification\NotificationEventType;
