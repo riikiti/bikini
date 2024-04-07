@@ -15,7 +15,7 @@
 
   const { t } = useI18n()
   const userStore = useAuthStore()
-  const user = storeToRefs(userStore)
+  const { user } = storeToRefs(userStore)
   const { userMenu } = toRefs(props)
   const isOpen = ref(false)
   const toggleOpen = () => {
@@ -24,10 +24,10 @@
 </script>
 
 <template>
-  <div class="h-9 flex items-center z-10">
-    <ghost-button class="transition-all" @click="toggleOpen()">
+  <div class="flex justify-center items-center z-10">
+    <n-button class="transition-all flex items-center justify-center" @click="toggleOpen()">
       <component :is="isOpen ? X : Menu"></component>
-    </ghost-button>
+    </n-button>
     <div
       v-if="isOpen"
       class="fixed right-0 bottom-0 left-0 top-11 bg-white dark:bg-background z-50"
@@ -36,8 +36,8 @@
         <user-avatar :img="user.avatar" :name="user.name" :email="user.email" />
       </div>
       <div class="mt-2">
-        <div v-for="(link, index) in userMenu" :key="index" class="px-4 py-2 border-b">
-          <a :href="link.href">{{ link.name }}</a>
+        <div v-for="(link, index) in userMenu" :key="index" class="px-4 py-2 border-b text-black">
+          <a :href="link.href" class="text-black">{{ link.name }}</a>
         </div>
         <div class="px-4 py-2 border-b">
           {{ $t('header.logout') }}

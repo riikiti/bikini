@@ -6,9 +6,20 @@
   import ProfileHeaderDesktop from '~/components/Profile/ProfileHeader/ProfileHeaderDesktop.vue'
   import type { IUserProfileAction, IUserBaseStatistics, IPhoto } from '~/services/models'
   import ProfileActiveContest from '~/components/Profile/ProfileActiveContest.vue'
-  import { NCarousel, NCarouselItem, NGradientText, NGrid, NGridItem, NModal } from 'naive-ui'
-  import { GalleryCard } from '#components'
+  import {
+    NButton,
+    NCarousel,
+    NCarouselItem,
+    NGradientText,
+    NGrid,
+    NGridItem,
+    NModal,
+    NSpace
+  } from 'naive-ui'
+  import { ContestUserModal, GalleryCard } from '#components'
   import { storeToRefs } from 'pinia'
+  import contestRepository from '~/services/repository/contestRepository'
+  import usersRepository from '~/services/repository/usersRepository'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -105,17 +116,33 @@
     }
   ])
   const photos: Ref<IPhoto[]> = ref([])
-  const fetchPhotos = async () => {
-    fetch('/mock/mock-model-photos.json')
-      .then(response => response.json())
-      .then(data => {
-        photos.value = data.photos as IPhoto[]
-      })
+
+  const fetchGalleryPhotos = async () => {
+    const response = await usersRepository.getGalleryPhotos(user.value.id)
+    photos.value = response
   }
 
-  onMounted(() => {
-    fetchPhotos()
+  const save = async () => {
+    //const val = await usersRepository.addGalleryPhoto()
+    await fetchGalleryPhotos()
+  }
+  const config = ref({
+    route: `/api/gallery-photo`,
+    method: 'POST',
+    name: 'image'
   })
+
+  const file = ref(null)
+
+  const setFileUpload = async data => {
+    file.value = data
+    await fetchGalleryPhotos()
+  }
+
+  onMounted(async () => {
+    await fetchGalleryPhotos()
+  })
+
   //todo refactor <Вынести в отдельный компоненты>
 </script>
 
@@ -137,10 +164,26 @@
       class="bg-gray-50/60 rounded-xl overflow-hidden sm:shadow-lg px-2 sm:px-4 md:px-8 py-6 sm:py-12"
     >
       <n-gradient-text :size="24" type="warning">
+        <div class="font-extrabold text-2xl sm:text-3xl mb-6">Загрузка галлереи</div>
+      </n-gradient-text>
+      <n-space vertical class="border-gray-400 border-solid p-2 rounded">
+        <file-upload
+          :name="config.name"
+          :route="config.route"
+          :method="config.method"
+          @uploaded="setFileUpload"
+        />
+      </n-space>
+    </div>
+    <div
+      v-if="user.active_contest"
+      class="bg-gray-50/60 rounded-xl overflow-hidden sm:shadow-lg px-2 sm:px-4 md:px-8 py-6 sm:py-12"
+    >
+      <n-gradient-text :size="24" type="warning">
         <div class="font-extrabold text-2xl sm:text-3xl mb-6">Активный конкурс</div>
       </n-gradient-text>
       <div class="max-w-[600px] mx-auto">
-        <profile-active-contest />
+        <profile-active-contest :active-contest="user.active_contest" />
       </div>
     </div>
     <div

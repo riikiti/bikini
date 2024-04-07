@@ -48,7 +48,7 @@
 <template>
   <div class="w-full">
     <n-space v-if="!currentModel" justify="center">
-      <n-button type="info" size="large" class="text-3xl py-8" @click="handleModal()"
+      <n-button type="info" size="large" class="md:text-3xl md:py-8" @click="handleModal()"
         >Стать участником конкурса</n-button
       >
     </n-space>
