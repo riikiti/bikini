@@ -51,6 +51,7 @@ class UserController extends Controller
                 'status' => 'success',
                 'data' => [
                     'user' => UserResource::make($user),
+                    'contest_photo' => null,
                     'gallery_photo' => ModelPhotoResource::collection($user->photos)
                 ],]);
         } else {

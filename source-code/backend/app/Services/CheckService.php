@@ -33,10 +33,10 @@ class CheckService
         if (!$user->fieldsAreFilled() && $user->role == User::MODEL) {
             $flag = true;
             $check[] = [
-                'answer_3' => ModelActiveStatusEnum::NOT_FILLED_IN ,
+                'answer_3' => ModelActiveStatusEnum::NOT_FILLED_IN,
             ];
         }
-        if ($flag){
+        if ($flag) {
             $check[] = [
                 'title' => 'Ваш профиль неактивен. Причины:',
             ];

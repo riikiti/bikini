@@ -6,14 +6,15 @@ use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserCompactResource;
 use App\Models\User;
+use App\Services\CheckService;
 use Illuminate\Http\Request;
 
 
 class AuthController extends Controller
 {
-
-    public function __construct()
+    public function __construct(CheckService $service)
     {
+        $this->checkService = $service;
         $this->middleware('auth:api', ['except' => ['login']]);
     }
 
@@ -33,8 +34,7 @@ class AuthController extends Controller
     public function me()
     {
         // короче я проверял на других роутах такая запись работает, тут не хочет
-        $user = User::find(auth()->user()->id);
-        $check = $this->checkService->checkUser($user);
+        $check = $this->checkService->checkUser(auth()->user());
         if ($check) {
             return response()->json([
                 'status' => 'profile is not approved',
@@ -42,7 +42,9 @@ class AuthController extends Controller
                 'check' => $check,
             ]);
         } else {
-            return response()->json(['status' => 'success', 'user' => response()->json(UserCompactResource::make(auth()->user()))]);
+            return response()->json(
+                ['status' => 'success', 'user' => response()->json(UserCompactResource::make(auth()->user()))]
+            );
         }
     }
 

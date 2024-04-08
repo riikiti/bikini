@@ -11,7 +11,7 @@ class Controller extends BaseController
 {
     use AuthorizesRequests, ValidatesRequests;
 
-    public $checkService;
+    public CheckService $checkService;
 
     public function __construct(CheckService $service)
     {
