@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\FillModelInfoController;
 use App\Http\Controllers\Api\Auth\RegisterController;
@@ -95,5 +96,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
     Route::post('/messages/{user}', [MessageController::class, 'store']);
 });
 
-Route::post('/payment/create',[PaymentController::class,'create']);
-Route::get('/payment/callback',[PaymentController::class,'callback'])->name('payment.callback');
+Route::post('/payment/create', [PaymentController::class, 'create']);
+Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+
+Route::get('/application', ApplicationController::class);
