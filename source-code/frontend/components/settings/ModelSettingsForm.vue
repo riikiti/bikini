@@ -35,18 +35,6 @@
 
   const { settingsList } = toRefs(props)
 
-  const countryList = [
-    { label: 'English', value: 6 },
-    { label: 'French', value: 2 },
-    { label: 'German', value: 3 },
-    { label: 'Spanish', value: 4 },
-    { label: 'Portuguese', value: 5 },
-    { label: 'Russian', value: 1 },
-    { label: 'Japanese', value: 7 },
-    { label: 'Korean', value: 8 },
-    { label: 'Chinese', value: 9 }
-  ]
-
   const birthdaySelect = computed(() => {
     return useGenerateDateArray(COUNT_OF_YEARS)
   })
@@ -102,16 +90,10 @@
     )
   })
   const save = async () => {
-    console.log('fsdafas: ', message_statuses)
     const messages_status = JSON.parse(JSON.stringify(message_statuses))
-
-    const text = { ...modelRef.value, messages_status }
-
-    console.log('fsdafs ff', text)
-
-    const response = await personalRepository.save(text)
+    const savedData = { ...user.value, ...modelRef.value, messages_status }
+    const response = await personalRepository.save(savedData)
     await userStore.profile()
-    console.log('save: ', response)
   }
 
   const message_statuses = reactive({

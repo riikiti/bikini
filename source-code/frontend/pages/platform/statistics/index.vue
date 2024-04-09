@@ -152,14 +152,10 @@
             class="text-black"
             :href="RoutesNames.PROFILE + `/${user.id}`"
           >
-            <div>
-              {{ user.name }}
-            </div>
+            <div>{{ user.name }}</div>
           </a>
         </n-space>
       </n-space>
     </div>
   </div>
 </template>
-
-<style scoped></style>

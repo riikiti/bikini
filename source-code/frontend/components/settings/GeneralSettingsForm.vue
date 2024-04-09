@@ -129,19 +129,16 @@
     name: 'avatar'
   })
 
-  console.log(config.value)
-
   const setFileUpload = data => {
     file.value = data
     modelRef.value.avatar = data
-    console.log('file-upload: ', JSON.parse(file.value))
   }
 
   const formRef = ref(null)
   const save = async () => {
-    const response = await personalRepository.save(modelRef.value)
+    const savedData = { ...user.value.info, ...modelRef.value }
+    const response = await personalRepository.save(savedData)
     await userStore.profile()
-    console.log('save: ', response)
   }
 </script>
 

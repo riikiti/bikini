@@ -2,12 +2,14 @@ import { defineStore } from 'pinia'
 import personalRepository from '~/services/repository/personalRepository'
 import type { IUserLogin, IUserRegister } from '~/services/models/user'
 import { persistedState } from '#imports'
+import { RoutesNames } from '~/services/routes-names'
 
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     isAuth: false,
     authTokenKey: 'JWT_SECRET',
-    user: null
+    user: null,
+    check: []
   }),
   persist: {
     storage: persistedState.localStorage
@@ -34,6 +36,25 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await personalRepository.profile()
         this.user = response.data.user.original
+        this.check = response.data.check.reduce((acc, val) => {
+          if (val.type === 'settings') {
+            const additionalParams = {
+              route: RoutesNames.SETTINGS,
+              routeName: 'Настройки'
+            }
+            acc.push({ ...val, ...additionalParams })
+          } else if (val.type === 'portfolio') {
+            const additionalParams = {
+              route: RoutesNames.PROFILE + `${this.user.id}`,
+              routeName: 'Профиль'
+            }
+            acc.push({ ...val, ...additionalParams })
+          } else {
+            acc.push(val)
+          }
+
+          return acc
+        }, [])
       } catch (error) {
         console.log(error)
       }

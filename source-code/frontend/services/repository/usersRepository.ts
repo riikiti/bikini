@@ -6,6 +6,11 @@ const usersRepository = {
     const response = await $http.get('/api/models')
     return response.data
   },
+  profileById: async id => {
+    const { $http } = useNuxtApp()
+    const response = await $http.get(`/api/user/${id}`)
+    return response.data.data
+  },
   getGalleryPhotos: async id => {
     const { $http } = useNuxtApp()
     const response = await $http.get(`/api/model-photos/${id}`)
@@ -17,5 +22,4 @@ const usersRepository = {
     return response
   }
 }
-
 export default usersRepository

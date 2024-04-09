@@ -7,6 +7,7 @@
   import { RoutesNames } from '~/services/routes-names'
   import { useAuthStore } from '#imports'
   import { storeToRefs } from 'pinia'
+  import { EUserAccountType } from '~/services/enums'
 
   const router = useRouter()
 
@@ -57,6 +58,19 @@
     }
   ])
 
+  const computedUserLinks = computed(() => {
+    return userOptions.value.reduce((acc, val) => {
+      if (user.value.role !== EUserAccountType.MODEL_ACCOUNT) {
+        if (val.key !== UserAction.PROFILE && val.key !== UserAction.FINANCE) {
+          acc.push(val)
+        }
+      } else {
+        acc.push(val)
+      }
+      return acc
+    }, [])
+  })
+
   const selectUserOption = (key: UserAction) => {
     switch (key) {
       case UserAction.SETTINGS:
@@ -66,7 +80,7 @@
         router.push(RoutesNames.FINANCE)
         break
       case UserAction.PROFILE:
-        router.push(RoutesNames.PROFILE)
+        router.push(RoutesNames.PROFILE + `${user.value.id}`)
         break
       case UserAction.LOGOUT:
         logout()
@@ -79,7 +93,7 @@
 
 <template>
   <div v-if="user">
-    <n-dropdown trigger="click" :options="userOptions" @select="selectUserOption">
+    <n-dropdown trigger="click" :options="computedUserLinks" @select="selectUserOption">
       <user-avatar :img="user.avatar" :name="user.name" />
     </n-dropdown>
   </div>

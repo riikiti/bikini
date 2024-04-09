@@ -1,7 +1,7 @@
 <script setup lang="ts">
   import { h } from 'vue'
   import { ThumbsUp } from 'lucide-vue-next'
-  import { NAlert, NButton, NGrid, NGridItem, NIcon, NSpace, NTooltip } from 'naive-ui'
+  import { NAlert, NButton, NGrid, NGridItem, NIcon, NImage, NSpace, NTooltip } from 'naive-ui'
   import ContestCard from '~/components/contest/ContestCard.vue'
 
   interface IProps {
@@ -20,7 +20,16 @@
       <div class="mb-2 flex justify-between items-center">
         <n-alert :title="`Рейтинг: ${activeContest.rating}`" type="success" />
       </div>
-      <img src="https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg" class="max-h-[500px]" />
+      <div class="max-h-[500px] overflow-hidden rounded w-full max-h-full">
+        <n-image
+          :src="activeContest.photo"
+          height="100%"
+          width="100%"
+          max-height="100%"
+          max-width="100%"
+          class="w-full h-full"
+        />
+      </div>
       <n-grid :x-gap="12" :y-gap="12" :cols="3" class="w-full mt-4">
         <n-grid-item>
           <n-space vertical>
