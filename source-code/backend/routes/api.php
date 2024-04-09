@@ -14,6 +14,7 @@ use App\Http\Controllers\Api\ModelController;
 use App\Http\Controllers\Api\Pages\ContestController;
 use App\Http\Controllers\Api\Pages\MainPageController;
 use App\Http\Controllers\Api\Pages\ModelsPageController;
+use App\Http\Controllers\Api\Pages\StatisticController;
 use App\Http\Controllers\Api\Pages\WinnersController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
@@ -44,6 +45,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('me', [AuthController::class, 'me']);
     Route::post('register', [RegisterController::class, 'register'])->withoutMiddleware('api');
     Route::post('fill', [FillModelInfoController::class, 'update']);
+    Route::get('/statistic', [StatisticController::class, 'index']);
+
 });
 
 Route::apiResource('user', UserController::class)->only('index', 'show');

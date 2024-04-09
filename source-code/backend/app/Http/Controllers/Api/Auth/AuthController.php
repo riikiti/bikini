@@ -33,7 +33,6 @@ class AuthController extends Controller
 
     public function me()
     {
-        // короче я проверял на других роутах такая запись работает, тут не хочет
         $check = $this->checkService->checkUser(auth()->user());
         if ($check) {
             return response()->json([
