@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\Api\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StatisticResource;
+use App\Http\Resources\UserStatisticResource;
 use App\Models\Contest;
 use App\Models\Statistic;
+use App\Models\User;
 use App\Models\WinnerList;
 use Illuminate\Http\Request;
 
@@ -19,10 +22,33 @@ class StatisticController extends Controller
             ->orderBy('type')
             ->get();
 
+        $a = StatisticResource::collection($statistics);
+        $statistics = [
+            1 => [],
+            5 => [],
+            15 => [],
+            25 => [],
+            50 => [],
+        ];
 
+        $result = [];
+
+        foreach ($a as $item) {
+            if (array_key_exists($item['type'], $statistics)) {
+                $statistics[$item['type']][] = $item['user_id'];
+            }
+        }
+
+        foreach ($statistics as $type => $users) {
+            $out = [];
+            foreach ($users as $user_id) {
+                $out[] = UserStatisticResource::make(User::find($user_id));
+            }
+            $result["type_$type"]['users'] = $out;
+        }
         return response()->json([
             'status' => 'ok',
-            'data' => $statistics
+            'data' => $result,
         ]);
     }
 

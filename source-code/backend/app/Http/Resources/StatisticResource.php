@@ -15,11 +15,8 @@ class StatisticResource extends JsonResource
     public function toArray(Request $request): array
     {
         return [
-            'user' => $this->name,
-            'start' => $this->date_start,
-            'finish' => $this->date_finish,
-            'active' => $this->is_active,
-            'prizes' => PrizesResource::collection($this->prizes),
+            'user' => UserStatisticResource::make($this->users),
+            'type' => $this->type,
         ];
     }
 }
