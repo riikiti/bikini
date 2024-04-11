@@ -10,7 +10,8 @@ import type {
   IContestBlock,
   IContestPrize,
   IContestPlayers,
-  IContestUser
+  IContestUser,
+  IContestWinner
 } from '~/services/models/contest'
 
 export {
@@ -33,5 +34,6 @@ export {
   IContestPrize,
   IContestPlayers,
   IContestUser,
-  IUserLogin
+  IUserLogin,
+  IContestWinner
 }
