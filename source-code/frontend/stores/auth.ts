@@ -1,11 +1,25 @@
 import { defineStore } from 'pinia'
 import personalRepository from '~/services/repository/personalRepository'
-import type { IUserLogin, IUserRegister } from '~/services/models/user'
+import type {
+  IAccountCheck,
+  IExtendedAccountCheck,
+  IUser,
+  IUserFan,
+  IUserLogin,
+  IUserRegister
+} from '~/services/models/user'
 import { persistedState } from '#imports'
 import { RoutesNames } from '~/services/routes-names'
 
+interface IAuthStore {
+  isAuth: boolean
+  authTokenKey: string
+  user: IUser | IUserFan | null
+  check: IAccountCheck[] | []
+}
+
 export const useAuthStore = defineStore('auth', {
-  state: () => ({
+  state: (): IAuthStore => ({
     isAuth: false,
     authTokenKey: 'JWT_SECRET',
     user: null,
@@ -19,7 +33,6 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await personalRepository.refresh()
         const { data } = response
-        console.log('ttL: ', data)
         const newToken = data.token.original.access_token
         localStorage.setItem(this.authTokenKey, newToken)
         await this.profile()
@@ -36,25 +49,28 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await personalRepository.profile()
         this.user = response.data.user.original
-        this.check = response.data.check.reduce((acc, val) => {
-          if (val.type === 'settings') {
-            const additionalParams = {
-              route: RoutesNames.SETTINGS,
-              routeName: 'Настройки'
+        this.check = response.data.check.reduce(
+          (acc: IExtendedAccountCheck[], val: IAccountCheck) => {
+            if (val.type === 'settings') {
+              const additionalParams = {
+                route: RoutesNames.SETTINGS,
+                routeName: 'Настройки'
+              }
+              acc.push({ ...val, ...additionalParams })
+            } else if (val.type === 'portfolio') {
+              const additionalParams = {
+                route: RoutesNames.PROFILE + `${this.user?.id}`,
+                routeName: 'Профиль'
+              }
+              acc.push({ ...val, ...additionalParams })
+            } else {
+              acc.push(val)
             }
-            acc.push({ ...val, ...additionalParams })
-          } else if (val.type === 'portfolio') {
-            const additionalParams = {
-              route: RoutesNames.PROFILE + `${this.user.id}`,
-              routeName: 'Профиль'
-            }
-            acc.push({ ...val, ...additionalParams })
-          } else {
-            acc.push(val)
-          }
 
-          return acc
-        }, [])
+            return acc as IExtendedAccountCheck[]
+          },
+          []
+        )
       } catch (error) {
         console.log(error)
       }

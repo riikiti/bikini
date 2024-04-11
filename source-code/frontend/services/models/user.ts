@@ -9,8 +9,13 @@ export interface IUser {
   created_at: string
   role: EUserAccountType
   country: ICountry | null
-  info?: IUserModelInfo
+  info?: IUserModelInfo | null
+  active_contest: boolean | null
+  is_favorite: boolean | null
+  is_winner: boolean | null
 }
+
+export interface IUserFan extends Omit<IUser, 'info | active_contest | is_winner'> {}
 
 export interface IHair {
   id: number
@@ -31,15 +36,15 @@ export interface IUserModelMessageRules {
 }
 
 export interface IUserModelInfo {
-  birthdate: number | null
-  height: number | null
-  weight: number | null
-  size: number | null
-  waist: number | null
-  hips: number | null
-  city: string | null
-  about: string | null
-  hair: IHair | null
+  birthdate?: number | null
+  height?: number | null
+  weight?: number | null
+  size?: number | null
+  waist?: number | null
+  hips?: number | null
+  city?: string | null
+  about?: string | null
+  hair_color: IHair | null
   breast: IBreast | null
   messages_status?: IUserModelMessageRules | null
 }
@@ -52,4 +57,14 @@ export interface IUserLogin {
 export interface IUserRegister {
   email: string
   password: string
+}
+
+export interface IAccountCheck {
+  title: string
+  type: string
+}
+
+export interface IExtendedAccountCheck extends IAccountCheck {
+  route?: string | null
+  routeName?: string | null
 }
