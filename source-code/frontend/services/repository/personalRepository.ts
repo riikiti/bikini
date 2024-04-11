@@ -2,6 +2,12 @@ import { useNuxtApp } from '#imports'
 import type { IUserLogin } from '~/services/models'
 
 const personalRepository = {
+  application: async () => {
+    const { $http } = useNuxtApp()
+    const response = await $http.get('api/application')
+    console.log(response)
+    return response
+  },
   login: (params: IUserLogin) => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/login', params)
