@@ -10,6 +10,7 @@ export default {
     logout: 'Logout',
     users: 'Users',
     favorites: 'Favorites',
+    winner: 'Winner',
     platform: 'Platform',
     messenger: 'Messenger'
   },
