@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Transaction;
 use App\Services\Helpers\Payment\PaymentHelperService;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use YooKassa\Model\Notification\NotificationEventType;
 use YooKassa\Model\Notification\NotificationSucceeded;
 use YooKassa\Model\Notification\NotificationWaitingForCapture;
@@ -29,26 +30,46 @@ class PaymentController extends Controller
     public function create(Request $request)
     {
         $transaction = Transaction::create([
-            'amount' => $request->input('amount'),
+            'amount' => floatval($request->input('amount')),
             'description' => $request->input('description'),
             'user_id' => auth()->user()->id,
         ]);
         if ($transaction) {
-            return response()->json(['status' => 'inject', 'link' => $this->paymentHelper->createPayment($transaction->amount, $transaction->description, ['transaction_id' => $transaction->id])]);
+            return response()->json(
+                [
+                    'status' => 'inject',
+                    'link' => $this->paymentHelper->createPayment(
+                        $transaction->amount,
+                        $transaction->description,
+                        ['transaction_id' => $transaction->id]
+                    )
+                ]
+            );
         } else {
             return response()->json(['status' => 'reject', 'message' => 'didnt create transaction']);
         }
-
     }
 
     public function callback(Request $request)
     {
         $source = file_get_contents('php://input');
+        Log::channel('sms')->info($source);
         $requestBody = json_decode($source, true);
-        $notification = ($requestBody['event' === NotificationEventType::PAYMENT_SUCCEEDED])
+        $notification = (isset($requestBody['event']) && $requestBody['event'] === NotificationEventType::PAYMENT_SUCCEEDED)
             ? new NotificationSucceeded($requestBody)
             : new NotificationWaitingForCapture($requestBody);
         $payment = $notification->getObject();
+        Log::channel('sms')->info($payment->status);
+
+        if (isset($payment->status) && $payment->status == 'canceled') {
+            $metadata = $payment->metadata;
+            if (isset($metadata->transaction_id)) {
+                $transactionId = intval($metadata->transaction_id);
+                $transaction = Transaction::findOrFail($transactionId);
+                $transaction->fill(['status' => PaymentStatusEnum::FAILED])->save();
+            }
+        }
+
         if (isset($payment->status) && $payment->status === 'succeeded') {
             if ($payment->paid) {
                 $metadata = $payment->metadata;
@@ -58,6 +79,24 @@ class PaymentController extends Controller
                     $transaction->fill(['status' => PaymentStatusEnum::CONFIRM])->save();
                     //todo добавить в конкурс https://www.youtube.com/watch?v=YlE433y5A9M&t=186s
                 }
+            }
+        }
+        if (isset($payment->status) && $payment->status === 'waiting_for_capture') {
+            $metadata = $payment->metadata;
+            if (isset($metadata->transaction_id)) {
+                $transactionId = intval($metadata->transaction_id);
+                $transaction = Transaction::findOrFail($transactionId);
+                $transaction->fill(['status' => PaymentStatusEnum::WAITING])->save();
+            }
+        }
+
+
+        if (isset($payment->status) && $payment->status === 'failed') {
+            $metadata = $payment->metadata;
+            if (isset($metadata->transaction_id)) {
+                $transactionId = intval($metadata->transaction_id);
+                $transaction = Transaction::findOrFail($transactionId);
+                $transaction->fill(['status' => PaymentStatusEnum::FAILED])->save();
             }
         }
     }

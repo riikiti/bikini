@@ -1,5 +1,6 @@
 <?php
 
+use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\FillModelInfoController;
@@ -19,7 +20,9 @@ use App\Http\Controllers\Api\Pages\WinnersController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
 use App\Http\Controllers\Api\UserController;
+use App\Models\Transaction;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -100,6 +103,28 @@ Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
 });
 
 Route::post('/payment/create', [PaymentController::class, 'create']);
-Route::get('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+
+/*Route::post('/payment/callback', function (Request $request) {
+    $paymentId = $request->input('metadata.transaction_id');
+    $status = $request->input('status');
+    Log::channel('sms')->info($request->input('metadata.transaction_id'));
+    // Find the payment object in your database using the payment_id
+    $payment = Transaction::find($paymentId);
+    if ($payment) {
+        $payment->status = PaymentStatusEnum::FAILED->value;
+        $payment->save();
+        if ($status === 'succeeded') {
+            $payment->status = PaymentStatusEnum::CONFIRM->value;
+            $payment->save();
+        } elseif ($status === 'failed') {
+            $payment->status = PaymentStatusEnum::FAILED->value;
+            $payment->save();
+        }
+    }
+
+    // Return a response to YooKassa
+    return response()->json(['status' => 'ok']);
+});*/
+Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
 Route::get('/application', ApplicationController::class);
