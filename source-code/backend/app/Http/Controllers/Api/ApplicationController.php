@@ -14,11 +14,10 @@ class ApplicationController extends Controller
     {
         $moderator_id = User::query()->where('role', User::ADMIN)->first()->id;
 
-        $count = match (auth()->user()->role) {
+         match (auth()->user()->role) {
             User::USER => $count = $this->getUserFavorites(),
             User::MODEL => $count = $this->getModelFavorites(),
         };
-
 
         return response()->json([
             'status' => 'success',
