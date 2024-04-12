@@ -12,11 +12,13 @@ class ApplicationController extends Controller
 {
     public function __invoke()
     {
-        $moderator_id = User::query()->where('role',User::ADMIN)->first()->id;
-        $count =  match (auth()->user()->role) {
+        $moderator_id = User::query()->where('role', User::ADMIN)->first()->id;
+
+        $count = match (auth()->user()->role) {
             User::USER => $count = $this->getUserFavorites(),
             User::MODEL => $count = $this->getModelFavorites(),
         };
+
 
         return response()->json([
             'status' => 'success',
@@ -27,6 +29,7 @@ class ApplicationController extends Controller
 
     public function getUserFavorites(): int
     {
+
         return Favourite::query()->where('user_id', auth()->user()->id)->count();
     }
 

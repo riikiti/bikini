@@ -42,7 +42,7 @@ class PaymentHelper implements PaymentHelperService
      * @throws TooManyRequestsException
      * @throws UnauthorizedException
      */
-    public function createPayment(float $amount, string $description, array $options = []) : string
+    public function createPayment(int $amount, array $options = []) : string
     {
         $payment = $this->client->createPayment(
             array(
@@ -55,7 +55,7 @@ class PaymentHelper implements PaymentHelperService
                     'return_url' => 'https://bikini-star.com/',
                 ),
                 'capture' => false,
-                'description' => $description,
+                'description' => 'Покупка услуги на сайте bikini-star',
                 'metadata' => [
                     'transaction_id' => $options['transaction_id'],
                 ]

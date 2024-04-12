@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Models\Statistic;
 use App\Models\Transaction;
 use App\Services\Helpers\Payment\PaymentHelperService;
 use Illuminate\Http\Request;
@@ -29,18 +30,17 @@ class PaymentController extends Controller
 
     public function create(Request $request)
     {
-        $transaction = Transaction::create([
-            'amount' => floatval($request->input('amount')),
-            'description' => $request->input('description'),
+        $transaction = Statistic::create([
+            'type' => intval($request->input('type')),
             'user_id' => auth()->user()->id,
+            'model_id' => $request->input('model_id')
         ]);
         if ($transaction) {
             return response()->json(
                 [
                     'status' => 'inject',
                     'link' => $this->paymentHelper->createPayment(
-                        $transaction->amount,
-                        $transaction->description,
+                        $transaction->type,
                         ['transaction_id' => $transaction->id]
                     )
                 ]
@@ -65,7 +65,7 @@ class PaymentController extends Controller
             $metadata = $payment->metadata;
             if (isset($metadata->transaction_id)) {
                 $transactionId = intval($metadata->transaction_id);
-                $transaction = Transaction::findOrFail($transactionId);
+                $transaction = Statistic::findOrFail($transactionId);
                 $transaction->fill(['status' => PaymentStatusEnum::FAILED])->save();
             }
         }
@@ -75,7 +75,7 @@ class PaymentController extends Controller
                 $metadata = $payment->metadata;
                 if (isset($metadata->transaction_id)) {
                     $transactionId = intval($metadata->transaction_id);
-                    $transaction = Transaction::findOrFail($transactionId);
+                    $transaction = Statistic::findOrFail($transactionId);
                     $transaction->fill(['status' => PaymentStatusEnum::CONFIRM])->save();
                     //todo добавить в конкурс https://www.youtube.com/watch?v=YlE433y5A9M&t=186s
                 }
@@ -85,7 +85,7 @@ class PaymentController extends Controller
             $metadata = $payment->metadata;
             if (isset($metadata->transaction_id)) {
                 $transactionId = intval($metadata->transaction_id);
-                $transaction = Transaction::findOrFail($transactionId);
+                $transaction = Statistic::findOrFail($transactionId);
                 $transaction->fill(['status' => PaymentStatusEnum::WAITING])->save();
             }
         }
@@ -95,7 +95,7 @@ class PaymentController extends Controller
             $metadata = $payment->metadata;
             if (isset($metadata->transaction_id)) {
                 $transactionId = intval($metadata->transaction_id);
-                $transaction = Transaction::findOrFail($transactionId);
+                $transaction = Statistic::findOrFail($transactionId);
                 $transaction->fill(['status' => PaymentStatusEnum::FAILED])->save();
             }
         }
