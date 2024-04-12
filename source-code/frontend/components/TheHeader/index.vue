@@ -10,7 +10,7 @@
   import { useSettingsStore } from '#imports'
   import { storeToRefs } from 'pinia'
   import type { ILinkSettings } from '~/services/models'
-  import { NButton } from 'naive-ui'
+  import { NBadge, NButton } from 'naive-ui'
 
   const { t } = useI18n()
   const localePath = useLocalePath()
@@ -64,8 +64,10 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <n-button quaternary tag="a" :href="localePath(RoutesNames.FAVORITES)" size="medium">
-            <heart />
+          <n-button text tag="a" :href="localePath(RoutesNames.FAVORITES)" size="medium">
+            <n-badge :value="settingsStore.favouritesCount">
+              <heart />
+            </n-badge>
           </n-button>
           <n-button quaternary tag="a" :href="localePath(RoutesNames.MESSENGER)" size="medium">
             <mail />

@@ -12,7 +12,7 @@
     NModalProvider,
     NNotificationProvider
   } from 'naive-ui'
-  import personalRepository from '~/services/repository/personalRepository'
+
   const authStore = useAuthStore()
   const settingsStore = useSettingsStore()
   const { isMobile } = storeToRefs(settingsStore)
@@ -26,7 +26,7 @@
   })
   onMounted(async () => {
     await authStore.profile()
-    await personalRepository.application()
+    await settingsStore.setSettings()
   })
 </script>
 <template>

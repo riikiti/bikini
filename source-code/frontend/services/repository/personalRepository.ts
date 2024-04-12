@@ -2,12 +2,6 @@ import { useNuxtApp } from '#imports'
 import type { IUserLogin } from '~/services/models'
 
 const personalRepository = {
-  application: async () => {
-    const { $http } = useNuxtApp()
-    const response = await $http.get('api/application')
-    console.log(response)
-    return response
-  },
   login: (params: IUserLogin) => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/login', params)
@@ -24,18 +18,24 @@ const personalRepository = {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/me')
   },
+  addToFavourite: async id => {
+    const { $http } = useNuxtApp()
+    const response = await $http.post(`/api/favourite/${id}`)
+    return response.data.data
+  },
+  removeFromFavourite: async id => {
+    const { $http } = useNuxtApp()
+    const response = await $http.delete(`/api/favourite/${id}`)
+    return response.data.data
+  },
   settingsList: async () => {
     const { $http } = useNuxtApp()
-    const response = await $http.get('api/property?role=model')
+    const response = await $http.get('/api/property?role=model')
     return response.data.data
   },
   save: async params => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/fill', params)
-  },
-  like: params => {
-    const { $http } = useNuxtApp()
-    console.log('user id: ', params)
   }
 }
 export default personalRepository
