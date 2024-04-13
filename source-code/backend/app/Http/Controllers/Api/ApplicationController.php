@@ -19,6 +19,7 @@ class ApplicationController extends Controller
             User::MODEL => $count = $this->getModelFavorites(),
         };
 
+         $count = Favourite::query()->where('user_id', auth()->user()->id)->count();
         return response()->json([
             'status' => 'success',
             'favourites_count' => $count,
