@@ -49,62 +49,69 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('register', [RegisterController::class, 'register'])->withoutMiddleware('api');
     Route::post('fill', [FillModelInfoController::class, 'update']);
     Route::get('/statistic', [StatisticController::class, 'index']);
+    Route::group(['middleware' =>'jwt.auth'],function (){
+
+        Route::apiResource('user', UserController::class)->only('index', 'show');
+
+        Route::get('/main', [MainPageController::class, 'index']);
+        Route::get('/models', [ModelsPageController::class, 'getAll']);
+
+        Route::post('/gallery-photo', [UserController::class, 'addPhoto']);
+
+        Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
+
+        Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
+
+        Route::post('/box-photo', [BoxFillController::class, 'fillBoxPhoto']);
+        Route::post('/box-video', [BoxFillController::class, 'fillBoxVideo']);
+        Route::post('/blog-photo', [BlogFillController::class, 'fillBlogPhoto']);
+        Route::post('/blog-video', [BlogFillController::class, 'fillBlogVideo']);
+
+        Route::get('/contest', [ContestController::class, 'index']);
+        Route::get('/active-contest', [ContestController::class, 'show']);
+        Route::get('/active-contest/prize-block', [ContestController::class, 'prizesBlock']);
+        Route::get('/active-contest/model-block', [ContestController::class, 'modelBlock']);
+
+        Route::post('/active-contest/add-photo', [ContestController::class, 'addPhoto']);
+        Route::post('/active-contest/update-photo', [ContestController::class, 'updatePhoto']);
+        Route::delete('/active-contest/delete-photo', [ContestController::class, 'deletePhoto']);
+
+        Route::get('/active-contest/all-publications-block', [ContestController::class, 'allContestPublicationsBlock']);
+        Route::get('/active-contest/winners-list', [ContestController::class, 'winnersList']);
+
+        Route::get('/winners', [WinnersController::class, 'index']);
+
+
+        Route::post('/favourite/{user}', [FavouriteController::class, 'addToFavourite']);
+        Route::delete('/favourite/{user}', [FavouriteController::class, 'removeFromFavourite']);
+        Route::get('/user-favorites', [ModelsPageController::class, 'getFavorites']);
+
+        Route::get('/box/{id}', [BoxController::class, 'show']);
+        Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
+        Route::get('/boxes/{user}', [BoxController::class, 'getAll']);
+
+        Route::post('/blog-pay/{user}', [BlogController::class, 'payment']);
+        Route::get('/blogs/{user}', [BlogController::class, 'getAll']);
+
+        Route::get('/property', [PropertyController::class, 'index']);
+        Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+
+        Route::get('/application', ApplicationController::class);
+
+
+        Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
+            Route::get('/messages/{user}', [MessageController::class, 'index']);
+            Route::get('/messages', [MessageController::class, 'getAll']);
+            Route::post('/messages/{user}', [MessageController::class, 'store']);
+        });
+
+        Route::post('/payment/create', [PaymentController::class, 'create']);
+    });
 
 });
 
 
-Route::apiResource('user', UserController::class)->only('index', 'show');
 
-Route::get('/main', [MainPageController::class, 'index']);
-Route::get('/models', [ModelsPageController::class, 'getAll']);
-
-Route::post('/gallery-photo', [UserController::class, 'addPhoto']);
-
-Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
-
-Route::get('/model-boxes/{user}', [UserController::class, 'showModelBoxes']);
-
-Route::post('/box-photo', [BoxFillController::class, 'fillBoxPhoto']);
-Route::post('/box-video', [BoxFillController::class, 'fillBoxVideo']);
-Route::post('/blog-photo', [BlogFillController::class, 'fillBlogPhoto']);
-Route::post('/blog-video', [BlogFillController::class, 'fillBlogVideo']);
-
-Route::get('/contest', [ContestController::class, 'index']);
-Route::get('/active-contest', [ContestController::class, 'show']);
-Route::get('/active-contest/prize-block', [ContestController::class, 'prizesBlock']);
-Route::get('/active-contest/model-block', [ContestController::class, 'modelBlock']);
-
-Route::post('/active-contest/add-photo', [ContestController::class, 'addPhoto']);
-Route::post('/active-contest/update-photo', [ContestController::class, 'updatePhoto']);
-Route::delete('/active-contest/delete-photo', [ContestController::class, 'deletePhoto']);
-
-Route::get('/active-contest/all-publications-block', [ContestController::class, 'allContestPublicationsBlock']);
-Route::get('/active-contest/winners-list', [ContestController::class, 'winnersList']);
-
-Route::get('/winners', [WinnersController::class, 'index']);
-
-
-Route::post('/favourite/{user}', [FavouriteController::class, 'addToFavourite']);
-Route::delete('/favourite/{user}', [FavouriteController::class, 'removeFromFavourite']);
-Route::get('/user-favorites', [ModelsPageController::class, 'getFavorites']);
-
-Route::get('/box/{id}', [BoxController::class, 'show']);
-Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
-Route::get('/boxes/{user}', [BoxController::class, 'getAll']);
-
-Route::post('/blog-pay/{user}', [BlogController::class, 'payment']);
-Route::get('/blogs/{user}', [BlogController::class, 'getAll']);
-
-Route::get('/property', [PropertyController::class, 'index']);
-
-
-Route::group(['middleware' => 'api', 'prefix' => 'messenger'], function () {
-    Route::get('/messages/{user}', [MessageController::class, 'index']);
-    Route::get('/messages', [MessageController::class, 'getAll']);
-    Route::post('/messages/{user}', [MessageController::class, 'store']);
-});
-
-Route::post('/payment/create', [PaymentController::class, 'create']);
 
 /*Route::post('/payment/callback', function (Request $request) {
     $paymentId = $request->input('metadata.transaction_id');
@@ -127,6 +134,3 @@ Route::post('/payment/create', [PaymentController::class, 'create']);
     // Return a response to YooKassa
     return response()->json(['status' => 'ok']);
 });*/
-Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
-
-Route::get('/application', ApplicationController::class);
