@@ -1,5 +1,6 @@
 <script setup lang="ts">
   import { useSettingsStore } from '~/stores/settings'
+  import { useAuthStore } from '#imports'
   import { storeToRefs } from 'pinia'
   import { onMounted } from 'vue'
   import {
@@ -11,6 +12,7 @@
     NModalProvider,
     NNotificationProvider
   } from 'naive-ui'
+
   const authStore = useAuthStore()
   const settingsStore = useSettingsStore()
   const { isMobile } = storeToRefs(settingsStore)
@@ -24,6 +26,7 @@
   })
   onMounted(async () => {
     await authStore.profile()
+    await settingsStore.setSettings()
   })
 </script>
 <template>

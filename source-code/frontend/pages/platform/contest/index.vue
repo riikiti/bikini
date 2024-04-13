@@ -1,13 +1,11 @@
 <script setup lang="ts">
   import { computed, onMounted, ref } from 'vue'
-  import { definePageMeta, useUserStore } from '#imports'
-  import { NButton, NEmpty, NGradientText, NGrid, NGridItem, NIcon, NSpace } from 'naive-ui'
-  import type { IContest, IContestPlayers, IContestPrize } from '~/services/models'
-  import { Camera, ChevronDown } from 'lucide-vue-next'
-  import ContestCard from '~/components/contest/ContestCard.vue'
+  import { definePageMeta, useSettingsStore, useAuthStore, storeToRefs } from '#imports'
+  import type { IContestPrize, IContestBlock } from '~/services/models'
   import { EUserAccountType } from '~/services/enums'
   import contestRepository from '~/services/repository/contestRepository'
   import ContestActiveUsers from '~/components/contest/ContestActiveUsers.vue'
+  import ContestWelcome from '~/components/contest/ContestWelcome.vue'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -19,14 +17,13 @@
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
 
-  const activeContest = ref(null)
+  const activeContest = ref<IContestBlock | null>(null)
 
   const fetchActiveContest = async () => {
     try {
       const response = await contestRepository.prizeList()
       const { data } = response
-      activeContest.value = data.contest ?? {}
-      console.log(activeContest.value)
+      activeContest.value = data.contest as IContestBlock
     } catch (e) {
       console.log(e)
     }
@@ -63,83 +60,17 @@
 
 <template>
   <div v-if="activeContest" class="h-full relative">
-    <n-space vertical align="center" class="h-screen" justify="center">
-      <n-gradient-text type="success">
-        <div class="text-[64px]">{{ activeContest.name }}</div>
-      </n-gradient-text>
-      <div class="text-xl md:text-3xl max-w-[1024px] text-center text-gray-500">
-        Присоединяйтесь к нашему фотоконкурсу и продемонстрируйте свой уникальный взгляд на мир. Мы
-        ищем потрясающие, оригинальные изображения, которые рассказывают историю и вызывают эмоции.
-        Независимо от того, являетесь ли вы опытным профессионалом или начинающим любителем, мы
-        приветствуем ваши работы!
-      </div>
-      <div class="mt-6">
-        <span class="text-3xl text-center"
-          >c
-          <n-gradient-text type="info">
-            <div>{{ activeContest?.start }}</div>
-          </n-gradient-text>
-          по
-          <n-gradient-text type="error">
-            <div>{{ activeContest?.finish }}</div>
-          </n-gradient-text>
-        </span>
-      </div>
-      <div
-        class="text-gray-800 cursor-pointer absolute bottom-2 md:bottom-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-      >
-        <div class="animate-bounce">
-          <ChevronDown :size="48" />
-        </div>
-      </div>
-    </n-space>
-    <div id="prizes" class="pb-12">
-      <div class="text-xl md:text-[48px] mb-16">Наши призы</div>
-      <div v-if="prizes" class="gap-8 columns-1 md:columns-3 h-full my-8">
-        <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
-          <div class="relative">
-            <div
-              :class="[
-                'w-[200px] h-[200px] rounded-full shadow-lg flex overflow-hidden relative',
-                { '-mt-12': prize.place === 1 }
-              ]"
-            >
-              <img :src="prize.image" alt="" />
-            </div>
-            <div
-              :class="[
-                'absolute w-[48px] h-[48px] rounded-full  bottom-2 left-1/2 transform -translate-x-1/2 translate-y-1/2 flex items-center justify-center font-bold text-2xl',
-                {
-                  'bg-yellow-300': prize.place === 1
-                },
-                {
-                  'bg-cyan-400': prize.place === 2
-                },
-                {
-                  'bg-violet-400': prize.place === 3
-                }
-              ]"
-            >
-              {{ prize.place }}
-            </div>
-          </div>
-
-          <div class="text-2xl text-center mt-3">{{ prize.name }}</div>
-          <div>{{ prize.description }}</div>
-        </div>
-      </div>
-      <div
-        v-if="user.role === EUserAccountType.MODEL_ACCOUNT"
-        class="flex items-center justify-center mt-16 w-full"
-      >
-        <contest-user />
-      </div>
-      <div class="mt-16">
-        <div class="text-xl md:text-[48px] mb-16">Участницы конкурса</div>
-        <contest-active-users :is-active-contest="activeContest.active" />
-      </div>
+    <contest-welcome :contest="activeContest" />
+    <contest-prize-section :prize-list="prizes" />
+    <div
+      v-if="user.role === EUserAccountType.MODEL_ACCOUNT"
+      class="flex items-center justify-center mt-16 w-full"
+    >
+      <contest-user />
+    </div>
+    <div class="mt-16">
+      <div class="text-xl md:text-[48px] mb-16">Участницы конкурса</div>
+      <contest-active-users :is-active-contest="activeContest.active" />
     </div>
   </div>
 </template>
-
-<style scoped></style>

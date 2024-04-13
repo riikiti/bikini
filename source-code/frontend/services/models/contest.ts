@@ -27,3 +27,10 @@ export interface IContestUser {
   image: string | null
   user: IUser
 }
+
+export interface IContestWinner extends Omit<IContestBlock, 'active | prizes'> {
+  id: number
+  is_active: boolean
+  created_at: string
+  updated_ad: string
+}

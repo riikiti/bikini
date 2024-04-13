@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api\Auth;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Resources\UserCompactResource;
+use App\Http\Resources\UserMeResource;
 use App\Models\User;
 use App\Services\CheckService;
 use Illuminate\Http\Request;
@@ -37,12 +38,12 @@ class AuthController extends Controller
         if ($check) {
             return response()->json([
                 'status' => 'profile is not approved',
-                'user' => response()->json(UserCompactResource::make(auth()->user())),
+                'user' => response()->json(UserMeResource::make(auth()->user())),
                 'check' => $check,
             ]);
         } else {
             return response()->json(
-                ['status' => 'success', 'user' => response()->json(UserCompactResource::make(auth()->user()))]
+                ['status' => 'success', 'user' => response()->json(UserMeResource::make(auth()->user()))]
             );
         }
     }

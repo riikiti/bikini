@@ -2,9 +2,12 @@
   import { RoutesNames } from '~/services/routes-names'
   import type { ICountry } from '~/services/models'
   import type { IUserModelMessageRules } from '~/services/models/user'
-  import { Heart, Mail, Star, BookmarkPlus, GalleryHorizontalEnd, Trophy } from 'lucide-vue-next'
+  import { Heart, Mail, Star, BookmarkPlus, Trophy } from 'lucide-vue-next'
   import { h, toRefs, computed } from 'vue'
-  import { NIcon, NImage, NTag } from 'naive-ui'
+  import { NIcon, NImage, NTag, useMessage } from 'naive-ui'
+  import personalRepository from '~/services/repository/personalRepository'
+  import { useSettingsStore } from '~/stores/settings'
+
   interface IUser {
     id: number
     name: string
@@ -16,9 +19,17 @@
     info: IInfo
   }
 
+  const message = useMessage()
+  const settingsStore = useSettingsStore()
+
   interface IInfo {
     messages_status: IUserModelMessageRules
   }
+
+  const emits = defineEmits<{
+    (e: 'update'): void
+  }>()
+
   interface IProps {
     card: IUser
   }
@@ -40,6 +51,25 @@
 
     return false
   })
+
+  /*todo add classes for entities*/
+  const addToFavourite = async () => {
+    try {
+      if (!card.value.is_favorite) {
+        const response = await personalRepository.addToFavourite(card.value.id)
+        message.success(response)
+      } else {
+        const response = await personalRepository.removeFromFavourite(card.value.id)
+        message.warning(response)
+      }
+      await settingsStore.setSettings()
+      await emits('update')
+    } catch (e) {
+      message.error('Ooops!Что-то пошло не так!')
+    }
+  }
+
+  const modelMessengerLink = computed(() => RoutesNames.MESSENGER + `/${card.value.id}`)
 </script>
 
 <template>
@@ -69,9 +99,11 @@
       />
     </div>
     <div class="space-y-1 mt-3">
-      <h3 class="text-xl font-medium leading-none">
-        {{ card.name }}
-      </h3>
+      <router-link :to="RoutesNames.PROFILE + `${card.id}`" class="text-black no-underline">
+        <h3 class="text-xl font-medium leading-none">
+          {{ card.name }}
+        </h3>
+      </router-link>
     </div>
     <div class="grid grid-cols-5 mt-2 self-center pb-2 pt-2">
       <div v-if="card.active_contest" class="text-gray-300 hover:text-red-600">
@@ -82,9 +114,11 @@
         </router-link>
       </div>
       <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
-        <n-icon :size="32">
-          <mail :size="32" />
-        </n-icon>
+        <router-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
+          <n-icon :size="32">
+            <mail :size="32" />
+          </n-icon>
+        </router-link>
       </div>
       <div v-if="card.active_contest" class="text-gray-300 hover:text-red-600">
         <router-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
@@ -93,7 +127,10 @@
           </n-icon>
         </router-link>
       </div>
-      <div :class="['text-gray-300 hover:text-red-600', { 'text-red-600': card.is_favorite }]">
+      <div
+        :class="['text-gray-300 hover:text-red-600', { 'text-red-600': card.is_favorite }]"
+        @click="addToFavourite()"
+      >
         <n-icon :size="32">
           <bookmark-plus :size="32" />
         </n-icon>

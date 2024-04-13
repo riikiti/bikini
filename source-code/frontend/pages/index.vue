@@ -6,7 +6,7 @@
   import { NCard } from 'naive-ui'
   import { ref } from 'vue'
   import { useAuthStore } from '~/stores/auth'
-  import { useRouter, definePageMeta } from '#imports'
+  import { useRouter, definePageMeta, useSettingsStore } from '#imports'
   import { RoutesNames } from '~/services/routes-names'
 
   definePageMeta({
@@ -14,6 +14,8 @@
   })
 
   const authStore = useAuthStore()
+  const settingsStore = useSettingsStore()
+
   const router = useRouter()
 
   const isLoginForm = ref<boolean>(true)
@@ -52,7 +54,7 @@
     await authStore.register(newData)
     if (authStore.isAuth) {
       await authStore.profile()
-      await router.push(RoutesNames.ACTIVE_CONTEST)
+      await router.push(RoutesNames.MESSENGER + `/${settingsStore.moderatorId}`)
     }
   }
 </script>
@@ -121,9 +123,6 @@
         </div>
       </div>
     </n-card>
-
-    <!--    <auth-register class="max-w-[360px]" />-->
-    <!--    <auth-reset-password class="max-w-[360px]" />-->
   </div>
 </template>
 

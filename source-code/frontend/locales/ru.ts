@@ -8,6 +8,7 @@ export default {
     portfolio: 'Portfolio',
     logout: 'Logout',
     users: 'Участницы',
+    winner: 'Победительницы',
     profile: 'Profile',
     favorites: 'Favorites',
     platform: 'Platform',

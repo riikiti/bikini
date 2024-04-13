@@ -1,13 +1,9 @@
 <script setup lang="ts">
   import { computed, onMounted, ref } from 'vue'
   import { definePageMeta, useUserStore } from '#imports'
-  import { NButton, NEmpty, NGradientText, NGrid, NGridItem, NIcon, NSpace } from 'naive-ui'
-  import type { IContest, IContestPlayers, IContestPrize } from '~/services/models'
-  import { Camera, ChevronDown } from 'lucide-vue-next'
-  import ContestCard from '~/components/contest/ContestCard.vue'
-  import { EUserAccountType } from '~/services/enums'
+  import { NGradientText, NSpace } from 'naive-ui'
+  import type { IContestPrize, IContestBlock } from '~/services/models'
   import contestRepository from '~/services/repository/contestRepository'
-  import ContestActiveUsers from '~/components/contest/ContestActiveUsers.vue'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -17,11 +13,11 @@
 
   const userStore = useUserStore()
 
-  const activeContest = ref(null)
+  const activeContest = ref<IContestBlock | null>(null)
   const fetchActiveContest = async () => {
     const response = await contestRepository.prizeList()
     const { data } = response
-    activeContest.value = data.contest
+    activeContest.value = data.contest as IContestBlock
   }
 
   const prizes = computed(() => {
@@ -50,8 +46,8 @@
 </script>
 
 <template>
-  <div v-if="activeContest" class="h-full relative">
-    <n-space vertical align="center" class="h-screen" justify="center">
+  <div v-if="activeContest" class="h-full relative flex flex-col gap-6">
+    <n-space vertical align="center" justify="center">
       <n-gradient-text type="success">
         <div class="text-[64px]">{{ activeContest.name }}</div>
       </n-gradient-text>
@@ -103,54 +99,60 @@
           </n-gradient-text>
         </span>
       </div>
-      <div
-        class="text-gray-800 cursor-pointer absolute bottom-12 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-      >
-        <div class="animate-bounce">
-          <ChevronDown :size="48" />
+    </n-space>
+    <n-space vertical align="center" justify="center">
+      <n-gradient-text type="success">
+        <div class="text-[64px]">{{ activeContest.name }}</div>
+      </n-gradient-text>
+      <div v-if="prizes">
+        <div class="text-3xl font-bold my-8 mb-16 text-center">Победительницы</div>
+        <div class="gap-8 columns-3 h-full my-8">
+          <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
+            <div class="relative">
+              <div
+                :class="[
+                  'w-[200px] h-[200px] rounded-full shadow-lg flex overflow-hidden relative',
+                  { '-mt-12': prize.place === 1 }
+                ]"
+              >
+                <img :src="prize.image" alt="" />
+              </div>
+              <div
+                :class="[
+                  'absolute w-[48px] h-[48px] rounded-full  bottom-2 left-1/2 transform -translate-x-1/2 translate-y-1/2 flex items-center justify-center font-bold text-2xl',
+                  {
+                    'bg-yellow-300': prize.place === 1
+                  },
+                  {
+                    'bg-cyan-400': prize.place === 2
+                  },
+                  {
+                    'bg-violet-400': prize.place === 3
+                  }
+                ]"
+              >
+                {{ prize.place }}
+              </div>
+            </div>
+
+            <div class="text-2xl text-center mt-3">{{ prize.name }}</div>
+            <div>{{ prize.description }}</div>
+          </div>
         </div>
+      </div>
+      <div class="mt-6">
+        <span class="text-3xl text-center"
+          >c
+          <n-gradient-text type="info">
+            <div>{{ activeContest?.start }}</div>
+          </n-gradient-text>
+          по
+          <n-gradient-text type="error">
+            <div>{{ activeContest?.finish }}</div>
+          </n-gradient-text>
+        </span>
       </div>
     </n-space>
-    <div id="prizes" class="pb-12">
-      <div class="text-[48px] mb-16">Наши призы</div>
-      <div v-if="prizes" class="gap-8 columns-3 h-full my-8">
-        <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
-          <div class="relative">
-            <div
-              :class="[
-                'w-[200px] h-[200px] rounded-full shadow-lg flex overflow-hidden relative',
-                { '-mt-12': prize.place === 1 }
-              ]"
-            >
-              <img :src="prize.image" alt="" />
-            </div>
-            <div
-              :class="[
-                'absolute w-[48px] h-[48px] rounded-full  bottom-2 left-1/2 transform -translate-x-1/2 translate-y-1/2 flex items-center justify-center font-bold text-2xl',
-                {
-                  'bg-yellow-300': prize.place === 1
-                },
-                {
-                  'bg-cyan-400': prize.place === 2
-                },
-                {
-                  'bg-violet-400': prize.place === 3
-                }
-              ]"
-            >
-              {{ prize.place }}
-            </div>
-          </div>
-
-          <div class="text-2xl text-center mt-3">{{ prize.name }}</div>
-          <div>{{ prize.description }}</div>
-        </div>
-      </div>
-      <div class="mt-16">
-        <div class="text-xl md:text-[48px] mb-16">Участницы прошеддего конкурса</div>
-        <contest-active-users :is-active-contest="false" />
-      </div>
-    </div>
   </div>
 </template>
 
