@@ -54,7 +54,10 @@
     await authStore.register(newData)
     if (authStore.isAuth) {
       await authStore.profile()
-      await router.push(RoutesNames.MESSENGER + `/${settingsStore.moderatorId}`)
+      await settingsStore.setSettings()
+      if (settingsStore.moderatorId) {
+        await router.push(RoutesNames.MESSENGER + `/${settingsStore.moderatorId}`)
+      }
     }
   }
 </script>

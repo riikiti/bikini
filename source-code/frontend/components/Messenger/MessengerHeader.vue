@@ -12,15 +12,13 @@
   }
 
   const props = defineProps<IProps>()
-
-  console.log(props.user)
 </script>
 
 <template>
   <n-space size="large">
-    <div class="h-[250px] relative overflow-hidden rounded-md">
+    <div class="h-[250px] w-[250px] relative overflow-hidden rounded-md">
       <n-image
-        v-if="false"
+        v-if="user?.avatar"
         :src="user?.avatar"
         fallback-src="~/assets/images/profile/user-default.png"
         width="100%"
