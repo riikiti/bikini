@@ -1,0 +1,28 @@
+{
+  "boxes": [
+    {
+      "created_at": "Feb 16 15:44",
+      "user_id": 1,
+      "description": "Как устроен B-TREE индекс в базах данных",
+      "isPaid": false,
+      "price": 737,
+      "id": 1
+    },
+    {
+      "created_at": "Feb 17 15:44",
+      "user_id": 3,
+      "description": "Собесы, чат и документ",
+      "isPaid": false,
+      "price": 132,
+      "id": 2
+    },
+    {
+      "created_at": "Feb 18 15:44",
+      "user_id": 1,
+      "description": "Мок-собес с участниками сообщества",
+      "isPaid": false,
+      "price": 2223,
+      "id": 3
+    }
+  ]
+}
