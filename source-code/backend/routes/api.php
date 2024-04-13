@@ -56,6 +56,7 @@ Route::apiResource('user', UserController::class)->only('index', 'show');
 
 Route::get('/main', [MainPageController::class, 'index']);
 Route::get('/models', [ModelsPageController::class, 'getAll']);
+
 Route::post('/gallery-photo', [UserController::class, 'addPhoto']);
 
 Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
@@ -84,7 +85,7 @@ Route::get('/winners', [WinnersController::class, 'index']);
 
 Route::post('/favourite/{user}', [FavouriteController::class, 'addToFavourite']);
 Route::delete('/favourite/{user}', [FavouriteController::class, 'removeFromFavourite']);
-
+Route::get('/user-favorites', [ModelsPageController::class, 'getFavorites']);
 
 Route::get('/box/{id}', [BoxController::class, 'show']);
 Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
