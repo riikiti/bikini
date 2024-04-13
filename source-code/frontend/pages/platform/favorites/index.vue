@@ -16,7 +16,7 @@
     try {
       const response = await usersRepository.favourites()
       console.log(response)
-      modelList.value = response.data
+      modelList.value = response
     } catch (e) {
       console.log(e)
     }
