@@ -9,10 +9,12 @@ use App\Http\Resources\ContestModelsResource;
 use App\Http\Resources\ModelPhotoResource;
 use App\Http\Resources\UserCompactResource;
 use App\Http\Resources\UserResource;
+use App\Http\Resources\WinnerResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
 use App\Models\ModelPhoto;
 use App\Models\User;
+use App\Models\WinnerList;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -38,13 +40,14 @@ class UserController extends Controller
             ->first();
 
         if ($user->role === $user::MODEL && isset($modelPhoto)) {
-
+            $isWinner= WinnerList::query()->where('user_id',$user->id)->get();
             return response()->json([
                 'status' => 'success',
                 'data' => [
                     'user' => UserResource::make($user),
                     'contest_photo' => ContestModelsResource::make($modelPhoto),
-                    'gallery_photo' => ModelPhotoResource::collection($user->photos)
+                    'gallery_photo' => ModelPhotoResource::collection($user->photos),
+                    'is_winner' => WinnerResource::collection($isWinner)
                 ],]);
         } elseif ($user->role === $user::MODEL) {
             return response()->json([

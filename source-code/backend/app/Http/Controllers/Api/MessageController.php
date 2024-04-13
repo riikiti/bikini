@@ -17,6 +17,7 @@ class MessageController extends Controller
 
         // Получаем текущего пользователя
         $senderUser = $request->user();
+        $messages = [];
         // Получаем все сообщения, связанные с этим пользователем
         $receivedMessages = $senderUser->receivedMessages->where('sender_id', $user->id);
         $sentMessages = $senderUser->sentMessages->where('receiver_id', $user->id);
