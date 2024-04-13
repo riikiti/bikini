@@ -25,25 +25,25 @@ class FillModelInfoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            'birthdate' => 'integer',
-            'height' => 'integer',
-            'weight' => 'integer',
-            'hair_color' => 'exists:hair_colors,id',
-            'breast' => 'exists:breasts,id',
-            'size' => 'integer',
-            'waist' => 'integer',
-            'hips' => 'integer',
-            'country_id' => 'integer|exists:countries,id',
-            'city' => 'string',
+            'birthdate' => 'nullable|integer',
+            'height' => 'nullable|integer',
+            'weight' => 'nullable|integer',
+            'hair_color' => 'nullable|exists:hair_colors,id',
+            'breast' => 'nullable|exists:breasts,id',
+            'size' => 'nullable|integer',
+            'waist' => 'nullable|integer',
+            'hips' => 'nullable|integer',
+            'country_id' => 'nullable|integer|exists:countries,id',
+            'city' => 'nullable|string',
             'avatar' => 'nullable',
-            'about' => 'string',
-            'messages_status.from_subscribers' => 'boolean',
-            'messages_status.from_all_models' => 'boolean',
-            'messages_status.from_all_fans' => 'boolean',
-            'messages_status.from_all_users' => 'boolean',
-            'messages_status.from_no_one' => 'boolean',
-            'new_password' => 'string',
-            'new_password_confirmed' => 'string'
+            'about' => 'nullable|string',
+            'messages_status.from_subscribers' => 'nullable|boolean',
+            'messages_status.from_all_models' => 'nullable|boolean',
+            'messages_status.from_all_fans' => 'nullable|boolean',
+            'messages_status.from_all_users' => 'nullable|boolean',
+            'messages_status.from_no_one' => 'nullable|boolean',
+            'new_password' => 'nullable|string',
+            'new_password_confirmed' => 'nullable|string'
         ];
     }
 }
