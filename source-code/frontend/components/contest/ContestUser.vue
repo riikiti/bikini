@@ -1,5 +1,5 @@
 <script setup lang="ts">
-  import { NButton, NGradientText, NSpace } from 'naive-ui'
+  import { NAlert, NButton, NGradientText, NSpace } from 'naive-ui'
   import { ref } from 'vue'
   import { ContestUserModal } from '#components'
   import { RoutesNames } from '~/services/routes-names'
@@ -8,6 +8,7 @@
   const isEditForm = ref(false)
 
   const userStore = useAuthStore()
+  const { check } = storeToRefs(userStore)
 
   const handleEditForm = () => {
     isEditForm.value = true
@@ -93,6 +94,7 @@
     v-model:show="showModal"
     :is-edit="isEditForm"
     @formsave="save"
+    @formclose="handleCloseModal()"
     @close="handleCloseModal()"
   />
 </template>

@@ -1,21 +1,62 @@
 <script setup lang="ts">
-  import type { IUserBaseStatistics, IUserProfileAction } from '~/services/models'
-  import { NButton, NCollapse, NCollapseItem, NIcon, NSpace } from 'naive-ui'
-  import { storeToRefs } from 'pinia'
+  import type { IUser, IUserBaseStatistics, IUserProfileAction } from '~/services/models'
+  import { NButton, NCollapse, NCollapseItem, NIcon, NSpace, useMessage } from 'naive-ui'
+  import { computed, toRefs } from 'vue'
+  import personalRepository from '~/services/repository/personalRepository'
+  import { RoutesNames } from '~/services/routes-names'
+  import { BookmarkPlus, Heart, Mail, Star, Trophy } from 'lucide-vue-next'
 
   interface IProps {
+    user: IUser
     userActions: IUserProfileAction[]
     userBaseStatistics: IUserBaseStatistics[]
   }
 
   const props = defineProps<IProps>()
+  const { user } = toRefs(props)
+  const canWriteModel = computed(() => {
+    const {
+      info: { messages_status }
+    } = user.value
 
-  const userStore = useAuthStore()
-  const { user } = storeToRefs(userStore)
+    if (messages_status) {
+      for (const status in messages_status) {
+        if (messages_status[status] !== false && messages_status[status] !== null) {
+          return true
+        }
+      }
+    }
+
+    return false
+  })
+
+  //todo create hook useFavourite refactoring
+  const emits = defineEmits<{
+    (e: 'update'): void
+  }>()
+  const message = useMessage()
+  const settingsStore = useSettingsStore()
+  const addToFavourite = async () => {
+    try {
+      if (!user.value.is_favorite) {
+        const response = await personalRepository.addToFavourite(user.value.id)
+        message.success(response)
+      } else {
+        const response = await personalRepository.removeFromFavourite(user.value.id)
+        message.warning(response)
+      }
+      await settingsStore.setSettings()
+      await emits('update')
+    } catch (e) {
+      message.error('Ooops!Что-то пошло не так!')
+    }
+  }
+
+  const modelMessengerLink = computed(() => RoutesNames.MESSENGER + `/${user.value.id}`)
 </script>
 
 <template>
-  <div>
+  <div v-if="user">
     <n-space vertical size="large">
       <n-space vertical align="center">
         <div class="h-[150px] w-[150px] rounded-full overflow-hidden">
@@ -24,10 +65,41 @@
         <div class="mt-4 font-bold text-2xl">{{ user.name }}</div>
       </n-space>
       <n-space justify="center">
-        <div v-for="(userAction, idx) in userActions" :key="idx">
-          <n-button @click="userAction.callback(user.id)">
-            <n-icon :size="24" :component="userAction.component" />
-          </n-button>
+        <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
+          <router-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
+            <n-icon :size="32">
+              <heart :size="32" />
+            </n-icon>
+          </router-link>
+        </div>
+        <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
+          <router-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
+            <n-icon :size="32">
+              <mail :size="32" />
+            </n-icon>
+          </router-link>
+        </div>
+        <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
+          <router-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
+            <n-icon :size="32">
+              <star fill="currentColor" />
+            </n-icon>
+          </router-link>
+        </div>
+        <div
+          :class="['text-gray-300 hover:text-red-600', { 'text-red-600': user.is_favorite }]"
+          @click="addToFavourite()"
+        >
+          <n-icon :size="32">
+            <bookmark-plus :size="32" />
+          </n-icon>
+        </div>
+        <div v-if="user.is_winner" class="text-gray-300 hover:text-red-600">
+          <router-link :to="RoutesNames.WINNER_PAGE" class="text-red-600">
+            <n-icon :size="32">
+              <trophy :size="32" />
+            </n-icon>
+          </router-link>
         </div>
       </n-space>
       <n-collapse>

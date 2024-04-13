@@ -136,6 +136,8 @@
 
   const formRef = ref(null)
   const save = async () => {
+    const x = Array.from(user.value.info)
+    console.log('x: ', x)
     const savedData = { ...user.value.info, ...modelRef.value }
     const response = await personalRepository.save(savedData)
     await userStore.profile()

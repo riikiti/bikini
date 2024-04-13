@@ -7,6 +7,10 @@
   const localePath = useLocalePath()
   const userMenu = [
     {
+      href: localePath(RoutesNames.WINNER_PAGE),
+      name: t('header.winner')
+    },
+    {
       href: localePath(RoutesNames.USERS),
       name: t('header.users')
     }
@@ -15,8 +19,15 @@
 
 <template>
   <nav>
-    <n-space>
-      <n-button v-for="(link, index) in userMenu" :key="index" quaternary tag="a" :href="link.href">
+    <n-space :size="0">
+      <n-button
+        v-for="(link, index) in userMenu"
+        :key="index"
+        :size="'small'"
+        quaternary
+        tag="a"
+        :href="link.href"
+      >
         {{ link.name }}
       </n-button>
     </n-space>

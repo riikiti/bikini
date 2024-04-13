@@ -8,6 +8,7 @@ export default {
     portfolio: 'Portfolio',
     profile: 'Profile',
     logout: 'Logout',
+    winner: 'Winner',
     users: 'Users',
     favorites: 'Favorites',
     platform: 'Platform',
