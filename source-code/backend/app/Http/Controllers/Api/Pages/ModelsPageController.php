@@ -26,8 +26,14 @@ class ModelsPageController extends Controller
 
     public function getFavorites(): JsonResponse
     {
-        return response()->json(
-            UserCompactResource::collection(Favourite::query()->where('user_id', auth()->user()->id)->get())
-        );
+        $favorites = Favourite::query()
+            ->where('user_id', auth()->user()->id)
+            ->get('model_id')->toArray();
+
+        $data = [];
+        foreach ($favorites as $favorite) {
+            $data[] = User::query()->where('id', $favorite)->first();
+        }
+        return response()->json(UserCompactResource::collection($data));
     }
 }
