@@ -28,9 +28,7 @@ class UserController extends Controller
             'data' => UserCompactResource::collection(
                 User::query()
                     ->where('role', User::MODEL)
-                    ->get()
-            )
-        ]);
+                    ->get())]);
     }
 
     public function show(User $user)
@@ -42,30 +40,39 @@ class UserController extends Controller
             ->first();
 
         if ($user->role === $user::MODEL && isset($modelPhoto)) {
-            $isWinner = WinnerList::query()->where('user_id', $user->id)->get();
+            $isWinner= WinnerList::query()->where('user_id',$user->id)->get();
+            return response()->json([
+                'status' => 'success',
+                'data' => [
+                    'user' => UserCompactResource::make($user),
+                    'contest_photo' => ContestModelsResource::make($modelPhoto),
+                    'gallery_photo' => ModelPhotoResource::collection($user->photos),
+                    'is_winner' => WinnerResource::collection($isWinner)
+                ],]);
+        } elseif ($user->role === $user::MODEL) {
+            $isWinner= WinnerList::query()->where('user_id',$user->id)->get();
+
             return response()->json([
                 'status' => 'success',
                 'data' => [
                     'user' => UserResource::make($user),
-                    'contest_photo' => ContestModelsResource::make($modelPhoto),
+                    'contest_photo' => null,
                     'gallery_photo' => ModelPhotoResource::collection($user->photos),
                     'is_winner' => WinnerResource::collection($isWinner)
-                ],
-            ]);
-        } elseif ($user->role === $user::MODEL) {
-            $isWinner = WinnerList::query()->where('user_id', $user->id)->get();
-
-            return response()->json(UserCompactResource::make($user));
+                ],]);
         } else {
             return response()->json([
                 'status' => 'success',
                 'data' => UserResource::make($user),
             ]);
         }
+
+
     }
 
     public function addPhoto(Request $request): JsonResponse
     {
+
         $data = [
             'image' => Storage::disk('public')->put('/public/ModelPhotos', $request->file('image')),
             'user_id' => auth()->user()->id,
@@ -75,6 +82,8 @@ class UserController extends Controller
             'status' => 'ok',
             'model_photo' => ModelPhotoResource::make(ModelPhoto::create($data))
         ]);
+
+
     }
 
     public function showModelPhoto(User $user)
@@ -87,12 +96,13 @@ class UserController extends Controller
             ]);
         } else {
             if (!empty($user)) {
-                return response()->json(['status' => 'success', 'data' => ModelPhotoResource::collection($user->photos)]
-                );
+                return response()->json(['status' => 'success', 'data' => ModelPhotoResource::collection($user->photos)]);
             } else {
                 return response()->json(['status' => 'not found']);
             }
         }
+
+
     }
 
     public function showModelBoxes(Request $request, User $user)
@@ -111,6 +121,8 @@ class UserController extends Controller
                 return response()->json(['status' => 'not found']);
             }
         }
+
+
     }
 
 }
