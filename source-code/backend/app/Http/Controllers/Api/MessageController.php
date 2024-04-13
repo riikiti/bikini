@@ -33,11 +33,12 @@ class MessageController extends Controller
             $messages[] = $message;
         }
         $sortedMessages = collect($messages)->sortBy('created_at');
+        $messages = collect($sortedMessages)->values()->all();
         return response()->json(['status' => 'success', 'data' =>
             ['messenger' => [
                 'sender_user' => UserMessageResource::make($senderUser),
                 'receiver_user' => UserMessageResource::make($user),
-                'messages' => $sortedMessages,
+                'messages' => $messages,
             ]]]);
 
     }
