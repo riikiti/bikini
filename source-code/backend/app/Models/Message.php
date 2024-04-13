@@ -10,10 +10,14 @@ class Message extends Model
 {
     use HasFactory;
 
+
     protected $table = 'messages';
 
     protected $fillable = ['sender_id', 'receiver_id', 'content'];
 
+    public static function getCreatedAtAttribute($value) {
+        return date('Y-m-d H:i:s', strtotime($value));
+    }
     public function messageUser(): BelongsTo
     {
         return $this->belongsTo(User::class);

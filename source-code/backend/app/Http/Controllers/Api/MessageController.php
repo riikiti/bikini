@@ -4,6 +4,7 @@ namespace app\Http\Controllers\Api;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\UserCompactResource;
+use App\Http\Resources\UserMessageResource;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
@@ -19,11 +20,24 @@ class MessageController extends Controller
         // Получаем все сообщения, связанные с этим пользователем
         $receivedMessages = $senderUser->receivedMessages->where('sender_id', $user->id);
         $sentMessages = $senderUser->sentMessages->where('receiver_id', $user->id);
+        foreach ($receivedMessages as $message)
+        {
+            $message['created_at'] = Message::getCreatedAtAttribute($message['created_at']);
+            $message['updated_at'] = Message::getCreatedAtAttribute($message['updated_at']);
+            $messages[] = $message;
+        }
+        foreach ($sentMessages as $message)
+        {
+            $message['created_at'] = Message::getCreatedAtAttribute($message['created_at']);
+            $message['updated_at'] = Message::getCreatedAtAttribute($message['updated_at']);
+            $messages[] = $message;
+        }
+        $sortedMessages = collect($messages)->sortBy('created_at');
         return response()->json(['status' => 'success', 'data' =>
-            ['messages' => [
-                'receiver_user' => $user->options(),
-                'sent_messages' => $sentMessages,
-                'received_messages' => $receivedMessages,
+            ['messenger' => [
+                'sender_user' => UserMessageResource::make($senderUser),
+                'receiver_user' => UserMessageResource::make($user),
+                'messages' => $sortedMessages,
             ]]]);
 
     }
