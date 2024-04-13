@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import type { IUser, IUserBaseStatistics, IUserProfileAction } from '~/services/models'
-  import { NButton, NCollapse, NCollapseItem, NIcon, NSpace, useMessage } from 'naive-ui'
+  import type { IUser, IUserBaseStatistics } from '~/services/models'
+  import { NCollapse, NCollapseItem, NIcon, NSpace, useMessage } from 'naive-ui'
   import { computed, toRefs } from 'vue'
   import personalRepository from '~/services/repository/personalRepository'
   import { RoutesNames } from '~/services/routes-names'
@@ -8,7 +8,6 @@
 
   interface IProps {
     user: IUser
-    userActions: IUserProfileAction[]
     userBaseStatistics: IUserBaseStatistics[]
   }
 

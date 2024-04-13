@@ -3,6 +3,7 @@
   import usersRepository from '~/services/repository/usersRepository'
   import { ref, onMounted } from 'vue'
   import { RoutesNames } from '~/services/routes-names'
+  import { NResult } from 'naive-ui'
 
   definePageMeta({
     layout: 'profile-layout',

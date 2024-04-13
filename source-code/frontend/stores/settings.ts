@@ -23,7 +23,6 @@ export const useSettingsStore = defineStore('settings', {
       } catch (e) {
         console.log(e)
       }
-    },
-    setFavourites(count) {}
+    }
   }
 })

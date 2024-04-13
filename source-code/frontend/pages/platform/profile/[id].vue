@@ -9,9 +9,7 @@
     useRouter
   } from '#imports'
   import { ref, onMounted, h, computed } from 'vue'
-  import type { IUserProfileAction } from '~/services/models'
-  import { EUserAccountType, EUserAction } from '~/services/enums'
-  import { ArchiveRestore, Heart, MailPlus, Star, Trophy } from 'lucide-vue-next'
+  import { EUserAccountType } from '~/services/enums'
   import ProfileHeaderDesktop from '~/components/Profile/ProfileHeader/ProfileHeaderDesktop.vue'
   import ProfileUpload from '~/components/Profile/ProfileUpload.vue'
   import { NGradientText, NSkeleton, NSpace } from 'naive-ui'
@@ -39,55 +37,13 @@
     isLoading.value = true
     try {
       userProfile.value = await usersRepository.profileById(profileId)
+      await authStore.profile()
       console.log(userProfile.value)
     } catch (e) {
       console.log(e)
     }
     isLoading.value = false
   }
-
-  const userActions = ref<IUserProfileAction[]>([
-    {
-      action: EUserAction.LIKE,
-      component: h(Heart),
-      tooltip: 'Какой-то тултип',
-      callback: (userId?: null | number): void => {
-        console.log(userId)
-      }
-    },
-    {
-      action: EUserAction.ADD_VOTING,
-      component: h(Star),
-      tooltip: 'Какой-то тултип',
-      callback: (userId?: null | number): void => {
-        console.log(userId)
-      }
-    },
-    {
-      action: EUserAction.SEND_MESSAGE,
-      component: h(MailPlus),
-      tooltip: 'Какой-то тултип',
-      callback: (userId?: null | number): void => {
-        console.log(userId)
-      }
-    },
-    {
-      action: EUserAction.WINNER,
-      component: h(Trophy),
-      tooltip: 'Какой-то тултип',
-      callback: (userId?: null | number): void => {
-        console.log(userId)
-      }
-    },
-    {
-      action: EUserAction.SUBSCRIBE,
-      component: h(ArchiveRestore),
-      tooltip: 'Какой-то тултип',
-      callback: (userId?: null | number): void => {
-        console.log(userId)
-      }
-    }
-  ])
 
   const userBaseStatistics = computed(() => {
     return [
@@ -147,14 +103,12 @@
         v-if="!settingsStore.isMobile"
         :user="userProfile?.user"
         :user-base-statistics="userBaseStatistics"
-        :user-actions="userActions"
         @update="fetchUserProfile()"
       />
       <profile-profile-header-mobile
         v-else
         :user="userProfile?.user"
         :user-base-statistics="userBaseStatistics"
-        :user-actions="userActions"
         @update="fetchUserProfile()"
       />
     </div>

@@ -1,16 +1,7 @@
 <script setup lang="ts">
   import { EUserAccountType } from '~/services/enums'
-  import type { IUser, IUserBaseStatistics, IUserProfileAction } from '~/services/models'
-  import {
-    NButton,
-    NEllipsis,
-    NGrid,
-    NGridItem,
-    NIcon,
-    NSpace,
-    NTooltip,
-    useMessage
-  } from 'naive-ui'
+  import type { IUser, IUserBaseStatistics } from '~/services/models'
+  import { NEllipsis, NGrid, NGridItem, NIcon, NSpace, NTooltip, useMessage } from 'naive-ui'
   import { computed, toRefs } from 'vue'
   import { RoutesNames } from '~/services/routes-names'
   import { BookmarkPlus, Heart, Mail, Star, Trophy } from 'lucide-vue-next'
@@ -18,7 +9,6 @@
 
   interface IProps {
     user: IUser
-    userActions: IUserProfileAction[]
     userBaseStatistics: IUserBaseStatistics[]
   }
 
@@ -46,6 +36,7 @@
   }>()
   const message = useMessage()
   const settingsStore = useSettingsStore()
+  const authStore = useAuthStore()
   const addToFavourite = async () => {
     try {
       if (!user.value.is_favorite) {
@@ -80,7 +71,7 @@
             </div>
             <div class="mt-4 font-bold text-2xl">{{ user.name }}</div>
           </n-space>
-          <n-space vertical align="start" justify="start">
+          <n-space v-if="user.id !== authStore.user.id" vertical align="start" justify="start">
             <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
               <router-link
                 :to="RoutesNames.ACTIVE_CONTEST"
