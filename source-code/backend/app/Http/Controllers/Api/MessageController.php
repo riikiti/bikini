@@ -33,7 +33,7 @@ class MessageController extends Controller
             $message['updated_at'] = Message::getCreatedAtAttribute($message['updated_at']);
             $messages[] = $message;
         }
-        $sortedMessages = collect($messages)->sortBy('created_at');
+        $sortedMessages = collect($messages)->sortByDesc('created_at');
         $messages = collect($sortedMessages)->values()->all();
         return response()->json(['status' => 'success', 'data' =>
             ['messenger' => [
