@@ -4,9 +4,11 @@ namespace App\Http\Controllers\Api;
 
 use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
+use App\Http\Resources\StatisticResource;
 use App\Models\Statistic;
 use App\Models\Transaction;
 use App\Services\Helpers\Payment\PaymentHelperService;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use YooKassa\Model\Notification\NotificationEventType;
@@ -28,7 +30,27 @@ class PaymentController extends Controller
         // TODO: Implement index() method.
     }
 
-    public function create(Request $request)
+
+    public function createFree(Request $request): JsonResponse
+    {
+        $check = Statistic::query()->where('user_id', auth()->user()->id)->where(
+            'model_id',
+            $request->input('model_id')
+        )->where('type', 1)->first();
+
+        if (isset($check)) {
+            return response()->json(['status' => 'reject', 'message' => 'didnt create transaction']);
+        } else {
+            $transaction = Statistic::create([
+                'type' => 1,
+                'user_id' => auth()->user()->id,
+                'model_id' => $request->input('model_id')
+            ]);
+            return response()->json(['status' => 'inject', 'data' => StatisticResource::make($transaction)]);
+        }
+    }
+
+    public function create(Request $request): JsonResponse
     {
         $transaction = Statistic::create([
             'type' => intval($request->input('type')),

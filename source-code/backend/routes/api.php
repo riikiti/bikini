@@ -86,6 +86,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         Route::delete('/favourite/{user}', [FavouriteController::class, 'removeFromFavourite']);
         Route::get('/user-favorites', [ModelsPageController::class, 'getFavorites']);
 
+
+
         Route::get('/box/{id}', [BoxController::class, 'show']);
         Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
         Route::get('/boxes/{user}', [BoxController::class, 'getAll']);
@@ -94,7 +96,11 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         Route::get('/blogs/{user}', [BlogController::class, 'getAll']);
 
         Route::get('/property', [PropertyController::class, 'index']);
+
         Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+        Route::post('/payment/create', [PaymentController::class, 'create']);
+        Route::post('/payment/create-free', [PaymentController::class, 'createFree']);
+
 
         Route::get('/application', ApplicationController::class);
 
@@ -105,7 +111,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
             Route::post('/messages/{user}', [MessageController::class, 'store']);
         });
 
-        Route::post('/payment/create', [PaymentController::class, 'create']);
+
     });
 
 });
