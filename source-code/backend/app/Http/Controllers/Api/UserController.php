@@ -55,7 +55,7 @@ class UserController extends Controller
             return response()->json([
                 'status' => 'success',
                 'data' => [
-                    'user' => UserResource::make($user),
+                    'user' => UserCompactResource::make($user),
                     'contest_photo' => null,
                     'gallery_photo' => ModelPhotoResource::collection($user->photos),
                     'is_winner' => WinnerResource::collection($isWinner)
@@ -63,7 +63,7 @@ class UserController extends Controller
         } else {
             return response()->json([
                 'status' => 'success',
-                'data' => UserResource::make($user),
+                'data' => UserCompactResource::make($user),
             ]);
         }
 
