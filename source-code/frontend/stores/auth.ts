@@ -10,6 +10,7 @@ import type {
 } from '~/services/models/user'
 import { persistedState } from '#imports'
 import { RoutesNames } from '~/services/routes-names'
+import { EUserAccountType } from '~/services/enums'
 
 interface IAuthStore {
   isAuth: boolean

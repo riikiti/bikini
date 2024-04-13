@@ -3,7 +3,7 @@ export const enum RoutesNames {
   BLOG = '/platform/profile/blog',
   BOX = '/platform/profile/box',
   SETTINGS = '/platform/settings',
-  FINANCE = '/finance',
+  FINANCE = '/platform/finance',
   PORTFOLIO = '/portfolio',
   DASHBOARD = '/dashboard',
 
