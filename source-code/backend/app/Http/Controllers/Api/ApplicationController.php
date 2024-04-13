@@ -13,7 +13,7 @@ class ApplicationController extends Controller
         $moderator_id = User::query()->where('role', User::ADMIN)->first()->id;
 
         $count = Favourite::query()->where('user_id', auth()->user()->id)->count();
-        
+
         return response()->json([
             'status' => 'success',
             'favourites_count' => $count,
