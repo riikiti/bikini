@@ -1,13 +1,13 @@
 export default class Messenger {
   receiverUser = null
-  sentMessages = []
-  receivedMessages = []
+  senderUser = null
+  messages = []
 
   constructor(data) {
     console.log(data)
-    this.receiverUser = this.#createChatUser(data?.receiver_user)
-    this.sentMessages = this.#createMessagesList(data?.sent_messages) ?? []
-    this.receivedMessages = this.#createMessagesList(data?.received_messages) ?? []
+    this.receiverUser = this.#createChatUser(data?.receiver_user) ?? null
+    this.senderUser = this.#createChatUser(data?.sender_user) ?? null
+    this.messages = this.#createMessagesList(data?.messages) ?? []
   }
 
   #createChatUser(data) {

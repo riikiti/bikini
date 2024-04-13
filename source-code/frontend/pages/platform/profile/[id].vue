@@ -14,7 +14,7 @@
   import { ArchiveRestore, Heart, MailPlus, Star, Trophy } from 'lucide-vue-next'
   import ProfileHeaderDesktop from '~/components/Profile/ProfileHeader/ProfileHeaderDesktop.vue'
   import ProfileUpload from '~/components/Profile/ProfileUpload.vue'
-  import { NGradientText } from 'naive-ui'
+  import { NGradientText, NSkeleton, NSpace } from 'naive-ui'
   import ProfileActiveContest from '~/components/Profile/ProfileActiveContest.vue'
   import { RoutesNames } from '~/services/routes-names'
 
@@ -33,8 +33,17 @@
 
   const { user } = storeToRefs(authStore)
 
+  const isLoading = ref(false)
+
   const fetchUserProfile = async () => {
-    userProfile.value = await usersRepository.profileById(profileId)
+    isLoading.value = true
+    try {
+      userProfile.value = await usersRepository.profileById(profileId)
+      console.log(userProfile.value)
+    } catch (e) {
+      console.log(e)
+    }
+    isLoading.value = false
   }
 
   const userActions = ref<IUserProfileAction[]>([
@@ -128,17 +137,25 @@
 </script>
 
 <template>
-  <div class="flex flex-col gap-4 w-full">
+  <n-space v-if="isLoading" vertical size="large">
+    <n-skeleton height="250px" width="100%" />
+    <n-skeleton height="250px" width="100%" />
+  </n-space>
+  <div v-else class="flex flex-col gap-4 w-full">
     <div class="px-2">
       <profile-header-desktop
         v-if="!settingsStore.isMobile"
+        :user="userProfile?.user"
         :user-base-statistics="userBaseStatistics"
         :user-actions="userActions"
+        @update="fetchUserProfile()"
       />
       <profile-profile-header-mobile
         v-else
+        :user="userProfile?.user"
         :user-base-statistics="userBaseStatistics"
         :user-actions="userActions"
+        @update="fetchUserProfile()"
       />
     </div>
     <profile-upload v-if="hasCurrentUserPage" @uploaded="fetchUserProfile()" />

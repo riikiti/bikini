@@ -1,6 +1,6 @@
 <script setup lang="ts">
   import { definePageMeta, useRouter, useRoute } from '#imports'
-  import { NSpace, useMessage } from 'naive-ui'
+  import { NImage, NSpace, NVirtualList, useMessage } from 'naive-ui'
   import { ref, onMounted } from 'vue'
   import messengerRepository from '~/services/repository/messengerRepository'
   import Messenger from '~/services/classes/Messenger'
@@ -24,9 +24,8 @@
     try {
       const response = await messengerRepository.getMessagesById(route.params.id)
       console.log('Response messenger: ', response)
-      messenger.value = new Messenger(response.messages) ?? null
+      messenger.value = new Messenger(response.messenger) ?? null
       console.log('mess: ', messenger.value)
-      console.log(response)
     } catch (e) {
       console.log(e)
     }
@@ -52,7 +51,6 @@
 </script>
 
 <template>
-  <div>{{ route.params.id }}</div>
   <n-space vertical>
     <messenger-header :user="messenger?.receiverUser" />
     <div class="mt-4">
@@ -63,6 +61,62 @@
     </div>
     <div class="mt-6">
       <div class="text-xl mb-3">Переписка</div>
+      <n-space v-if="messenger && messenger.messages.length" vertical>
+        <div v-for="(message, idx) in messenger.messages" class="chat">
+          <n-space>
+            <n-space>
+              <div class="h-[65px] relative overflow-hidden rounded-md">
+                <template v-if="message.senderId === messenger.senderUser.id">
+                  <n-image
+                    v-if="messenger.senderUser.avatar"
+                    :src="messenger.senderUser.avatar"
+                    fallback-src="~/assets/images/profile/user-default.png"
+                    width="100%"
+                    height="100%"
+                    object-fit="cover"
+                    class="w-full h-full"
+                  />
+                  <img
+                    v-else
+                    src="~/assets/images/profile/user-default.png"
+                    class="w-full h-full object-cover"
+                  />
+                </template>
+                <template v-else-if="message.senderId === messenger.receiverUser.id">
+                  <n-image
+                    v-if="messenger.receiverUser.avatar"
+                    :src="messenger.receiverUser.avatar"
+                    fallback-src="~/assets/images/profile/user-default.png"
+                    width="100%"
+                    height="100%"
+                    object-fit="cover"
+                    class="w-full h-full"
+                  />
+                  <img
+                    v-else
+                    src="~/assets/images/profile/user-default.png"
+                    class="w-full h-full object-cover"
+                  />
+                </template>
+              </div>
+            </n-space>
+            <n-space vertical justify="space-between">
+              <n-space class="font-medium">
+                <div v-if="message.senderId === messenger.senderUser.id">
+                  {{ messenger.senderUser.name }}
+                </div>
+                <div v-else-if="message.senderId === messenger.receiverUser.id">
+                  {{ messenger.receiverUser.name }}
+                </div>
+                <div>
+                  {{ message.createdAt }}
+                </div>
+              </n-space>
+              {{ message.content }}
+            </n-space>
+          </n-space>
+        </div>
+      </n-space>
     </div>
   </n-space>
 </template>

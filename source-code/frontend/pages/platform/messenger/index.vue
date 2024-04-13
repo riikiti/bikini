@@ -3,6 +3,8 @@
   import { NButton, NDialog, NIcon, NImage, NSpace, useMessage, useDialog } from 'naive-ui'
   import { Mail, User, Heart, X } from 'lucide-vue-next'
   import { RoutesNames } from '~/services/routes-names'
+  import messengerRepository from '~/services/repository/messengerRepository'
+  import Messenger from '~/services/classes/Messenger'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -12,6 +14,18 @@
 
   const message = useMessage()
   const dialog = useDialog()
+
+  const chats = ref(null)
+
+  const fetchMessages = async () => {
+    try {
+      const response = await messengerRepository.allChats()
+      console.log('Response messenger: ', response)
+      chats.value = response.user_chats
+    } catch (e) {
+      console.log(e)
+    }
+  }
 
   const handleConfirm = messege_id => {
     dialog.warning({
@@ -54,39 +68,44 @@
   const handlePositiveClick = () => {
     message.success('Confirm')
   }
+
+  onMounted(async () => {
+    await fetchMessages()
+  })
 </script>
 
 <template>
   <div class="text-2xl font-bold sm:text-3xl mb-10">Переписки</div>
   <n-space vertical size="large">
     <div
-      v-for="(messege, idx) in userMessages"
+      v-for="(messege, idx) in chats"
       :key="idx"
       class="p-4 border-solid border-gray-400 border rounded-md overflow-hidden relative"
     >
-      <n-button text size="large" class="absolute top-6 right-4" @click="handleConfirm(messege.id)">
-        <n-icon :size="24">
-          <x />
-        </n-icon>
-      </n-button>
       <n-space size="large" align="center">
         <div class="w-[64px] h-[64px] overflow-hidden rounded-lg">
-          <n-image :src="messege.user.avatar" width="100%" height="100%" object-fit="cover" />
+          <n-image
+            v-if="messege.avatar"
+            :src="messege.avatar"
+            width="100%"
+            height="100%"
+            object-fit="cover"
+          />
+          <img
+            v-else
+            src="~/assets/images/profile/user-default.png"
+            class="w-full h-full object-cover"
+          />
         </div>
         <n-space vertical>
-          <div class="text-2xl font-bold">{{ messege.user.name }}</div>
+          <div class="text-2xl font-bold">{{ messege.name }}</div>
           <n-space>
-            <n-button>
-              <n-icon :size="24">
-                <heart />
-              </n-icon>
-            </n-button>
-            <n-button>
+            <n-button tag="a" :href="RoutesNames.MESSENGER + `/${messege.id}`">
               <n-icon :size="24">
                 <mail />
               </n-icon>
             </n-button>
-            <n-button>
+            <n-button tag="a" :href="RoutesNames.PROFILE + `${messege.id}`">
               <n-icon :size="24">
                 <user />
               </n-icon>

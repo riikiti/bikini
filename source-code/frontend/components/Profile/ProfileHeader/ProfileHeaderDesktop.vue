@@ -1,25 +1,78 @@
 <script setup lang="ts">
   import { EUserAccountType } from '~/services/enums'
-  import type { IUserBaseStatistics, IUserProfileAction } from '~/services/models'
-  import { NButton, NEllipsis, NGrid, NGridItem, NIcon, NSpace, NTooltip } from 'naive-ui'
-  import { storeToRefs } from 'pinia'
+  import type { IUser, IUserBaseStatistics, IUserProfileAction } from '~/services/models'
+  import {
+    NButton,
+    NEllipsis,
+    NGrid,
+    NGridItem,
+    NIcon,
+    NSpace,
+    NTooltip,
+    useMessage
+  } from 'naive-ui'
+  import { computed, toRefs } from 'vue'
+  import { RoutesNames } from '~/services/routes-names'
+  import { BookmarkPlus, Heart, Mail, Star, Trophy } from 'lucide-vue-next'
+  import personalRepository from '~/services/repository/personalRepository'
 
   interface IProps {
+    user: IUser
     userActions: IUserProfileAction[]
     userBaseStatistics: IUserBaseStatistics[]
   }
 
   const props = defineProps<IProps>()
+  const { user } = toRefs(props)
+  const canWriteModel = computed(() => {
+    const {
+      info: { messages_status }
+    } = user.value
 
-  const userStore = useAuthStore()
-  const { user } = storeToRefs(userStore)
+    if (messages_status) {
+      for (const status in messages_status) {
+        if (messages_status[status] !== false && messages_status[status] !== null) {
+          return true
+        }
+      }
+    }
+
+    return false
+  })
+
+  //todo create hook useFavourite refactoring
+  const emits = defineEmits<{
+    (e: 'update'): void
+  }>()
+  const message = useMessage()
+  const settingsStore = useSettingsStore()
+  const addToFavourite = async () => {
+    try {
+      if (!user.value.is_favorite) {
+        const response = await personalRepository.addToFavourite(user.value.id)
+        message.success(response)
+      } else {
+        const response = await personalRepository.removeFromFavourite(user.value.id)
+        message.warning(response)
+      }
+      await settingsStore.setSettings()
+      await emits('update')
+    } catch (e) {
+      message.error('Ooops!Что-то пошло не так!')
+    }
+  }
+
+  const modelMessengerLink = computed(() => RoutesNames.MESSENGER + `/${user.value.id}`)
 </script>
 
 <template>
-  <div class="bg-gray-50/60 min-h-[250px] rounded-2xl overflow-hidden shadow-lg py-4 px-6 w-full">
+  <div
+    v-if="user"
+    class="bg-gray-50/60 min-h-[250px] rounded-2xl overflow-hidden shadow-lg py-4 px-6 w-full"
+  >
     <n-grid :x-gap="12" :y-gap="12" :cols="5" class="h-full">
       <n-grid-item>
-        <n-space align="center" size="large">
+        <n-space align="flex-start" size="large">
           <n-space vertical>
             <div class="h-[150px] w-[150px] rounded-full overflow-hidden">
               <img v-if="user.avatar" :src="user.avatar" :alt="user.name" class="w-full h-full" />
@@ -27,16 +80,48 @@
             </div>
             <div class="mt-4 font-bold text-2xl">{{ user.name }}</div>
           </n-space>
-          <n-space vertical>
-            <div v-for="(userAction, idx) in userActions" :key="idx">
-              <n-tooltip trigger="hover" placement="bottom">
-                <template #trigger>
-                  <n-button @click="userAction.callback(user.id)">
-                    <n-icon :size="24" :component="userAction.component" />
-                  </n-button>
-                </template>
-                {{ userAction.tooltip }}
-              </n-tooltip>
+          <n-space vertical align="start" justify="start">
+            <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
+              <router-link
+                :to="RoutesNames.ACTIVE_CONTEST"
+                class="text-gray-300 hover:text-red-600"
+              >
+                <n-icon :size="32">
+                  <heart :size="32" />
+                </n-icon>
+              </router-link>
+            </div>
+            <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
+              <router-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
+                <n-icon :size="32">
+                  <mail :size="32" />
+                </n-icon>
+              </router-link>
+            </div>
+            <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
+              <router-link
+                :to="RoutesNames.ACTIVE_CONTEST"
+                class="text-gray-300 hover:text-red-600"
+              >
+                <n-icon :size="32">
+                  <star fill="currentColor" />
+                </n-icon>
+              </router-link>
+            </div>
+            <div
+              :class="['text-gray-300 hover:text-red-600', { 'text-red-600': user.is_favorite }]"
+              @click="addToFavourite()"
+            >
+              <n-icon :size="32">
+                <bookmark-plus :size="32" />
+              </n-icon>
+            </div>
+            <div v-if="user.is_winner" class="text-gray-300 hover:text-red-600">
+              <router-link :to="RoutesNames.WINNER_PAGE" class="text-red-600">
+                <n-icon :size="32">
+                  <trophy :size="32" />
+                </n-icon>
+              </router-link>
             </div>
           </n-space>
         </n-space>

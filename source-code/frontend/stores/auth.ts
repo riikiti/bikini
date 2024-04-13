@@ -74,7 +74,6 @@ export const useAuthStore = defineStore('auth', {
         )
       } catch (error) {
         console.log(error)
-        await this.refresh()
       }
     },
     async login(params: IUserLogin) {

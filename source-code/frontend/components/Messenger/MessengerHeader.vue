@@ -2,6 +2,7 @@
   import { NImage, NSpace } from 'naive-ui'
 
   interface IMessengerUser {
+    id: number
     name: string | null
     avatar: string | null
   }
@@ -10,7 +11,9 @@
     user: IMessengerUser
   }
 
-  defineProps<IProps>()
+  const props = defineProps<IProps>()
+
+  console.log(props.user)
 </script>
 
 <template>

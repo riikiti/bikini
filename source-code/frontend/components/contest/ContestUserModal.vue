@@ -17,7 +17,6 @@
     emits('formsave', file.value)
   }
   const onNegativeClick = () => {
-    message.success('Cancel')
     emits('formclose')
   }
 
