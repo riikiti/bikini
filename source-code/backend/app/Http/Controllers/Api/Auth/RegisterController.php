@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Auth;
 
+use App\Events\SendMessageEvent;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
@@ -23,6 +24,8 @@ class RegisterController extends Controller
         if (!$token = auth()->tokenById($this->user->id)) {
             return response()->json(['error' => 'Unauthorized'], 401);
         }
+        $user = $this->user;
+        event(new SendMessageEvent($user));
         return response()->json(['status' => 'success', 'token' => $this->respondWithToken($token)]);
     }
 

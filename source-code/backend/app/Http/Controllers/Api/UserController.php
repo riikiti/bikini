@@ -50,12 +50,15 @@ class UserController extends Controller
                     'is_winner' => WinnerResource::collection($isWinner)
                 ],]);
         } elseif ($user->role === $user::MODEL) {
+            $isWinner= WinnerList::query()->where('user_id',$user->id)->get();
+
             return response()->json([
                 'status' => 'success',
                 'data' => [
                     'user' => UserResource::make($user),
                     'contest_photo' => null,
-                    'gallery_photo' => ModelPhotoResource::collection($user->photos)
+                    'gallery_photo' => ModelPhotoResource::collection($user->photos),
+                    'is_winner' => WinnerResource::collection($isWinner)
                 ],]);
         } else {
             return response()->json([
