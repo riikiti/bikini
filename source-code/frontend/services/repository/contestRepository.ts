@@ -3,19 +3,19 @@ import { useNuxtApp } from '#imports'
 const contestRepository = {
   prizeList: () => {
     const { $http } = useNuxtApp()
-    return $http.get('/api/active-contest/prize-block')
+    return $http.get('/api/auth/active-contest/prize-block')
   },
   currentUserList: () => {
     const { $http } = useNuxtApp()
-    return $http.get('/api/active-contest/model-block')
+    return $http.get('/api/auth/active-contest/model-block')
   },
   uploadContestPhoto: data => {
     const { $http } = useNuxtApp()
-    return $http.post('/api/active-contest/add-photo', data)
+    return $http.post('/api/auth/active-contest/add-photo', data)
   },
   allModelList: () => {
     const { $http } = useNuxtApp()
-    return $http.get('/api/active-contest/all-publications-block')
+    return $http.get('/api/auth/active-contest/all-publications-block')
   }
 }
 

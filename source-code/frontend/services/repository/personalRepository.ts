@@ -20,17 +20,17 @@ const personalRepository = {
   },
   addToFavourite: async id => {
     const { $http } = useNuxtApp()
-    const response = await $http.post(`/api/favourite/${id}`)
+    const response = await $http.post(`/api/auth/favourite/${id}`)
     return response.data.data
   },
   removeFromFavourite: async id => {
     const { $http } = useNuxtApp()
-    const response = await $http.delete(`/api/favourite/${id}`)
+    const response = await $http.delete(`/api/auth/favourite/${id}`)
     return response.data.data
   },
   settingsList: async () => {
     const { $http } = useNuxtApp()
-    const response = await $http.get('/api/property?role=model')
+    const response = await $http.get('/api/auth/property?role=model')
     return response.data.data
   },
   save: async params => {

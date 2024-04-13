@@ -3,29 +3,29 @@ import { useNuxtApp } from '#imports'
 const usersRepository = {
   models: async () => {
     const { $http } = useNuxtApp()
-    const response = await $http.get('/api/models')
+    const response = await $http.get('/api/auth/models')
     console.log('respomse: ', response)
     return response.data
   },
   favourites: async () => {
     const { $http } = useNuxtApp()
-    const response = await $http.get('/api/user-favorites')
+    const response = await $http.get('/api/auth/user-favorites')
     console.log('respomse: ', response)
     return response.data
   },
   profileById: async id => {
     const { $http } = useNuxtApp()
-    const response = await $http.get(`/api/user/${id}`)
+    const response = await $http.get(`/api/auth/user/${id}`)
     return response.data.data
   },
   getGalleryPhotos: async id => {
     const { $http } = useNuxtApp()
-    const response = await $http.get(`/api/model-photos/${id}`)
+    const response = await $http.get(`/api/auth/model-photos/${id}`)
     return response.data.data
   },
   addGalleryPhoto: async () => {
     const { $http } = useNuxtApp()
-    const response = await $http.post(`/api/gallery-photo`)
+    const response = await $http.post(`/api/auth/gallery-photo`)
     return response
   }
 }

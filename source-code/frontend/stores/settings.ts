@@ -17,6 +17,7 @@ export const useSettingsStore = defineStore('settings', {
     async setSettings() {
       try {
         const response = await applicationRepository.application()
+        console.log('app: ', response)
         const settings = new Application(response)
         this.moderatorId = settings.moderatorId
         this.favouritesCount = settings.favouritesCount
