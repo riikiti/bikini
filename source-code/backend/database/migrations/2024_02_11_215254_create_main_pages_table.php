@@ -16,10 +16,10 @@ return new class extends Migration
             $table->string('seo_title')->nullable();
             $table->string('seo_description')->nullable();
             $table->string('head')->nullable();
-            $table->unsignedBigInteger('sub_header_id');
-            $table->unsignedBigInteger('votes_id');
-            $table->unsignedBigInteger('info_id');
-            $table->unsignedBigInteger('winners_id');
+            $table->unsignedBigInteger('sub_header_id')->nullable();
+            $table->unsignedBigInteger('votes_id')->nullable();
+            $table->unsignedBigInteger('info_id')->nullable();
+            $table->unsignedBigInteger('winners_id')->nullable();
             $table->foreign('sub_header_id')->references('id')->on('main_page_blocks')->onDelete('set null');
             $table->foreign('votes_id')->references('id')->on('main_page_blocks')->onDelete('set null');
             $table->foreign('info_id')->references('id')->on('main_page_blocks')->onDelete('set null');
