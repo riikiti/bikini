@@ -99,9 +99,11 @@
       />
     </div>
     <div class="space-y-1 mt-3">
-      <h3 class="text-xl font-medium leading-none">
-        {{ card.name }}
-      </h3>
+      <router-link :to="RoutesNames.PROFILE + `${card.id}`" class="text-black no-underline">
+        <h3 class="text-xl font-medium leading-none">
+          {{ card.name }}
+        </h3>
+      </router-link>
     </div>
     <div class="grid grid-cols-5 mt-2 self-center pb-2 pt-2">
       <div v-if="card.active_contest" class="text-gray-300 hover:text-red-600">
