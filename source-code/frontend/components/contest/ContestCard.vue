@@ -21,8 +21,32 @@
     (e: 'save', id: number): void
   }>()
 
-  const like = async () => {
-    await personalRepository.like(contestItem.value.user.id)
+  const canAddingFreeLike = computed(() => {
+    return !contestItem.value.is_free_payment
+  })
+
+  const freeLike = async type => {
+    try {
+      if (!canAddingFreeLike.value) {
+        const data = {
+          type: type,
+          model_id: contestItem.value.user.id
+        }
+        await personalRepository.freeVoting(data)
+        emits('save')
+      }
+    } catch (e) {
+      console.log(e)
+    }
+  }
+
+  const premiumLike = async type => {
+    const data = {
+      type: type,
+      model_id: contestItem.value.user.id
+    }
+    const response = await personalRepository.premiumVoting(data)
+    window.open(response.link, '_blank')
     emits('save')
   }
 </script>
@@ -48,7 +72,15 @@
         <n-space vertical>
           <n-tooltip trigger="hover" placement="bottom">
             <template #trigger>
-              <n-button strong secondary size="large" circle type="warning" @click="like()">
+              <n-button
+                strong
+                secondary
+                size="large"
+                circle
+                type="warning"
+                :disabled="canAddingFreeLike"
+                @click="freeLike(1)"
+              >
                 <n-icon :size="24" :component="h(ThumbsUp)" />
               </n-button>
             </template>
@@ -63,25 +95,61 @@
           <n-space>
             <n-tooltip trigger="hover" placement="bottom">
               <template #trigger>
-                <n-button strong secondary size="large" circle type="warning"> +5 </n-button>
+                <n-button
+                  strong
+                  secondary
+                  size="large"
+                  circle
+                  type="warning"
+                  @click="premiumLike(5)"
+                >
+                  +5
+                </n-button>
               </template>
               <div class="text-center">Участница увидит что именно <b>ВЫ</b> добавили баллы</div>
             </n-tooltip>
             <n-tooltip trigger="hover" placement="bottom">
               <template #trigger>
-                <n-button strong secondary size="large" circle type="warning"> +15 </n-button>
+                <n-button
+                  strong
+                  secondary
+                  size="large"
+                  circle
+                  type="warning"
+                  @click="premiumLike(15)"
+                >
+                  +15
+                </n-button>
               </template>
               <div class="text-center">Участница увидит что именно <b>ВЫ</b> добавили баллы</div>
             </n-tooltip>
             <n-tooltip trigger="hover" placement="bottom">
               <template #trigger>
-                <n-button strong secondary size="large" circle type="warning"> +25 </n-button>
+                <n-button
+                  strong
+                  secondary
+                  size="large"
+                  circle
+                  type="warning"
+                  @click="premiumLike(25)"
+                >
+                  +25
+                </n-button>
               </template>
               <div class="text-center">Участница увидит что именно <b>ВЫ</b> добавили баллы</div>
             </n-tooltip>
             <n-tooltip trigger="hover" placement="bottom">
               <template #trigger>
-                <n-button strong secondary size="large" circle type="warning"> +50 </n-button>
+                <n-button
+                  strong
+                  secondary
+                  size="large"
+                  circle
+                  type="warning"
+                  @click="premiumLike(50)"
+                >
+                  +50
+                </n-button>
               </template>
               <div class="text-center">Участница увидит что именно <b>ВЫ</b> добавили баллы</div>
             </n-tooltip>

@@ -20,16 +20,11 @@
 <template>
   <nav>
     <n-space :size="0">
-      <n-button
-        v-for="(link, index) in userMenu"
-        :key="index"
-        :size="'small'"
-        quaternary
-        tag="a"
-        :href="link.href"
-      >
-        {{ link.name }}
-      </n-button>
+      <router-link v-for="(link, index) in userMenu" :key="index" :to="link.href">
+        <n-button :size="'small'" quaternary>
+          {{ link.name }}
+        </n-button>
+      </router-link>
     </n-space>
   </nav>
 </template>

@@ -7,7 +7,6 @@
 
   definePageMeta({
     layout: 'profile-layout',
-    key: 'contest',
     middleware: 'auth'
   })
 

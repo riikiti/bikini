@@ -64,14 +64,18 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <n-button text tag="a" :href="localePath(RoutesNames.FAVORITES)" size="medium">
-            <n-badge :value="settingsStore.favouritesCount">
-              <heart />
-            </n-badge>
-          </n-button>
-          <n-button quaternary tag="a" :href="localePath(RoutesNames.MESSENGER)" size="medium">
-            <mail />
-          </n-button>
+          <router-link :to="localePath(RoutesNames.FAVORITES)">
+            <n-button text size="medium">
+              <n-badge :value="settingsStore.favouritesCount">
+                <heart />
+              </n-badge>
+            </n-button>
+          </router-link>
+          <router-link :to="localePath(RoutesNames.MESSENGER)">
+            <n-button quaternary size="medium">
+              <mail />
+            </n-button>
+          </router-link>
           <user-nav v-if="!isMobile" :user-menu="userLinks" />
           <burger-menu v-if="isMobile" :user-menu="userLinks" />
         </div>
