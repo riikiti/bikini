@@ -28,7 +28,7 @@ export default defineNuxtConfig({
   ssr: false,
   runtimeConfig: {
     public: {
-      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://127.0.0.1:8000',
+      apiUrl: process.env.NUXT_PUBLIC_API_URL || 'http://89.111.172.135',
       authTokenKey: 'JWT_SECRET'
     }
   },

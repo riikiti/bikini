@@ -29,11 +29,11 @@
 
   const config = ref({
     add: {
-      route: '/api/active-contest/add-photo',
+      route: '/api/auth/active-contest/add-photo',
       method: 'POST'
     },
     update: {
-      route: '/api/active-contest/update-photo',
+      route: '/api/auth/active-contest/add-photo',
       method: 'POST'
     }
   })
