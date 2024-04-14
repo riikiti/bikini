@@ -16,11 +16,10 @@ class StatisticController extends Controller
 {
     public function index(Request $request)
     {
-        $model = auth()->user();
         $statistics = Statistic::query()
-            ->where('model_id', $model->id)
-            ->whereIn('type', [1, 5, 15, 25, 50])
+            ->where('model_id', auth()->user()->id)
             ->where('status', PaymentStatusEnum::CONFIRM->value)
+            ->whereIn('type', [1, 5, 15, 25, 50])
             ->orderBy('type')
             ->get();
 
