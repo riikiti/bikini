@@ -116,8 +116,9 @@ class PaymentController extends Controller
                         'isActive',
                         true
                     )->first();
-                    Log::channel('sms')->info($amount->value);
-                    $contest->fill(['paidRating', $amount->value])->save();
+                    Log::channel('sms')->info(intval($contest));
+                    Log::channel('sms')->info(intval($amount->value));
+                    $contest->fill(['paidRating', intval($amount->value)])->save();
                 }
             }
         }
