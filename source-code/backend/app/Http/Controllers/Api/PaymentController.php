@@ -121,8 +121,8 @@ class PaymentController extends Controller
                     Log::channel('sms')->info(intval($transaction->model_id));
                     Log::channel('sms')->info(intval($amount->value));
                     if ($c) {
-                        $contest->paidRating = $amount->value;
-                        $contest->save();
+                        $c->paidRating = $amount->value;
+                        $c->save();
                     }
 
                     Log::channel('sms')->info($c);
