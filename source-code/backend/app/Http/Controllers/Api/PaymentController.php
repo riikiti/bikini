@@ -113,12 +113,13 @@ class PaymentController extends Controller
                     $transaction->fill(['status' => PaymentStatusEnum::CONFIRM])->save();
                     //todo добавить в конкурс https://www.youtube.com/watch?v=YlE433y5A9M&t=186s
                     $contest = ContestModel::query()
-                        ->where('user_id', $transaction->model_id)
+                        ->where('user_id', intval($transaction->model_id))
                         ->where('isActive', true)
                         ->first();
                     Log::channel('sms')->info(intval($transaction->model_id));
                     Log::channel('sms')->info(intval($amount->value));
                     $contest->fill(['paidRating', intval($amount->value)])->save();
+                    Log::channel('sms')->info(intval($contest));
                 }
             }
         }
@@ -132,18 +133,10 @@ class PaymentController extends Controller
                     'isActive',
                     true
                 )->first();
+
                 Log::channel('sms')->info(intval($transaction->model_id));
                 Log::channel('sms')->info(intval($amount->value));
-            }
-        }
-
-
-        if (isset($payment->status) && $payment->status === 'failed') {
-            $metadata = $payment->metadata;
-            if (isset($metadata->transaction_id)) {
-                $transactionId = intval($metadata->transaction_id);
-                $transaction = Statistic::findOrFail($transactionId);
-                $transaction->fill(['status' => PaymentStatusEnum::FAILED])->save();
+                Log::channel('sms')->info(intval($contest));
             }
         }
     }
