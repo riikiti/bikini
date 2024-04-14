@@ -44,7 +44,10 @@ class StatisticController extends Controller
             foreach ($users as $user_id) {
                 $out[] = UserStatisticResource::make(User::find($user_id));
             }
-            $result["type_$type"]['users'] = $out;
+            $result[] = [
+                    'type' => $type,
+                    'users' => $out,
+                ];
         }
         return response()->json([
             'status' => 'ok',
