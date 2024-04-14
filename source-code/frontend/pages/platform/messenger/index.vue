@@ -100,16 +100,20 @@
         <n-space vertical>
           <div class="text-2xl font-bold">{{ messege.name }}</div>
           <n-space>
-            <n-button tag="a" :href="RoutesNames.MESSENGER + `/${messege.id}`">
-              <n-icon :size="24">
-                <mail />
-              </n-icon>
-            </n-button>
-            <n-button tag="a" :href="RoutesNames.PROFILE + `${messege.id}`">
-              <n-icon :size="24">
-                <user />
-              </n-icon>
-            </n-button>
+            <router-link :to="RoutesNames.MESSENGER + `/${messege.id}`">
+              <n-button>
+                <n-icon :size="24">
+                  <mail />
+                </n-icon>
+              </n-button>
+            </router-link>
+            <router-link :to="RoutesNames.PROFILE + `${messege.id}`">
+              <n-button>
+                <n-icon :size="24">
+                  <user />
+                </n-icon>
+              </n-button>
+            </router-link>
           </n-space>
         </n-space>
       </n-space>

@@ -38,7 +38,11 @@
     responsive="screen"
   >
     <n-grid-item v-for="(player, idx) in userList.users" :key="idx">
-      <contest-card :contest-item="player" :is-ending-contest="!isActiveContest" />
+      <contest-card
+        :contest-item="player"
+        :is-ending-contest="!isActiveContest"
+        @save="fetchActivePlayers()"
+      />
     </n-grid-item>
   </n-grid>
   <div v-else>

@@ -36,6 +36,16 @@ const personalRepository = {
   save: async params => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/fill', params)
+  },
+  freeVoting: async params => {
+    const { $http } = useNuxtApp()
+    const response = await $http.post('api/auth/payment/create-free', params)
+    return response.data.data
+  },
+  premiumVoting: async params => {
+    const { $http } = useNuxtApp()
+    const response = await $http.post('api/auth/payment/create', params)
+    return response.data
   }
 }
 export default personalRepository
