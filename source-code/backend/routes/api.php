@@ -97,7 +97,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
         Route::get('/property', [PropertyController::class, 'index']);
 
-        Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
+
         Route::post('/payment/create', [PaymentController::class, 'create']);
         Route::post('/payment/create-free', [PaymentController::class, 'createFree']);
 
@@ -115,7 +115,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     });
 
 });
-
+Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
 
 
