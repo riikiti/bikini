@@ -22,8 +22,8 @@ class ContestModelsResource extends JsonResource
 
         return [
             'user' => UserCompactCompactResource::make(User::find($this->user_id)),
-            'photo' => $this->photo ? $this->appUrl.'/storage/'.$this->photo : null,
-            'rating' => ($this->freeRating + $this->additionalFreeRating + $this->paidRating),
+            'photo' => $this->photo ? $this->appUrl . '/storage/' . $this->photo : null,
+            'rating' => $this->freeRating + $this->additionalFreeRating + $this->paidRating,
         ];
     }
 }
