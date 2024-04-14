@@ -1,0 +1,1 @@
+import{bo as t,a4 as a,bp as s}from"./entry.gSqCWQNH.js";import{u}from"./index.0Xd3rQ3Y.js";const f=t(e=>{if(e.fullPath.includes(a.PLATFORM_BLOG)||e.fullPath.includes(a.PLATFORM_BOX)||e.fullPath.includes(a.PLATFORM_GALLERY)){const l=u();return s(l(a.PROFILE))}});export{f as default};
