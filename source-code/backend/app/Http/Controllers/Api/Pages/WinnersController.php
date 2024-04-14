@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Api\Pages;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\WinnerFullResource;
 use App\Models\Contest;
 use App\Models\WinnerList;
 
@@ -17,7 +18,7 @@ class WinnersController extends Controller
             $winners = WinnerList::query()->where('contest_id',$contest->id)->get();
             $data[] = [
                 "contest" => $contest,
-                "winners" => $winners,
+                "winners" => WinnerFullResource::collection($winners),
             ];
         }
 
