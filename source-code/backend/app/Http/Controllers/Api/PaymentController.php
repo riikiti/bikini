@@ -53,8 +53,6 @@ class PaymentController extends Controller
                 $request->input('model_id')
             )->first();
             $contest->fill(['freeRating', 1])->save();
-
-
             return response()->json(['status' => 'inject', 'data' => StatisticResource::make($transaction)]);
         }
     }
@@ -109,6 +107,11 @@ class PaymentController extends Controller
                     $transaction = Statistic::findOrFail($transactionId);
                     $transaction->fill(['status' => PaymentStatusEnum::CONFIRM])->save();
                     //todo добавить в конкурс https://www.youtube.com/watch?v=YlE433y5A9M&t=186s
+                    $contest = ContestModel::query()->where('user_id', $transaction->model_id)->where(
+                        'isActive',
+                        true
+                    )->first();
+                    $contest->fill(['paidRating', $payment->amount->value])->save();
                 }
             }
         }
