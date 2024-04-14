@@ -16,19 +16,21 @@ class UserSeeder extends Seeder
      */
     public function run(): void
     {
-        Country::create(
+        Country::createOrUpdate(
             [
                 'name' => 'Russia',
-            ]
+                'icon'=>'https://flagicons.lipis.dev/flags/4x3/ru.svg'
+            ],
+
         );
         User::factory()->create();
-        ModelPhoto::create(
+       /* ModelPhoto::create(
             [
                 'image' => '123',
                 'description' => '123',
                 'user_id' => 1
             ]
-        );
+        );*/
 
 
     }
