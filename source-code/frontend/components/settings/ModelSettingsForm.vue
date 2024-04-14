@@ -61,7 +61,7 @@
     birthdate: user.value.info?.birthdate ?? null,
     size: user.value.info?.size ?? null,
     country: user.value.country?.id ?? null,
-    hair_color: user.value.info?.hair_color?.id ?? null,
+    hair_color: user.value.info?.hair?.id ?? null,
     breast: user.value.info?.breast?.id ?? null,
     city: user.value.info?.city ?? null,
     about: user.value.info?.about ?? null

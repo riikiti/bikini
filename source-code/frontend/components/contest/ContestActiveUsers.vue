@@ -46,7 +46,7 @@
     </n-grid-item>
   </n-grid>
   <div v-else>
-    <n-empty description="Участниц пока нет(">
+    <n-empty description="Участниц пока нет">
       <template #icon>
         <n-icon :size="36" color="#19A058">
           <Camera />

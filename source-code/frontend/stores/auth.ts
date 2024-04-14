@@ -51,8 +51,8 @@ export const useAuthStore = defineStore('auth', {
       try {
         const response = await personalRepository.profile()
         this.user = response.data.user.original
-        this.check = response.data.check.reduce(
-          (acc: IExtendedAccountCheck[], val: IAccountCheck) => {
+        this.check =
+          response.data.check?.reduce((acc: IExtendedAccountCheck[], val: IAccountCheck) => {
             if (val.type === 'settings') {
               const additionalParams = {
                 route: RoutesNames.SETTINGS,
@@ -70,9 +70,7 @@ export const useAuthStore = defineStore('auth', {
             }
 
             return acc as IExtendedAccountCheck[]
-          },
-          []
-        )
+          }, []) ?? []
       } catch (error) {
         console.log(error)
       }

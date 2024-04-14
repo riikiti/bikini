@@ -1,5 +1,4 @@
 <script setup lang="ts">
-  import SwitcherTheme from '~/components/TheHeader/SwitcherTheme.vue'
   import { Mail, Heart } from 'lucide-vue-next'
   import UserNav from '~/components/TheHeader/UserNav.vue'
   import SwitcherLocale from '~/components/TheHeader/SwitcherLocale.vue'
@@ -38,7 +37,7 @@
   ]
 
   const settingsStore = useSettingsStore()
-  const { isMobile } = storeToRefs(settingsStore)
+  const { isMobile, isBeta } = storeToRefs(settingsStore)
 </script>
 
 <template>
@@ -56,7 +55,7 @@
               </div>
             </nuxt-link>
           </div>
-          <div class="flex items-center">
+          <div v-if="isBeta" class="flex items-center">
             <switcher-locale />
           </div>
           <div v-if="!isMobile" class="ml-3 flex items-center gap-3">
@@ -65,7 +64,7 @@
         </div>
         <div class="flex items-center gap-2">
           <router-link :to="localePath(RoutesNames.FAVORITES)">
-            <n-button text size="medium">
+            <n-button quaternary size="medium">
               <n-badge :value="settingsStore.favouritesCount">
                 <heart />
               </n-badge>

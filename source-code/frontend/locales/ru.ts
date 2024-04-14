@@ -3,16 +3,16 @@ export default {
     main: 'Main',
     blog: 'Blog',
     box: 'Box',
-    settings: 'Settings',
-    finance: 'Finance',
+    settings: 'Настройки',
+    finance: 'Выплаты',
     portfolio: 'Portfolio',
-    logout: 'Logout',
+    logout: 'Выйти',
     users: 'Участницы',
     winner: 'Победительницы',
-    profile: 'Profile',
-    favorites: 'Favorites',
-    platform: 'Platform',
-    messenger: 'Messenger'
+    profile: 'Профиль',
+    favorites: 'Избранное',
+    platform: 'Платформа',
+    messenger: 'Переписка'
   },
   form_login: {
     password: 'Password'

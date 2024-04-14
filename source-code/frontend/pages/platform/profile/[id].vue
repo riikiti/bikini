@@ -61,8 +61,8 @@
       },
       {
         header: 'Цвет волос',
-        value: userProfile.value?.user.info?.hair?.color
-          ? userProfile.value?.user.info?.hair?.color
+        value: userProfile.value?.user.info?.hair_color?.color
+          ? userProfile.value?.user.info?.hair_color?.color
           : 'Не заполнено'
       },
       {

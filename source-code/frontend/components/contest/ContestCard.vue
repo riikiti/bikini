@@ -4,6 +4,7 @@
   import { NAlert, NButton, NGrid, NGridItem, NIcon, NImage, NSpace, NTooltip } from 'naive-ui'
   import type { IContestUser } from '~/services/models'
   import personalRepository from '~/services/repository/personalRepository'
+  import { RoutesNames } from '~/services/routes-names'
 
   interface IProps {
     contestItem: IContestUser
@@ -158,7 +159,12 @@
       </n-grid-item>
     </n-grid>
     <n-space class="mt-4">
-      <div class="text-lg font-bold">{{ contestItem.user.name }}</div>
+      <router-link
+        :to="RoutesNames.PROFILE + `${contestItem.user.id}`"
+        class="no-underline text-lg font-bold text-black"
+      >
+        {{ contestItem.user.name }}
+      </router-link>
     </n-space>
   </div>
 </template>

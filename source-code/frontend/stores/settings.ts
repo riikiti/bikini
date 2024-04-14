@@ -6,10 +6,12 @@ interface ISettingsStore {
   isMobile: boolean
   moderatorId: string | number | null
   favouritesCount: string | number | null
+  isBeta: boolean
 }
 export const useSettingsStore = defineStore('settings', {
   state: (): ISettingsStore => ({
     isMobile: false,
+    isBeta: true,
     moderatorId: null,
     favouritesCount: null
   }),
