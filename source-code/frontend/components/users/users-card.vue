@@ -106,13 +106,6 @@
       </router-link>
     </div>
     <div class="grid grid-cols-5 mt-2 self-center pb-2 pt-2">
-      <div v-if="card.active_contest" class="text-gray-300 hover:text-red-600">
-        <router-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
-          <n-icon :size="32">
-            <heart :size="32" />
-          </n-icon>
-        </router-link>
-      </div>
       <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
         <router-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
           <n-icon :size="32">
@@ -132,7 +125,7 @@
         @click="addToFavourite()"
       >
         <n-icon :size="32">
-          <bookmark-plus :size="32" />
+          <heart :size="32" />
         </n-icon>
       </div>
       <div v-if="card.is_winner" class="text-gray-300 hover:text-red-600">

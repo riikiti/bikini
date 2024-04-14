@@ -1,12 +1,34 @@
 <script setup lang="ts">
   import { definePageMeta } from '#imports'
-  import { NSpace } from 'naive-ui'
+  import { NAlert, NSkeleton, NSpace } from 'naive-ui'
   import { RoutesNames } from '~/services/routes-names'
+  import contestRepository from '~/services/repository/contestRepository'
+  import { ref, onMounted } from 'vue'
 
   definePageMeta({
     layout: 'profile-layout',
     key: 'contest',
     middleware: 'profile'
+  })
+
+  const statistics = ref(null)
+  const isLoading = ref(false)
+
+  const fetchStatistics = async () => {
+    isLoading.value = true
+    try {
+      const response = await contestRepository.statistics()
+
+      const x = response?.reduce((acc, val) => {}) ?? []
+      statistics.value = response
+    } catch (e) {
+      console.log(e)
+    }
+    isLoading.value = false
+  }
+
+  onMounted(async () => {
+    await fetchStatistics()
   })
 
   const statisticsList = [
@@ -135,27 +157,32 @@
 
 <template>
   <div>
-    <div class="text-2xl">Статистика</div>
-    <div>Вам добавили</div>
-    <div class="mt-12 flex flex-col gap-12">
-      <n-space v-for="statisticsItem in statisticsList" :key="statisticsItem.id" vertical>
-        <div v-if="statisticsItem.type == 1" class="text-3xl">
-          по <b>{{ statisticsItem.type }}</b> баллу, пользователи:
-        </div>
-        <div v-else class="text-3xl">
-          по <b>{{ statisticsItem.type }}</b> баллов (дополнительные голоса), пользователи:
-        </div>
-        <n-space size="large">
-          <a
-            v-for="(user, idx) in statisticsItem.items"
-            :key="idx"
-            class="text-black"
-            :href="RoutesNames.PROFILE + `/${user.id}`"
-          >
-            <div>{{ user.name }}</div>
-          </a>
+    <n-skeleton v-if="isLoading" text :repeat="1" :height="40" class="mb-4" />
+    <n-skeleton v-if="isLoading" text :repeat="5" :height="150" />
+    <template v-else>
+      <div class="text-2xl">Статистика</div>
+      <div>Вам добавили</div>
+      <div class="mt-12 flex flex-col gap-12">
+        <n-space v-for="statisticsItem in statistics" :key="statisticsItem.id" vertical>
+          <div v-if="statisticsItem.type == 1" class="text-3xl">
+            по <b>{{ statisticsItem.type }}</b> баллу, пользователи:
+          </div>
+          <div v-else class="text-3xl">
+            по <b>{{ statisticsItem.type }}</b> баллов (дополнительные голоса), пользователи:
+          </div>
+          <n-space v-if="statisticsItem.users.length > 0" size="large">
+            <router-link
+              v-for="(user, idx) in statisticsItem.users"
+              :key="idx"
+              class="text-black"
+              :to="RoutesNames.PROFILE + `/${user.id}`"
+            >
+              <div>{{ user.name }}</div>
+            </router-link>
+          </n-space>
+          <n-alert v-else title="Информация" type="info"> На данный момент нет статистики!</n-alert>
         </n-space>
-      </n-space>
-    </div>
+      </div>
+    </template>
   </div>
 </template>

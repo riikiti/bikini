@@ -71,7 +71,7 @@
           <n-button class="uppercase" type="primary" size="large" dashed @click="handleEditForm"
             >Обновить фото</n-button
           >
-          <router-link :to="RoutesNames.STATISTICS + `/${currentModel.user.id}`">
+          <router-link :to="RoutesNames.STATISTICS">
             <n-button class="uppercase" type="primary" size="large" dashed>Статистика</n-button>
           </router-link>
         </n-space>

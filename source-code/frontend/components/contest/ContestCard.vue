@@ -1,7 +1,17 @@
 <script setup lang="ts">
   import { h, computed, toRefs } from 'vue'
   import { ThumbsUp } from 'lucide-vue-next'
-  import { NAlert, NButton, NGrid, NGridItem, NIcon, NImage, NSpace, NTooltip } from 'naive-ui'
+  import {
+    NAlert,
+    NButton,
+    NGradientText,
+    NGrid,
+    NGridItem,
+    NIcon,
+    NImage,
+    NSpace,
+    NTooltip
+  } from 'naive-ui'
   import type { IContestUser } from '~/services/models'
   import personalRepository from '~/services/repository/personalRepository'
   import { RoutesNames } from '~/services/routes-names'
@@ -15,6 +25,8 @@
     contestName: '',
     isEndingContest: false
   })
+  const userStore = useAuthStore()
+  const { user } = storeToRefs(userStore)
 
   const { contestItem } = toRefs(props)
 
@@ -50,10 +62,19 @@
     window.open(response.link, '_blank')
     emits('save')
   }
+
+  const canAddingVote = computed(() => {
+    return contestItem.value.user.id !== user.value.id
+  })
 </script>
 
 <template>
-  <div class="flex flex-col p-4 rounded-lg overflow-hidden shadow">
+  <div
+    :class="[
+      'flex flex-col p-4 rounded-lg overflow-hidden shadow',
+      { 'shadow-blue-300 shadow-lg': !canAddingVote }
+    ]"
+  >
     <div class="mb-2 flex justify-between items-center">
       <div v-if="contestName">Конкурс: {{ contestName }}</div>
       <n-alert :title="'Рейтинг:' + contestItem.rating" type="success" />
@@ -68,7 +89,13 @@
         class="w-full h-full"
       />
     </div>
-    <n-grid v-if="!isEndingContest" :x-gap="12" :y-gap="12" :cols="3" class="w-full mt-4">
+    <n-grid
+      v-if="!isEndingContest && canAddingVote"
+      :x-gap="12"
+      :y-gap="12"
+      :cols="3"
+      class="w-full mt-4"
+    >
       <n-grid-item>
         <n-space vertical>
           <n-tooltip trigger="hover" placement="bottom">
@@ -158,6 +185,9 @@
         </n-space>
       </n-grid-item>
     </n-grid>
+    <div v-else class="font-medium text-lg w-full break-words text-center my-4">
+      <n-gradient-text>Это ВЫ! </n-gradient-text>
+    </div>
     <n-space class="mt-4">
       <router-link
         :to="RoutesNames.PROFILE + `${contestItem.user.id}`"
