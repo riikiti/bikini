@@ -120,7 +120,11 @@ class PaymentController extends Controller
                         ->first();
                     Log::channel('sms')->info(intval($transaction->model_id));
                     Log::channel('sms')->info(intval($amount->value));
-                    $c->fill(['paidRating', intval($amount->value)])->save();
+                    if ($c) {
+                        $contest->paidRating = $amount->value;
+                        $contest->save();
+                    }
+
                     Log::channel('sms')->info($c);
                 }
             }
