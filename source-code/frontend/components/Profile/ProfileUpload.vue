@@ -7,7 +7,7 @@
   }>()
 
   const config = ref({
-    route: `/api/gallery-photo`,
+    route: `/api/auth/gallery-photo`,
     method: 'POST',
     name: 'image'
   })
