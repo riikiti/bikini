@@ -14,7 +14,7 @@
   definePageMeta({
     layout: 'profile-layout',
     key: 'settings',
-    middleware: 'profile'
+    middleware: 'auth'
   })
   const settingsList = ref(null)
 

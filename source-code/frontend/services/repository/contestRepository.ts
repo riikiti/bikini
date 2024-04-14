@@ -9,6 +9,12 @@ const contestRepository = {
     const { $http } = useNuxtApp()
     return $http.get('/api/auth/active-contest/model-block')
   },
+  winnerList: async () => {
+    const { $http } = useNuxtApp()
+    const response = await $http.get('/api/auth/winners')
+    console.log('winners: ', response)
+    return response.data.data
+  },
   uploadContestPhoto: data => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/active-contest/add-photo', data)

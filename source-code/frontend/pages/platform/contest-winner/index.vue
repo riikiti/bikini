@@ -1,10 +1,19 @@
 <script setup lang="ts">
   import { computed, onMounted, ref } from 'vue'
   import { definePageMeta, useUserStore } from '#imports'
-  import { NGradientText, NSpace } from 'naive-ui'
+  import {
+    NAlert,
+    NButton,
+    NCard,
+    NGradientText,
+    NImage,
+    NResult,
+    NSkeleton,
+    NSpace
+  } from 'naive-ui'
   import type { IContestPrize, IContestBlock } from '~/services/models'
   import contestRepository from '~/services/repository/contestRepository'
-
+  import { RoutesNames } from '~/services/routes-names'
   definePageMeta({
     layout: 'profile-layout',
     middleware: 'auth'
@@ -12,145 +21,121 @@
 
   const userStore = useUserStore()
 
-  const activeContest = ref<IContestBlock | null>(null)
+  const isLoading = ref(false)
+
+  const activeContest = ref(null)
   const fetchActiveContest = async () => {
-    const response = await contestRepository.prizeList()
-    const { data } = response
-    activeContest.value = data.contest as IContestBlock
+    isLoading.value = true
+    try {
+      activeContest.value = await contestRepository.winnerList()
+    } catch (e) {
+      console.log(e)
+    }
+    isLoading.value = false
   }
 
-  const prizes = computed(() => {
-    if (activeContest.value.prizes) {
-      const sorted = activeContest.value.prizes.sort(
-        (a: IContestPrize, b: IContestPrize) => a.place - b.place
-      )
-      // Найти индекс элемента с place: 2
-      const indexPlace2 = sorted.findIndex((prize: IContestPrize) => prize.place === 2)
+  onMounted(() => {
+    fetchActiveContest()
+  })
 
-      // Переместить элемент с place: 2 в начало массива
-      const place2Element = sorted.splice(indexPlace2, 1)[0]
-      sorted.unshift(place2Element)
-      const indexPlace1 = sorted.findIndex((prize: IContestPrize) => prize.place === 1)
-      const place1Element = sorted.splice(indexPlace1, 1)[0]
-      const middleIndex = Math.floor(sorted.length / 2)
-      sorted.splice(middleIndex, 0, place1Element)
-      return sorted
+  const testWinners = [
+    {
+      id: 5,
+      place: 1,
+      user: {
+        id: 1,
+        name: 'Affff',
+        avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+      },
+      contest_id: '1',
+      created_at: '2024-03-28T12:08:20.000000Z',
+      updated_at: '2024-03-28T12:08:20.000000Z'
+    },
+    {
+      id: 6,
+      place: 2,
+      user: {
+        id: 1,
+        name: 'ававаав',
+        avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+      },
+      contest_id: '1',
+      created_at: '2024-03-28T12:08:20.000000Z',
+      updated_at: '2024-03-28T12:08:20.000000Z'
+    },
+    {
+      id: 7,
+      place: 3,
+      user: {
+        id: 7,
+        name: 'ffff',
+        avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
+      },
+      contest_id: '1',
+      created_at: '2024-03-28T12:08:20.000000Z',
+      updated_at: '2024-03-28T12:08:20.000000Z'
     }
-    return []
-  })
-
-  onMounted(async () => {
-    await fetchActiveContest()
-  })
+  ]
 </script>
 
 <template>
-  <div v-if="activeContest" class="h-full relative flex flex-col gap-6">
-    <n-space vertical align="center" justify="center">
-      <n-gradient-text type="success">
-        <div class="text-[64px]">{{ activeContest.name }}</div>
-      </n-gradient-text>
-      <div v-if="prizes">
-        <div class="text-3xl font-bold my-8 mb-16 text-center">Победительницы</div>
-        <div class="gap-8 columns-3 h-full my-8">
-          <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
-            <div class="relative">
-              <div
-                :class="[
-                  'w-[200px] h-[200px] rounded-full shadow-lg flex overflow-hidden relative',
-                  { '-mt-12': prize.place === 1 }
-                ]"
-              >
-                <img :src="prize.image" alt="" />
-              </div>
-              <div
-                :class="[
-                  'absolute w-[48px] h-[48px] rounded-full  bottom-2 left-1/2 transform -translate-x-1/2 translate-y-1/2 flex items-center justify-center font-bold text-2xl',
-                  {
-                    'bg-yellow-300': prize.place === 1
-                  },
-                  {
-                    'bg-cyan-400': prize.place === 2
-                  },
-                  {
-                    'bg-violet-400': prize.place === 3
-                  }
-                ]"
-              >
-                {{ prize.place }}
-              </div>
-            </div>
-
-            <div class="text-2xl text-center mt-3">{{ prize.name }}</div>
-            <div>{{ prize.description }}</div>
+  <div class="h-full relative">
+    <n-skeleton v-if="isLoading" text :repeat="2" :height="400" />
+    <n-space v-for="(contestItem, idx) in activeContest" v-else :key="idx" vertical :size="40">
+      <n-card>
+        <n-space vertical align="center" justify="center">
+          <n-gradient-text type="success">
+            <div class="text-[64px]">{{ contestItem?.contest?.name }}</div>
+          </n-gradient-text>
+          <n-space v-if="contestItem.winners?.length || testWinners" size="large">
+            <n-card v-for="(winner, idx) in testWinners" :key="idx">
+              <n-space vertical>
+                <div class="h-[250px] overflow-hidden rounded w-full max-h-full">
+                  <n-image
+                    v-if="winner?.user?.avatar"
+                    :src="winner?.user.avatar"
+                    height="100%"
+                    width="100%"
+                    max-height="100%"
+                    max-width="100%"
+                    class="w-full h-full"
+                  />
+                  <n-alert v-else title="Произошла ошибка" type="error"> Попробуйте позже </n-alert>
+                </div>
+                <div class="mt-3 text-xl font-medium text-center">
+                  Место: <n-gradient-text>{{ winner.place }}</n-gradient-text>
+                </div>
+              </n-space>
+            </n-card>
+          </n-space>
+          <template v-else>
+            <n-result
+              status="warning"
+              title="Победителей пока нет"
+              size="medium"
+              description="На данный момент победителей у данного конкурса нет!"
+            >
+              <template #footer>
+                <router-link :to="RoutesNames.ACTIVE_CONTEST">
+                  <n-button>Посмотрите текущий контест</n-button>
+                </router-link>
+              </template>
+            </n-result>
+          </template>
+          <div class="mt-6">
+            <span class="text-3xl text-center"
+              >c
+              <n-gradient-text type="info">
+                <div>{{ contestItem.contest?.start }}</div>
+              </n-gradient-text>
+              по
+              <n-gradient-text type="error">
+                <div>{{ contestItem.contest?.finish }}</div>
+              </n-gradient-text>
+            </span>
           </div>
-        </div>
-      </div>
-      <div class="mt-6">
-        <span class="text-3xl text-center"
-          >c
-          <n-gradient-text type="info">
-            <div>{{ activeContest?.start }}</div>
-          </n-gradient-text>
-          по
-          <n-gradient-text type="error">
-            <div>{{ activeContest?.finish }}</div>
-          </n-gradient-text>
-        </span>
-      </div>
-    </n-space>
-    <n-space vertical align="center" justify="center">
-      <n-gradient-text type="success">
-        <div class="text-[64px]">{{ activeContest.name }}</div>
-      </n-gradient-text>
-      <div v-if="prizes">
-        <div class="text-3xl font-bold my-8 mb-16 text-center">Победительницы</div>
-        <div class="gap-8 columns-3 h-full my-8">
-          <div v-for="(prize, index) in prizes" :key="index" class="flex flex-col items-center">
-            <div class="relative">
-              <div
-                :class="[
-                  'w-[200px] h-[200px] rounded-full shadow-lg flex overflow-hidden relative',
-                  { '-mt-12': prize.place === 1 }
-                ]"
-              >
-                <img :src="prize.image" alt="" />
-              </div>
-              <div
-                :class="[
-                  'absolute w-[48px] h-[48px] rounded-full  bottom-2 left-1/2 transform -translate-x-1/2 translate-y-1/2 flex items-center justify-center font-bold text-2xl',
-                  {
-                    'bg-yellow-300': prize.place === 1
-                  },
-                  {
-                    'bg-cyan-400': prize.place === 2
-                  },
-                  {
-                    'bg-violet-400': prize.place === 3
-                  }
-                ]"
-              >
-                {{ prize.place }}
-              </div>
-            </div>
-
-            <div class="text-2xl text-center mt-3">{{ prize.name }}</div>
-            <div>{{ prize.description }}</div>
-          </div>
-        </div>
-      </div>
-      <div class="mt-6">
-        <span class="text-3xl text-center"
-          >c
-          <n-gradient-text type="info">
-            <div>{{ activeContest?.start }}</div>
-          </n-gradient-text>
-          по
-          <n-gradient-text type="error">
-            <div>{{ activeContest?.finish }}</div>
-          </n-gradient-text>
-        </span>
-      </div>
+        </n-space>
+      </n-card>
     </n-space>
   </div>
 </template>
