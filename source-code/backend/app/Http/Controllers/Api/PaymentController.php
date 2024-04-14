@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StatisticResource;
+use App\Models\Contest;
 use App\Models\ContestModel;
 use App\Models\Statistic;
 use App\Models\Transaction;
@@ -112,14 +113,15 @@ class PaymentController extends Controller
                     $transaction = Statistic::findOrFail($transactionId);
                     $transaction->fill(['status' => PaymentStatusEnum::CONFIRM])->save();
                     //todo добавить в конкурс https://www.youtube.com/watch?v=YlE433y5A9M&t=186s
-                    $contest = ContestModel::query()
+                    $contest = Contest::query()->where('is_active', true)->first();
+                    $c = ContestModel::query()
                         ->where('user_id', intval($transaction->model_id))
-                        ->where('isActive', true)
+                        ->where('contest_id', $contest->id)
                         ->first();
                     Log::channel('sms')->info(intval($transaction->model_id));
                     Log::channel('sms')->info(intval($amount->value));
-                    $contest->fill(['paidRating', intval($amount->value)])->save();
-                    Log::channel('sms')->info(intval($contest));
+                    $c->fill(['paidRating', intval($amount->value)])->save();
+                    Log::channel('sms')->info($c);
                 }
             }
         }
@@ -129,14 +131,8 @@ class PaymentController extends Controller
                 $transactionId = intval($metadata->transaction_id);
                 $transaction = Statistic::findOrFail($transactionId);
                 $transaction->fill(['status' => PaymentStatusEnum::WAITING])->save();
-                $contest = ContestModel::query()->where('user_id', $transaction->model_id)->where(
-                    'isActive',
-                    true
-                )->first();
-
                 Log::channel('sms')->info(intval($transaction->model_id));
                 Log::channel('sms')->info(intval($amount->value));
-                Log::channel('sms')->info(intval($contest));
             }
         }
     }
