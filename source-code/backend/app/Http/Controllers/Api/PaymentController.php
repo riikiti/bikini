@@ -128,6 +128,13 @@ class PaymentController extends Controller
                 $transactionId = intval($metadata->transaction_id);
                 $transaction = Statistic::findOrFail($transactionId);
                 $transaction->fill(['status' => PaymentStatusEnum::WAITING])->save();
+                $contest = ContestModel::query()->where('user_id', $transaction->model_id)->where(
+                    'isActive',
+                    true
+                )->first();
+                Log::channel('sms')->info(intval($transaction->model_id));
+                Log::channel('sms')->info(intval($amount->value));
+
             }
         }
 
