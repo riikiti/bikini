@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Api;
 use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StatisticResource;
+use App\Models\ContestModel;
 use App\Models\Statistic;
 use App\Models\Transaction;
 use App\Services\Helpers\Payment\PaymentHelperService;
@@ -46,6 +47,14 @@ class PaymentController extends Controller
                 'user_id' => auth()->user()->id,
                 'model_id' => $request->input('model_id')
             ]);
+
+            $contest = ContestModel::query()->where('isActive', true)->where(
+                'user_id',
+                $request->input('model_id')
+            )->first();
+            $contest->fill(['freeRating', 1])->save();
+
+
             return response()->json(['status' => 'inject', 'data' => StatisticResource::make($transaction)]);
         }
     }
