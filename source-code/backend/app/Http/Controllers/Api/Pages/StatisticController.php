@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Api\Pages;
 
+use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\StatisticResource;
 use App\Http\Resources\UserStatisticResource;
@@ -19,6 +20,7 @@ class StatisticController extends Controller
         $statistics = Statistic::query()
             ->where('model_id', $model->id)
             ->whereIn('type', [1, 5, 15, 25, 50])
+            ->where('status', PaymentStatusEnum::CONFIRM->value)
             ->orderBy('type')
             ->get();
 
@@ -45,9 +47,9 @@ class StatisticController extends Controller
                 $out[] = UserStatisticResource::make(User::find($user_id));
             }
             $result[] = [
-                    'type' => $type,
-                    'users' => $out,
-                ];
+                'type' => $type,
+                'users' => $out,
+            ];
         }
         return response()->json([
             'status' => 'ok',
