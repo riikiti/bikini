@@ -52,7 +52,11 @@ class PaymentController extends Controller
                 'user_id',
                 $request->input('model_id')
             )->first();
-            $contest->fill(['freeRating', 1])->save();
+
+            if ($contest) {
+                $contest->freeRating = 1;
+                $contest->save();
+            }
             return response()->json(['status' => 'inject', 'data' => StatisticResource::make($transaction)]);
         }
     }
