@@ -65,27 +65,15 @@
           <img :src="currentModel.photo" alt="" class="w-[150px] h-[150px]" />
         </div>
         <n-space class="mt-6">
-          <n-button
-            tag="a"
-            :href="RoutesNames.PROFILE"
-            class="uppercase"
-            type="primary"
-            size="large"
-            dashed
-            >Мой Профиль</n-button
-          >
+          <router-link :to="RoutesNames.PROFILE + `${currentModel.user.id}`">
+            <n-button class="uppercase" type="primary" size="large" dashed>Мой Профиль</n-button>
+          </router-link>
           <n-button class="uppercase" type="primary" size="large" dashed @click="handleEditForm"
             >Обновить фото</n-button
           >
-          <n-button
-            tag="a"
-            :href="RoutesNames.STATISTICS"
-            class="uppercase"
-            type="primary"
-            size="large"
-            dashed
-            >Статистика</n-button
-          >
+          <router-link :to="RoutesNames.STATISTICS + `/${currentModel.user.id}`">
+            <n-button class="uppercase" type="primary" size="large" dashed>Статистика</n-button>
+          </router-link>
         </n-space>
       </n-space>
     </div>
