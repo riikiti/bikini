@@ -1,0 +1,1 @@
+import{bo as n,bi as s,bp as o,a4 as t,bq as u}from"./entry.xrD6b9Mx.js";const b=n(a=>{const{authTokenKey:i}=s().public,e=localStorage.getItem(i);if(e&&a.path==="/")return o(t.ACTIVE_CONTEST);if(!e&&a.path!==t.MAIN)return u(),o(t.MAIN)});export{b as default};
