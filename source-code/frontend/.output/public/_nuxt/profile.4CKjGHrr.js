@@ -1,1 +1,0 @@
-import{br as s,a4 as a,bs as t}from"./entry.pcvPK11Y.js";import{u}from"./index.05O-rZRu.js";const r=s(e=>{if(e.fullPath.includes(a.PLATFORM_BLOG)||e.fullPath.includes(a.PLATFORM_BOX)||e.fullPath.includes(a.PLATFORM_GALLERY)){const l=u();return t(l(a.PROFILE))}});export{r as default};
