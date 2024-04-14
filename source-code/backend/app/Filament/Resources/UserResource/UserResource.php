@@ -29,7 +29,7 @@ class UserResource extends Resource
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
                 TextColumn::make('role')->label('Роль'),
-                ToggleColumn::make('is_active')->label('Активен'),
+                ToggleColumn::make('approved')->label('Активен'),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
