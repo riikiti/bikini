@@ -25,5 +25,6 @@ class ContestModelsResource extends JsonResource
             'photo' => $this->photo ? $this->appUrl . '/storage/' . $this->photo : null,
             'rating' => $this->freeRating + $this->additionalFreeRating + $this->paidRating,
             'is_free_payment' => $this->freeRating === 1,
+        ];
     }
 }
