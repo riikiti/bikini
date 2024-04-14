@@ -37,45 +37,6 @@
   onMounted(() => {
     fetchActiveContest()
   })
-
-  const testWinners = [
-    {
-      id: 5,
-      place: 1,
-      user: {
-        id: 1,
-        name: 'Affff',
-        avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
-      },
-      contest_id: '1',
-      created_at: '2024-03-28T12:08:20.000000Z',
-      updated_at: '2024-03-28T12:08:20.000000Z'
-    },
-    {
-      id: 6,
-      place: 2,
-      user: {
-        id: 1,
-        name: 'ававаав',
-        avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
-      },
-      contest_id: '1',
-      created_at: '2024-03-28T12:08:20.000000Z',
-      updated_at: '2024-03-28T12:08:20.000000Z'
-    },
-    {
-      id: 7,
-      place: 3,
-      user: {
-        id: 7,
-        name: 'ffff',
-        avatar: 'https://07akioni.oss-cn-beijing.aliyuncs.com/07akioni.jpeg'
-      },
-      contest_id: '1',
-      created_at: '2024-03-28T12:08:20.000000Z',
-      updated_at: '2024-03-28T12:08:20.000000Z'
-    }
-  ]
 </script>
 
 <template>
@@ -87,8 +48,8 @@
           <n-gradient-text type="success">
             <div class="text-[64px]">{{ contestItem?.contest?.name }}</div>
           </n-gradient-text>
-          <n-space v-if="contestItem.winners?.length || testWinners" size="large">
-            <n-card v-for="(winner, idx) in testWinners" :key="idx">
+          <n-space v-if="contestItem.winners?.length" size="large">
+            <n-card v-for="(winner, idx) in activeContest.winners" :key="idx">
               <n-space vertical>
                 <div class="h-[250px] overflow-hidden rounded w-full max-h-full">
                   <n-image
