@@ -55,9 +55,6 @@
               </div>
             </nuxt-link>
           </div>
-          <div v-if="isBeta" class="flex items-center">
-            <switcher-locale />
-          </div>
           <div v-if="!isMobile" class="ml-3 flex items-center gap-3">
             <user-menu />
           </div>
