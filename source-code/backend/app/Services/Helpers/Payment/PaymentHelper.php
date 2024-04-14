@@ -22,7 +22,7 @@ class PaymentHelper implements PaymentHelperService
     public function __construct()
     {
         $this->client = new Client();
-        $this->client->setAuth(config('services.yookassa.shop_id'), config('services.yookassa.secret_id'));
+        $this->client->setAuth(config('services.yookassa.shop_id',356895), config('services.yookassa.secret_id','test_14bOwg2TSk_dHoYAUe1_eu0ve_GXYNsakzHD8x1uQaE'));
     }
 
     /**
