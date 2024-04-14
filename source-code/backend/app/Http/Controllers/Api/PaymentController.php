@@ -92,6 +92,7 @@ class PaymentController extends Controller
             ? new NotificationSucceeded($requestBody)
             : new NotificationWaitingForCapture($requestBody);
         $payment = $notification->getObject();
+        $amount = $payment->amount;
         Log::channel('sms')->info($payment->status);
 
         if (isset($payment->status) && $payment->status == 'canceled') {
@@ -115,7 +116,8 @@ class PaymentController extends Controller
                         'isActive',
                         true
                     )->first();
-                    $contest->fill(['paidRating', $payment->amount->value])->save();
+                    Log::channel('sms')->info($amount->value);
+                    $contest->fill(['paidRating', $amount->value])->save();
                 }
             }
         }
