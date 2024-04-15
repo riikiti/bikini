@@ -77,9 +77,9 @@
               description="На данный момент победителей у данного конкурса нет!"
             >
               <template #footer>
-                <router-link :to="RoutesNames.ACTIVE_CONTEST">
+                <nuxt-link :to="RoutesNames.ACTIVE_CONTEST">
                   <n-button>Посмотрите текущий контест</n-button>
-                </router-link>
+                </nuxt-link>
               </template>
             </n-result>
           </template>

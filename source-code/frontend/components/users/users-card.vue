@@ -99,26 +99,26 @@
       />
     </div>
     <div class="space-y-1 mt-3">
-      <router-link :to="RoutesNames.PROFILE + `${card.id}`" class="text-black no-underline">
+      <nuxt-link :to="RoutesNames.PROFILE + `${card.id}`" class="text-black no-underline">
         <h3 class="text-xl font-medium leading-none">
           {{ card.name }}
         </h3>
-      </router-link>
+      </nuxt-link>
     </div>
     <div class="grid grid-cols-5 mt-2 self-center pb-2 pt-2">
       <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
-        <router-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
+        <nuxt-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
           <n-icon :size="32">
             <mail :size="32" />
           </n-icon>
-        </router-link>
+        </nuxt-link>
       </div>
       <div v-if="card.active_contest" class="text-gray-300 hover:text-red-600">
-        <router-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
+        <nuxt-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
           <n-icon :size="32">
             <star fill="currentColor" />
           </n-icon>
-        </router-link>
+        </nuxt-link>
       </div>
       <div
         :class="['text-gray-300 hover:text-red-600', { 'text-red-600': card.is_favorite }]"
@@ -129,11 +129,11 @@
         </n-icon>
       </div>
       <div v-if="card.is_winner" class="text-gray-300 hover:text-red-600">
-        <router-link :to="RoutesNames.WINNER_PAGE" class="text-red-600">
+        <nuxt-link :to="RoutesNames.WINNER_PAGE" class="text-red-600">
           <n-icon :size="32">
             <trophy :size="32" />
           </n-icon>
-        </router-link>
+        </nuxt-link>
       </div>
     </div>
   </div>

@@ -17,5 +17,9 @@ export const enum RoutesNames {
   STATISTICS = '/platform/statistics',
   FAVORITES = '/platform/favorites',
   MESSENGER = '/platform/messenger',
-  WINNER_PAGE = '/platform/contest-winner'
+  WINNER_PAGE = '/platform/contest-winner',
+  STATIC_PRIVACY = '/wiki/privacy',
+  STATIC_USER_PRIVACY = '/wiki/user-privacy',
+  STATIC_TERMS = '/wiki/terms',
+  STATIC_RULES = '/wiki/rules'
 }

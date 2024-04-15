@@ -189,12 +189,12 @@
       <n-gradient-text>Это ВЫ! </n-gradient-text>
     </div>
     <n-space class="mt-4">
-      <router-link
+      <nuxt-link
         :to="RoutesNames.PROFILE + `${contestItem.user.id}`"
         class="no-underline text-lg font-bold text-black"
       >
         {{ contestItem.user.name }}
-      </router-link>
+      </nuxt-link>
     </n-space>
   </div>
 </template>

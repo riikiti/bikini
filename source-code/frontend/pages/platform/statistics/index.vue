@@ -171,14 +171,14 @@
             по <b>{{ statisticsItem.type }}</b> баллов (дополнительные голоса), пользователи:
           </div>
           <n-space v-if="statisticsItem.users.length > 0" size="large">
-            <router-link
+            <nuxt-link
               v-for="(user, idx) in statisticsItem.users"
               :key="idx"
               class="text-black"
               :to="RoutesNames.PROFILE + `/${user.id}`"
             >
               <div>{{ user.name }}</div>
-            </router-link>
+            </nuxt-link>
           </n-space>
           <n-alert v-else title="Информация" type="info"> На данный момент нет статистики!</n-alert>
         </n-space>

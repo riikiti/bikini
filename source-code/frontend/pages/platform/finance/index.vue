@@ -65,10 +65,10 @@
       <p class="text-xl font-medium">
         Выплата осуществляется после завершения конкурса в течении 5 банковских дней. По заявке на
         выплату, пожалуйста свяжитесь с
-        <router-link
+        <nuxt-link
           class="text-gray-400 underline-offset-4"
           :to="RoutesNames.MESSENGER + `/${settingsStore.moderatorId}`"
-          >модератором</router-link
+          >модератором</nuxt-link
         >
       </p>
     </div>

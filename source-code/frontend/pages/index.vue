@@ -127,6 +127,7 @@
       </div>
     </n-card>
   </div>
+  <the-footer />
 </template>
 
 <style scoped></style>

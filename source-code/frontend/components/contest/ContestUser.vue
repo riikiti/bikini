@@ -65,15 +65,15 @@
           <img :src="currentModel.photo" alt="" class="w-[150px] h-[150px]" />
         </div>
         <n-space class="mt-6">
-          <router-link :to="RoutesNames.PROFILE + `${currentModel.user.id}`">
+          <nuxt-link :to="RoutesNames.PROFILE + `${currentModel.user.id}`">
             <n-button class="uppercase" type="primary" size="large" dashed>Мой Профиль</n-button>
-          </router-link>
+          </nuxt-link>
           <n-button class="uppercase" type="primary" size="large" dashed @click="handleEditForm"
             >Обновить фото</n-button
           >
-          <router-link :to="RoutesNames.STATISTICS">
+          <nuxt-link :to="RoutesNames.STATISTICS">
             <n-button class="uppercase" type="primary" size="large" dashed>Статистика</n-button>
-          </router-link>
+          </nuxt-link>
         </n-space>
       </n-space>
     </div>

@@ -73,31 +73,25 @@
           </n-space>
           <n-space v-if="user.id !== authStore.user.id" vertical align="start" justify="start">
             <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
-              <router-link
-                :to="RoutesNames.ACTIVE_CONTEST"
-                class="text-gray-300 hover:text-red-600"
-              >
+              <nuxt-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
                 <n-icon :size="32">
                   <heart :size="32" />
                 </n-icon>
-              </router-link>
+              </nuxt-link>
             </div>
             <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
-              <router-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
+              <nuxt-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
                 <n-icon :size="32">
                   <mail :size="32" />
                 </n-icon>
-              </router-link>
+              </nuxt-link>
             </div>
             <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
-              <router-link
-                :to="RoutesNames.ACTIVE_CONTEST"
-                class="text-gray-300 hover:text-red-600"
-              >
+              <nuxt-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
                 <n-icon :size="32">
                   <star fill="currentColor" />
                 </n-icon>
-              </router-link>
+              </nuxt-link>
             </div>
             <div
               :class="['text-gray-300 hover:text-red-600', { 'text-red-600': user.is_favorite }]"
@@ -108,11 +102,11 @@
               </n-icon>
             </div>
             <div v-if="user.is_winner" class="text-gray-300 hover:text-red-600">
-              <router-link :to="RoutesNames.WINNER_PAGE" class="text-red-600">
+              <nuxt-link :to="RoutesNames.WINNER_PAGE" class="text-red-600">
                 <n-icon :size="32">
                   <trophy :size="32" />
                 </n-icon>
-              </router-link>
+              </nuxt-link>
             </div>
           </n-space>
         </n-space>

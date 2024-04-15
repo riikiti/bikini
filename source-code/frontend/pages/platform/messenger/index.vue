@@ -100,20 +100,20 @@
         <n-space vertical>
           <div class="text-2xl font-bold">{{ messege.name }}</div>
           <n-space>
-            <router-link :to="RoutesNames.MESSENGER + `/${messege.id}`">
+            <nuxt-link :to="RoutesNames.MESSENGER + `/${messege.id}`">
               <n-button>
                 <n-icon :size="24">
                   <mail />
                 </n-icon>
               </n-button>
-            </router-link>
-            <router-link :to="RoutesNames.PROFILE + `${messege.id}`">
+            </nuxt-link>
+            <nuxt-link :to="RoutesNames.PROFILE + `${messege.id}`">
               <n-button>
                 <n-icon :size="24">
                   <user />
                 </n-icon>
               </n-button>
-            </router-link>
+            </nuxt-link>
           </n-space>
         </n-space>
       </n-space>
