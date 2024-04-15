@@ -33,12 +33,5 @@
         </n-gradient-text>
       </span>
     </div>
-    <div
-      class="text-gray-800 cursor-pointer absolute bottom-2 md:bottom-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-    >
-      <div class="animate-bounce">
-        <ChevronDown :size="48" />
-      </div>
-    </div>
   </n-space>
 </template>
