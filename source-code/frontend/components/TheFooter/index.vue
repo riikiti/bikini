@@ -33,11 +33,11 @@
 <template>
   <div class="py-8 px-8 bg-gray-300 rounded">
     <n-space vertical>
-      <n-breadcrumb>
-        <n-breadcrumb-item v-for="url in staticUrls">
-          <nuxt-link :to="url.route">{{ url.name }}</nuxt-link>
-        </n-breadcrumb-item>
-      </n-breadcrumb>
+      <n-space>
+        <nuxt-link v-for="url in staticUrls" class="text-gray-800 no-underline" :to="url.route">{{
+          url.name
+        }}</nuxt-link>
+      </n-space>
       <n-space align="center">
         <nuxt-link :to="localePath(RoutesNames.MAIN)" class="no-underline cursor-pointer">
           <div class="font-extrabold text-slate-600 text-lg md:text-2xl dark:text-white">
