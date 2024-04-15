@@ -1,1 +1,0 @@
-import{_ as o}from"./_plugin-vue_export-helper.x3n3nnut.js";import{c as t,b1 as s,o as r}from"./entry.-G-ktP1b.js";const c={},a={class:"h-full"};function n(e,l){return r(),t("div",a,[s(e.$slots,"default")])}const d=o(c,[["render",n]]);export{d as default};
