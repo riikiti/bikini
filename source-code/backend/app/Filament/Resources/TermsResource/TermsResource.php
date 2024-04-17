@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\AgreementResource;
+namespace App\Filament\Resources\TermsResource;
 
-use App\Filament\Resources\AgreementResource\Pages;
-use App\Models\Pages\Agreement;
+use App\Filament\Resources\TermsResource\Pages;
+use App\Models\Pages\Terms;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -12,9 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
-class AgreementResource extends Resource
+class TermsResource extends Resource
 {
-    protected static ?string $model = Agreement::class;
+    protected static ?string $model = Terms::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 

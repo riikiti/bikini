@@ -2,7 +2,7 @@
 
 namespace App\Filament\Resources\AgreementResource\Pages;
 
-use app\Filament\Resources\AgreementResource\AgreementResource;
+use App\Filament\Resources\AgreementResource\AgreementResource;
 use Filament\Resources\Pages\CreateRecord;
 
 class CreateAgreement extends CreateRecord

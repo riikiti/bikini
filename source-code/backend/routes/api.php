@@ -12,10 +12,13 @@ use App\Http\Controllers\Api\BoxFillController;
 use App\Http\Controllers\Api\FavouriteController;
 use App\Http\Controllers\Api\MessageController;
 use App\Http\Controllers\Api\ModelController;
+use App\Http\Controllers\Api\Pages\AgreementController;
 use App\Http\Controllers\Api\Pages\ContestController;
 use App\Http\Controllers\Api\Pages\MainPageController;
 use App\Http\Controllers\Api\Pages\ModelsPageController;
+use App\Http\Controllers\Api\Pages\PolicyController;
 use App\Http\Controllers\Api\Pages\StatisticController;
+use App\Http\Controllers\Api\Pages\TermsController;
 use App\Http\Controllers\Api\Pages\WinnersController;
 use App\Http\Controllers\Api\PaymentController;
 use App\Http\Controllers\Api\PropertyController;
@@ -54,6 +57,10 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         Route::apiResource('user', UserController::class)->only('index', 'show');
 
         Route::get('/main', [MainPageController::class, 'index']);
+        Route::get('/agreement', AgreementController::class);
+        Route::get('/policy', PolicyController::class);
+        Route::get('/terms', TermsController::class);
+
         Route::get('/models', [ModelsPageController::class, 'getAll']);
 
         Route::post('/gallery-photo', [UserController::class, 'addPhoto']);
