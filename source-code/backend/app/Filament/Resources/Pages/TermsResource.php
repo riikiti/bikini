@@ -17,6 +17,7 @@ class TermsResource extends Resource
 
     protected static ?string $navigationLabel = 'Правила пользования Сайтом БИКИНИ СТАР';
     protected static ?string $navigationIcon = 'heroicon-s-window';
+    protected static ?string $navigationGroup = 'Страницы';
 
     public static function form(Form $form): Form
     {

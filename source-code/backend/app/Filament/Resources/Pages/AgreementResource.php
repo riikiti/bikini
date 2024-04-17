@@ -18,6 +18,7 @@ class AgreementResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-s-window';
 
+    protected static ?string $navigationGroup = 'Страницы';
     public static function form(Form $form): Form
     {
         return $form
