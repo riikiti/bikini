@@ -47,8 +47,8 @@ class PaymentController extends Controller
                 'user_id' => auth()->user()->id,
                 'model_id' => $request->input('model_id')
             ]);
-
-            $contest = ContestModel::query()->where('isActive', true)->where(
+            $activeContest = Contest::query()->where('is_active', true)->first();
+            $contest = ContestModel::query()->where('contest_id', $activeContest->id)->where(
                 'user_id',
                 $request->input('model_id')
             )->first();
