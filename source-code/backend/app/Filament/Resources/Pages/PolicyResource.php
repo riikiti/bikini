@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Filament\Resources\AgreementResource;
+namespace App\Filament\Resources\Pages;
 
-use App\Filament\Resources\AgreementResource\Pages;
-use App\Models\Pages\Agreement;
+use App\Filament\Resources\PolicyResource\Pages;
+use App\Models\Pages\Policy;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
 use Filament\Forms\Form;
@@ -12,9 +12,9 @@ use Filament\Tables;
 use Filament\Tables\Table;
 use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 
-class AgreementResource extends Resource
+class PolicyResource extends Resource
 {
-    protected static ?string $model = Agreement::class;
+    protected static ?string $model = Policy::class;
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -67,9 +67,9 @@ class AgreementResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAgreements::route('/'),
-            'create' => Pages\CreateAgreement::route('/create'),
-            'edit' => Pages\EditAgreement::route('/{record}/edit'),
+            'index' => \App\Filament\Resources\Pages\PolicyResource\Pages\ListAgreements::route('/'),
+            'create' => \App\Filament\Resources\Pages\PolicyResource\Pages\CreateAgreement::route('/create'),
+            'edit' => \App\Filament\Resources\Pages\PolicyResource\Pages\EditAgreement::route('/{record}/edit'),
         ];
     }
 }

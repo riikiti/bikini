@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Filament\Resources\PolicyResource\Pages;
+namespace App\Filament\Resources\Pages\TermsResource\Pages;
 
-use App\Filament\Resources\TermsResource\TermsResource;
+use App\Filament\Resources\Pages\TermsResource;
 use Filament\Actions;
 use Filament\Resources\Pages\EditRecord;
 

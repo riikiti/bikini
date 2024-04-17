@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Resources\TermsResource;
+namespace App\Filament\Resources\Pages;
 
 use App\Filament\Resources\TermsResource\Pages;
 use App\Models\Pages\Terms;
@@ -67,9 +67,9 @@ class TermsResource extends Resource
     public static function getPages(): array
     {
         return [
-            'index' => Pages\ListAgreements::route('/'),
-            'create' => Pages\CreateAgreement::route('/create'),
-            'edit' => Pages\EditAgreement::route('/{record}/edit'),
+            'index' => \App\Filament\Resources\Pages\TermsResource\Pages\ListAgreements::route('/'),
+            'create' => \App\Filament\Resources\Pages\TermsResource\Pages\CreateAgreement::route('/create'),
+            'edit' => \App\Filament\Resources\Pages\TermsResource\Pages\EditAgreement::route('/{record}/edit'),
         ];
     }
 }
