@@ -31,8 +31,8 @@
 </script>
 <template>
   <div class="h-screen">
-    <n-config-provider preflight-style-disabled>
-      <n-loading-bar-provider>
+    <n-config-provider preflight-style-disabled class="h-full">
+      <n-loading-bar-provider class="h-full">
         <n-message-provider>
           <n-notification-provider>
             <n-modal-provider>

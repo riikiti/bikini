@@ -38,7 +38,7 @@
   <div v-else>
     <n-result status="404" title="Добавляй в избранное!)" description="Список пуст" size="huge">
       <template #footer>
-        <router-link :to="RoutesNames.USERS">Ко всем пользователям</router-link>
+        <nuxt-link :to="RoutesNames.USERS">Ко всем пользователям</nuxt-link>
       </template>
     </n-result>
   </div>

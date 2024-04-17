@@ -63,18 +63,18 @@
           </div>
         </div>
         <div class="flex items-center gap-2">
-          <router-link :to="localePath(RoutesNames.FAVORITES)">
+          <nuxt-link :to="localePath(RoutesNames.FAVORITES)">
             <n-button quaternary size="medium">
               <n-badge :value="settingsStore.favouritesCount">
                 <heart />
               </n-badge>
             </n-button>
-          </router-link>
-          <router-link :to="localePath(RoutesNames.MESSENGER)">
+          </nuxt-link>
+          <nuxt-link :to="localePath(RoutesNames.MESSENGER)">
             <n-button quaternary size="medium">
               <mail />
             </n-button>
-          </router-link>
+          </nuxt-link>
           <user-nav v-if="!isMobile" :user-menu="userLinks" />
           <burger-menu v-if="isMobile" :user-menu="userLinks" />
         </div>

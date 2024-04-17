@@ -20,11 +20,11 @@
 <template>
   <nav>
     <n-space :size="0">
-      <router-link v-for="(link, index) in userMenu" :key="index" :to="link.href">
+      <nuxt-link v-for="(link, index) in userMenu" :key="index" :to="link.href">
         <n-button :size="'small'" quaternary>
           {{ link.name }}
         </n-button>
-      </router-link>
+      </nuxt-link>
     </n-space>
   </nav>
 </template>
