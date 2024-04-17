@@ -18,6 +18,7 @@ class BlogResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-m-photo';
 
     protected static ?string $navigationLabel = 'Блоги';
+    protected static ?string $navigationGroup = 'Пользователь';
 
     public static function table(Table $table): Table
     {

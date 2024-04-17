@@ -20,6 +20,7 @@ class MessageResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chat-bubble-oval-left';
 
     protected static ?string $navigationLabel = 'Сообщения';
+    protected static ?string $navigationGroup = 'Пользователь';
     public static function table(Table $table): Table
     {
         return $table

@@ -20,6 +20,7 @@ class UserResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-user';
 
     protected static ?string $navigationLabel = 'Пользователи';
+    protected static ?string $navigationGroup = 'Пользователь';
 
     public static function table(Table $table): Table
     {
