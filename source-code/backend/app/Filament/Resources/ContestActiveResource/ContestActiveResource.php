@@ -26,6 +26,8 @@ class ContestActiveResource extends Resource
 
     protected static ?string $navigationLabel = 'Активный конкурс';
 
+    protected static ?string $navigationGroup = 'Конкурс';
+
 
     public static function table(Table $table): Table
     {

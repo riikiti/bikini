@@ -25,6 +25,7 @@ class NoActiveContestsResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar-square';
 
     protected static ?string $navigationLabel = 'Не активные конкурсы';
+    protected static ?string $navigationGroup = 'Конкурс';
 
 
     public static function table(Table $table): Table

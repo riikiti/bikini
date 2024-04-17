@@ -22,6 +22,7 @@ class ContestResource extends Resource
     protected static ?string $navigationIcon = 'heroicon-o-chart-bar-square';
 
     protected static ?string $navigationLabel = 'Конкурсы';
+    protected static ?string $navigationGroup = 'Конкурс';
 
     public static function form(Form $form): Form
     {
