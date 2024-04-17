@@ -9,6 +9,7 @@ use Filament\Resources\Pages\EditRecord;
 class EditAgreement extends EditRecord
 {
     protected static string $resource = AgreementResource::class;
+    protected static ?string $title = 'Пользовательское соглашение';
 
     protected function getHeaderActions(): array
     {

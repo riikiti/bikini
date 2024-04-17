@@ -10,6 +10,7 @@ use Filament\Resources\Pages\ListRecords;
 class ListAgreements extends ListRecords
 {
     protected static string $resource = PolicyResource::class;
+    protected static ?string $title = 'Политика в отношении обработки персональных данных';
 
     protected function getHeaderActions(): array
     {

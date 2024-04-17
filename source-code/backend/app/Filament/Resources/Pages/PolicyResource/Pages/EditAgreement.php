@@ -9,7 +9,7 @@ use Filament\Resources\Pages\EditRecord;
 class EditAgreement extends EditRecord
 {
     protected static string $resource = PolicyResource::class;
-
+    protected static ?string $title = 'Политика в отношении обработки персональных данных';
     protected function getHeaderActions(): array
     {
         return [

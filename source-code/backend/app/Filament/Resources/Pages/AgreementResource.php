@@ -16,7 +16,7 @@ class AgreementResource extends Resource
     protected static ?string $model = Agreement::class;
     protected static ?string $navigationLabel = 'Пользовательское соглашение';
 
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-window';
 
     public static function form(Form $form): Form
     {

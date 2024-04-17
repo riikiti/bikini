@@ -8,4 +8,5 @@ use Filament\Resources\Pages\CreateRecord;
 class CreateAgreement extends CreateRecord
 {
     protected static string $resource = AgreementResource::class;
+    protected static ?string $title = 'Пользовательское соглашение';
 }

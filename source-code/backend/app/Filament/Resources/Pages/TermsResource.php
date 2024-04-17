@@ -16,7 +16,7 @@ class TermsResource extends Resource
     protected static ?string $model = Terms::class;
 
     protected static ?string $navigationLabel = 'Правила пользования Сайтом БИКИНИ СТАР';
-    protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
+    protected static ?string $navigationIcon = 'heroicon-s-window';
 
     public static function form(Form $form): Form
     {
