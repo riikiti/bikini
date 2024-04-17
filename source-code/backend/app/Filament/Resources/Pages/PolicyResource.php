@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Pages;
 
-use App\Filament\Resources\PolicyResource\Pages;
 use App\Models\Pages\Policy;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;

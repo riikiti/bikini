@@ -2,7 +2,6 @@
 
 namespace App\Filament\Resources\Pages;
 
-use App\Filament\Resources\AgreementResource\Pages;
 use App\Models\Pages\Agreement;
 use Filament\Forms\Components\Grid;
 use Filament\Forms\Components\TextInput;
