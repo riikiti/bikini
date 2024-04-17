@@ -8,7 +8,7 @@ use Filament\Resources\Pages\EditRecord;
 
 class EditAgreement extends EditRecord
 {
-    protected static string $resource = TermsResource::class;
+    protected static string $resource = PolicyResource::class;
 
     protected function getHeaderActions(): array
     {
