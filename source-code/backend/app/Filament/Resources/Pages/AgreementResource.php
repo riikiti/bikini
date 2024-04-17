@@ -14,6 +14,7 @@ use Mohamedsabil83\FilamentFormsTinyeditor\Components\TinyEditor;
 class AgreementResource extends Resource
 {
     protected static ?string $model = Agreement::class;
+    protected static ?string $navigationLabel = 'Пользовательское соглашение';
 
     protected static ?string $navigationIcon = 'heroicon-o-rectangle-stack';
 
@@ -23,7 +24,7 @@ class AgreementResource extends Resource
             ->schema([
                 Grid::make(1)
                     ->schema([
-                       TextInput::make('title')
+                        TextInput::make('title')
                             ->required()
                             ->maxLength(255)
                             ->label('Заголовок'),
