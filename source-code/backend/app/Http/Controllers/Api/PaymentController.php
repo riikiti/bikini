@@ -35,12 +35,11 @@ class PaymentController extends Controller
 
     public function createFree(Request $request): JsonResponse
     {
-        $check = Statistic::query()->where('user_id', auth()->user()->id)->where(
-            'model_id',
-            $request->input('model_id')
-        )->where('type', 1)->first();
-
-        if (isset($check)) {
+        $check = Statistic::query()
+            ->where('user_id', auth()->user()->id)
+            ->where('model_id', $request->input('model_id'))
+            ->where('type', 1)->exists();
+        if ($check) {
             return response()->json(['status' => 'reject', 'message' => 'didnt create transaction']);
         } else {
             $transaction = Statistic::create([
