@@ -64,7 +64,7 @@ class StatisticController extends Controller
             ->where('model_id', $request->input('model_id'))
             ->where('type', 1)->exists();
         if ($check) {
-            return response()->json(['status' => 'reject', 'message' => 'didnt create transaction']);
+            return response()->json(['status' => 'reject', 'message' => 'didnt create transaction','is_free_payment' => false]);
         } else {
             $transaction = Statistic::create([
                 'type' => 1,
