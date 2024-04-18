@@ -105,7 +105,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
 
         Route::post('/payment/create', [PaymentController::class, 'create']);
-        Route::post('/payment/create-free', [PaymentController::class, 'createFree']);
+        Route::post('/payment/create-free', [StatisticController::class, 'createFree']);
 
 
         Route::get('/application', ApplicationController::class);
