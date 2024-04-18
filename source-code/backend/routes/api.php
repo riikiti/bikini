@@ -43,6 +43,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
+Route::get('/mail', \App\Http\Controllers\Api\Auth\ResetPassword::class);
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
@@ -52,8 +53,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('register', [RegisterController::class, 'register'])->withoutMiddleware('api');
     Route::post('fill', [FillModelInfoController::class, 'update']);
     Route::get('/statistic', [StatisticController::class, 'index']);
-    Route::group(['middleware' =>'jwt.auth'],function (){
-
+    Route::group(['middleware' => 'jwt.auth'], function () {
         Route::apiResource('user', UserController::class)->only('index', 'show');
 
         Route::get('/main', [MainPageController::class, 'index']);
@@ -94,7 +94,6 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         Route::get('/user-favorites', [ModelsPageController::class, 'getFavorites']);
 
 
-
         Route::get('/box/{id}', [BoxController::class, 'show']);
         Route::post('/box-pay/{id}', [BoxController::class, 'payment']);
         Route::get('/boxes/{user}', [BoxController::class, 'getAll']);
@@ -117,10 +116,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
             Route::get('/messages', [MessageController::class, 'getAll']);
             Route::post('/messages/{user}', [MessageController::class, 'store']);
         });
-
-
     });
-
 });
 Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
