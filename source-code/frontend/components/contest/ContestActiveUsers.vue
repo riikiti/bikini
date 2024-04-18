@@ -32,7 +32,7 @@
 <template>
   <n-grid
     v-if="userList && userList.users.length > 0"
-    cols="1 s:2 m:3 l:4"
+    cols="1 xs:2 m:3 l:4"
     :x-gap="10"
     :y-gap="10"
     responsive="screen"

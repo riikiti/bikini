@@ -57,7 +57,7 @@
       <n-alert title="Сумма к выплате" type="success">
         <p class="text-xl font-medium">
           твой баланс Бонус-выплаты в текущем конкурсе составляет:
-          <n-gradient-text class="">2700 руб.</n-gradient-text>
+          <n-gradient-text class="">0 руб.</n-gradient-text>
         </p>
       </n-alert>
     </div>

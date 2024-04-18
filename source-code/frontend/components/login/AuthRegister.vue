@@ -78,35 +78,35 @@
 
   const rules: FormRules = {
     email: [
-      { type: 'email', message: 'Invalid email address' },
-      { required: true, message: 'Email is required' }
+      { type: 'email', message: 'Неверный адрес электронной почты' },
+      { required: true, message: 'Электронная почта обязательна' }
     ],
     name: [
       {
         required: true,
-        message: 'Password is required'
+        message: 'Поле Имя является обязательным'
       }
     ],
     password: [
       {
         required: true,
-        message: 'Password is required'
+        message: 'Пароль является обязательным полем'
       }
     ],
     confirmPassword: [
       {
         required: true,
-        message: 'Re-entered password is required',
+        message: 'Требуется повторный ввод пароля',
         trigger: ['input', 'blur']
       },
       {
         validator: validatePasswordStartWith,
-        message: 'Password is not same as re-entered password!',
+        message: 'Пароль не совпадает с введенным!',
         trigger: ['input']
       },
       {
         validator: validatePasswordSame,
-        message: 'Password is not same as re-entered password!',
+        message: 'Пароль не совпадает с введенным!',
         trigger: ['blur', 'password-input']
       }
     ]
@@ -156,7 +156,7 @@
         <n-form-item path="name" label="Имя пользователя">
           <n-input
             v-model:value="modelRef.name"
-            placeholder="Please enter your name"
+            placeholder="Имя пользователя"
             @keydown.enter.prevent
           />
         </n-form-item>
@@ -167,18 +167,14 @@
             :options="birthdaySelect"
           />
         </n-form-item>
-        <n-form-item path="email" label="E-mail">
-          <n-input
-            v-model:value="modelRef.email"
-            placeholder="Please enter your E-mail"
-            @keydown.enter.prevent
-          />
+        <n-form-item path="email" label="E-Мейл">
+          <n-input v-model:value="modelRef.email" placeholder="E-Мейл" @keydown.enter.prevent />
         </n-form-item>
         <n-form-item path="password" label="Пароль">
           <n-input
             v-model:value="modelRef.password"
             show-password-on="click"
-            placeholder="Please enter your Password"
+            placeholder="Пароль"
             type="password"
             @input="handlePasswordInput"
             @keydown.enter.prevent
@@ -195,7 +191,7 @@
           <n-input
             v-model:value="modelRef.confirmPassword"
             show-password-on="click"
-            placeholder="Please repeat your Password"
+            placeholder="Пароль"
             type="password"
             @keydown.enter.prevent
           >

@@ -10,31 +10,52 @@
   import { storeToRefs } from 'pinia'
   import type { ILinkSettings } from '~/services/models'
   import { NBadge, NButton } from 'naive-ui'
+  import { EUserAccountType } from '~/services/enums'
 
   const { t } = useI18n()
   const localePath = useLocalePath()
+
+  const userStore = useAuthStore()
+
+  const { user } = storeToRefs(userStore)
+
   const userLinks: ILinkSettings[] = [
     {
-      href: localePath(RoutesNames.BLOG),
-      name: t('header.blog')
+      href: RoutesNames.BLOG,
+      name: 'БЛОГ',
+      isShown: false
     },
     {
-      href: localePath(RoutesNames.BOX),
-      name: t('header.box')
+      href: RoutesNames.BOX,
+      name: 'BOX',
+      isShown: false
     },
     {
-      href: localePath(RoutesNames.SETTINGS),
-      name: t('header.settings')
+      href: RoutesNames.USERS,
+      name: 'Участницы',
+      isShown: true
     },
     {
-      href: localePath(RoutesNames.FINANCE),
-      name: t('header.finance')
+      href: RoutesNames.WINNER_PAGE,
+      name: 'Победительницы',
+      isShown: true
     },
     {
-      href: localePath(RoutesNames.PORTFOLIO),
-      name: t('header.portfolio')
+      href: RoutesNames.SETTINGS,
+      name: 'НАСТРОЙКИ',
+      isShown: true
+    },
+    {
+      href: RoutesNames.FINANCE,
+      name: 'ФИНАНСЫ',
+      isShown: EUserAccountType.MODEL_ACCOUNT === user.value?.role
+    },
+    {
+      href: RoutesNames.PROFILE + `${user.value.id}`,
+      name: 'Портфолио',
+      isShown: EUserAccountType.MODEL_ACCOUNT === user.value?.role
     }
-  ]
+  ].filter(({ isShown }) => isShown)
 
   const settingsStore = useSettingsStore()
   const { isMobile, isBeta } = storeToRefs(settingsStore)
