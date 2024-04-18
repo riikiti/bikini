@@ -14,6 +14,9 @@
 
   const props = defineProps<IProps>()
   const { user } = toRefs(props)
+
+  console.log(user)
+
   const canWriteModel = computed(() => {
     const {
       info: { messages_status }
@@ -75,7 +78,7 @@
             <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
               <nuxt-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
                 <n-icon :size="32">
-                  <heart :size="32" />
+                  <star fill="currentColor" />
                 </n-icon>
               </nuxt-link>
             </div>
@@ -86,19 +89,12 @@
                 </n-icon>
               </nuxt-link>
             </div>
-            <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
-              <nuxt-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
-                <n-icon :size="32">
-                  <star fill="currentColor" />
-                </n-icon>
-              </nuxt-link>
-            </div>
             <div
               :class="['text-gray-300 hover:text-red-600', { 'text-red-600': user.is_favorite }]"
               @click="addToFavourite()"
             >
               <n-icon :size="32">
-                <bookmark-plus :size="32" />
+                <heart :size="32" />
               </n-icon>
             </div>
             <div v-if="user.is_winner" class="text-gray-300 hover:text-red-600">

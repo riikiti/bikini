@@ -149,10 +149,10 @@
         v-if="user.avatar"
         :src="user.avatar"
         alt=""
-        class="max-w-[200px] h-[200px] rounded-lg"
+        class="max-w-[200px] h-[200px] rounded-lg object-cover"
       />
       <file-upload
-        class="w-[300px]"
+        class="min-w-[200px] max-w-[300px]"
         :name="config.name"
         :route="config.route"
         :method="config.method"
