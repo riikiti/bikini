@@ -78,7 +78,7 @@ class StatisticController extends Controller
             )->first();
 
             if ($contest) {
-                $contest->freeRating = 1;
+                $contest->freeRating += 1;
                 $contest->save();
             }
             return response()->json(['status' => 'inject', 'data' => StatisticResource::make($transaction)]);
