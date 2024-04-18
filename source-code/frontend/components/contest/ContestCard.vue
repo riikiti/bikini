@@ -87,7 +87,7 @@
     >
       <img
         :src="contestItem.photo"
-        class="w-full h-full max-w-full max-h-full aspect-square object-fill"
+        class="w-full h-full max-w-full max-h-full aspect-square object-cover"
       />
     </div>
     <n-grid
