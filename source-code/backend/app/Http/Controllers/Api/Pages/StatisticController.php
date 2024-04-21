@@ -8,6 +8,7 @@ use App\Http\Resources\StatisticResource;
 use App\Http\Resources\UserStatisticResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
+use App\Models\Money;
 use App\Models\Statistic;
 use App\Models\User;
 use App\Models\WinnerList;
@@ -57,6 +58,7 @@ class StatisticController extends Controller
             'data' => $result,
         ]);
     }
+
     public function createFree(Request $request): JsonResponse
     {
         $check = Statistic::query()
@@ -82,6 +84,19 @@ class StatisticController extends Controller
                 $contest->save();
             }
             return response()->json(['status' => 'inject', 'data' => StatisticResource::make($transaction)]);
+        }
+    }
+
+    public function getModelMoney()
+    {
+        $user = auth()->user();
+        $money = Money::query()
+            ->where('model_id', $user->id)
+            ->first();
+        if ($money !== null) {
+            return response()->json(['status' => 'ok', 'money' => $money->money]);
+        }else{
+            return response()->json(['status' => 'ok', 'money' => 0]);
         }
     }
 
