@@ -9,10 +9,9 @@ use Illuminate\Http\Request;
 
 class ResetPassword extends Controller
 {
-    public function __invoke()
+    public function __invoke(Request $request)
     {
-        $user = User::query()->where('role', User::ADMIN)->first();
-        dispatch(new SendRefreshPasswordMail( 'ruslan.igorevich@gmail.com', 'Максим', 'Максим харош'));
+        dispatch(new SendRefreshPasswordMail(User::query()->where('email', $request->email)->first()));
         return true;
     }
 }

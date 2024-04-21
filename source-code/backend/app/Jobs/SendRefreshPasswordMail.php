@@ -15,16 +15,16 @@ class SendRefreshPasswordMail implements ShouldQueue
 {
     use Dispatchable, InteractsWithQueue, Queueable, SerializesModels;
 
-    protected string $mail;
+    protected string $email;
     protected string $subject;
     protected string $body;
 
 
-    public function __construct($mail, $subject, $body)
+    public function __construct($user)
     {
-        $this->mail = $mail;
-        $this->subject = $subject;
-        $this->body = $body;
+        $this->email = $user->email;
+        $this->subject = 'Востановление пароля на сайте BikiniStar';
+        $this->body = 'http://bikini-star-test.ru:81/password-recovery?id=' . $user->id . '&email=' . $user->email;
     }
 
     /**
@@ -32,6 +32,6 @@ class SendRefreshPasswordMail implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->mail)->send(new PasswordMail($this->subject, $this->body));
+        Mail::to($this->email)->send(new PasswordMail($this->subject, $this->body));
     }
 }
