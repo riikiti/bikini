@@ -9,17 +9,24 @@
 
 <template>
   <div id="prizes" class="pb-12">
-    <div class="text-xl md:text-[48px] mb-16">Наши призы</div>
-    <div v-if="prizeList.length" class="gap-8 columns-1 md:columns-3 h-full my-8">
-      <div v-for="(prize, index) in prizeList" :key="index" class="flex flex-col items-center">
+    <div class="text-[48px] mb-8 sm:mb-16 text-center">Наши призы</div>
+    <div
+      v-if="prizeList.length"
+      class="flex flex-col justify-center sm:flex-row md:columns-3 h-full md:gap-8"
+    >
+      <div
+        v-for="(prize, index) in prizeList"
+        :key="index"
+        class="flex flex-col items-center my-4 min-h-[200px]"
+      >
         <div class="relative">
           <div
             :class="[
-              'w-[200px] h-[200px] rounded-full shadow-lg flex overflow-hidden relative',
-              { '-mt-12': prize.place === 1 }
+              'w-[200px] h-[200px] rounded-full shadow-lg  overflow-hidden relative object-cover',
+              { 'md:-mt-12': prize.place === 1 }
             ]"
           >
-            <img :src="prize.image" alt="" />
+            <img :src="prize.image" class="max-w-full max-h-full h-full w-full object-cover" />
           </div>
           <div
             :class="[

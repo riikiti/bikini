@@ -7,11 +7,14 @@
   import { useUserStore } from '~/stores/user'
   import { useI18n } from '#imports'
   import { storeToRefs } from 'pinia'
+  import { RoutesNames } from '~/services/routes-names'
 
   interface IProps {
     userMenu: ILinkSettings[]
   }
   const props = defineProps<IProps>()
+
+  const router = useRouter()
 
   const { t } = useI18n()
   const userStore = useAuthStore()
@@ -21,25 +24,30 @@
   const toggleOpen = () => {
     isOpen.value = !isOpen.value
   }
+
+  const logout = () => {
+    userStore.logout()
+    router.push(RoutesNames.MAIN)
+  }
 </script>
 
 <template>
-  <div class="flex justify-center items-center z-10">
+  <div class="flex justify-center items-center">
     <n-button class="transition-all flex items-center justify-center" @click="toggleOpen()">
       <component :is="isOpen ? X : Menu"></component>
     </n-button>
     <div
       v-if="isOpen"
-      class="fixed right-0 bottom-0 left-0 top-11 bg-white dark:bg-background z-50"
+      class="fixed right-0 bottom-0 left-0 top-10 bg-gray-100 dark:bg-gray-100 z-[200]"
     >
-      <div class="flex flex-col px-4 py-2 border-b">
-        <user-avatar :img="user.avatar" :name="user.name" :email="user.email" />
-      </div>
-      <div class="mt-2">
+      <div class="mt-2 flex flex-col items-end">
         <div v-for="(link, index) in userMenu" :key="index" class="px-4 py-2 border-b text-black">
-          <a :href="link.href" class="text-black">{{ link.name }}</a>
+          <a :href="link.href" class="text-black no-underline text-[16px]">{{ link.name }}</a>
         </div>
-        <div class="px-4 py-2 border-b">
+        <div class="px-4 py-2 border-b text-black no-underline text-[16px]">
+          {{ user.name }}
+        </div>
+        <div class="px-4 py-2 border-b text-black no-underline text-[16px]" @click="logout()">
           {{ $t('header.logout') }}
         </div>
       </div>

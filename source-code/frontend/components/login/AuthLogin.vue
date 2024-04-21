@@ -26,13 +26,13 @@
 
   const rules: FormRules = {
     email: [
-      { type: 'email', message: 'Invalid email address' },
-      { required: true, message: 'Email is required' }
+      { type: 'email', message: 'Неверный адрес электронной почты' },
+      { required: true, message: 'Электронная почта обязательна' }
     ],
     password: [
       {
         required: true,
-        message: 'Password is required'
+        message: 'Пароль является обязательным полем'
       }
     ]
   }
@@ -62,18 +62,14 @@
   <div class="text-3xl mb-8 text-center font-bold">Вход в систему</div>
   <div class="w-full">
     <n-form ref="formRef" :model="modelRef" :rules="rules">
-      <n-form-item path="email" label="E-mail">
-        <n-input
-          v-model:value="modelRef.email"
-          placeholder="Please enter your E-mail"
-          @keydown.enter.prevent
-        />
+      <n-form-item path="email" :show-label="false">
+        <n-input v-model:value="modelRef.email" placeholder="E-Мейл" @keydown.enter.prevent />
       </n-form-item>
-      <n-form-item path="password" :label="$t('form_login.password')">
+      <n-form-item path="password" :show-label="false">
         <n-input
           v-model:value="modelRef.password"
           show-password-on="click"
-          placeholder="Please enter your Password"
+          placeholder="Пароль"
           type="password"
           @keydown.enter.prevent
         >
@@ -85,7 +81,7 @@
           </template>
         </n-input>
       </n-form-item>
-      <n-row :gutter="[0, 24]">
+      <n-row>
         <n-col :span="24">
           <div class="flex">
             <n-button

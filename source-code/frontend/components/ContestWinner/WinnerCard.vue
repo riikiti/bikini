@@ -5,7 +5,7 @@
 <template>
   <n-space vertical align="center" justify="center">
     <n-gradient-text type="success">
-      <div class="text-[64px]">{{ activeContest.name }}</div>
+      <div class="text-2xl sm:text-6xl">{{ activeContest.name }}</div>
     </n-gradient-text>
     <div v-if="prizes">
       <div class="text-3xl font-bold my-8 mb-16 text-center">Победительницы</div>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="mt-6">
-      <span class="text-3xl text-center"
+      <span class="text-xl sm:text-3xl text-center"
         >c
         <n-gradient-text type="info">
           <div>{{ activeContest?.start }}</div>

@@ -57,6 +57,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         Route::apiResource('user', UserController::class)->only('index', 'show');
 
         Route::get('/main', [MainPageController::class, 'index']);
+        Route::get('/finance', [StatisticController::class, 'getModelMoney']);
         Route::get('/agreement', AgreementController::class);
         Route::get('/policy', PolicyController::class);
         Route::get('/terms', TermsController::class);

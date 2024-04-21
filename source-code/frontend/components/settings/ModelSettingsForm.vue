@@ -127,12 +127,12 @@
 
 <template>
   <n-form :model="modelRef">
-    <n-grid :x-gap="12" :y-gap="8" :cols="3">
+    <n-grid :x-gap="12" :y-gap="8" cols="1 xs:3" responsive="screen">
       <n-grid-item>
         <n-form-item path="birthdate" label="Год рождения">
           <n-select
             v-model:value="modelRef.birthdate"
-            placeholder="Select"
+            placeholder="Год рождения"
             :options="birthdaySelect"
           />
         </n-form-item>
@@ -144,7 +144,7 @@
             :update-value-on-input="false"
             :min="COUNT_MIN_HEIGHT"
             class="w-full"
-            placeholder="Please enter your height"
+            placeholder="Рост"
             @keydown.enter.prevent
           />
         </n-form-item>
@@ -156,13 +156,13 @@
             class="w-full"
             :update-value-on-input="false"
             :min="COUNT_MIN_WEIGHT"
-            placeholder="Please enter your weight"
+            placeholder="Вес"
             @keydown.enter.prevent
           />
         </n-form-item>
       </n-grid-item>
     </n-grid>
-    <n-grid :x-gap="12" :y-gap="8" :cols="3">
+    <n-grid :x-gap="12" :y-gap="8" cols="1 xs:3" responsive="screen">
       <n-grid-item>
         <n-form-item label="Грудь" path="size">
           <n-input-number
@@ -170,7 +170,7 @@
             :update-value-on-input="false"
             :min="COUNT_MIN_HEIGHT"
             class="w-full"
-            placeholder="Please enter your size"
+            placeholder="Грудь"
             @keydown.enter.prevent
           />
         </n-form-item>
@@ -182,7 +182,7 @@
             :update-value-on-input="false"
             :min="COUNT_MIN_WAIST"
             class="w-full"
-            placeholder="Please enter your waist"
+            placeholder="Талия"
             @keydown.enter.prevent
           />
         </n-form-item>
@@ -194,21 +194,25 @@
             class="w-full"
             :update-value-on-input="false"
             :min="COUNT_MIN_HIPS"
-            placeholder="Please enter your hips"
+            placeholder="Бедра"
             @keydown.enter.prevent
           />
         </n-form-item>
       </n-grid-item>
     </n-grid>
-    <n-grid :x-gap="12" :y-gap="8" :cols="2">
+    <n-grid :x-gap="12" :y-gap="8" cols="1 xs:2" responsive="screen">
       <n-grid-item>
         <n-form-item path="birthdate" label="Цвет волос">
-          <n-select v-model:value="modelRef.hair_color" placeholder="Select" :options="hairs" />
+          <n-select v-model:value="modelRef.hair_color" placeholder="Цвет волос" :options="hairs" />
         </n-form-item>
       </n-grid-item>
       <n-grid-item>
         <n-form-item path="birthdate" label="Размер бюстгалтера">
-          <n-select v-model:value="modelRef.breast" placeholder="Select" :options="breasts" />
+          <n-select
+            v-model:value="modelRef.breast"
+            placeholder="Размер бюстгалтера"
+            :options="breasts"
+          />
         </n-form-item>
       </n-grid-item>
     </n-grid>

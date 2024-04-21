@@ -7,9 +7,12 @@
   import { definePageMeta } from '#imports'
   import { ref } from 'vue'
   import personalRepository from '~/services/repository/personalRepository'
+  import { RoutesNames } from '~/services/routes-names'
 
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
+  const settingsStore = useSettingsStore()
+  const { moderatorId } = storeToRefs(settingsStore)
 
   definePageMeta({
     layout: 'profile-layout',
@@ -31,19 +34,23 @@
 <template>
   <n-tabs v-if="user.role === EUserAccountType.MODEL_ACCOUNT" type="segment" animated>
     <n-tab-pane name="oasis" tab="Общие настройки">
-      <n-card title="Общие настройки" size="large">
+      <div class="p-4 sm:p-8 border border-solid rounded border-gray-400">
+        <div class="text-xl sm:text-3xl font-medium mb-4">Общие настройки</div>
         <div class="text-gray-400 text-lg mb-4">
           Для смены е-мейла обратитесь к
-          <a href="" class="underline text-gray-400">модератору</a>
+          <nuxt-link :to="RoutesNames.MESSENGER + `/${moderatorId}`" class="underline text-gray-400"
+            >модератору</nuxt-link
+          >
         </div>
         <!-- todo: вынести в отдельный компонент ибо 2 формы хранить на стр такое себе         -->
         <general-settings-form :settings-list="settingsList" />
-      </n-card>
+      </div>
     </n-tab-pane>
     <n-tab-pane name="test" tab="Настройки модели">
-      <n-card title="Настройки модели" size="large">
+      <div class="p-4 sm:p-8 border border-solid rounded border-gray-400">
+        <div class="text-xl sm:text-3xl font-medium mb-4">Настройки модели</div>
         <model-settings-form :settings-list="settingsList" />
-      </n-card>
+      </div>
     </n-tab-pane>
   </n-tabs>
   <n-card v-else title="Общие настройки" size="large">

@@ -17,6 +17,15 @@
   const settingsStore = useSettingsStore()
   const { isMobile } = storeToRefs(settingsStore)
 
+  const configProviderSettings = {
+    breakpoints: {
+      xs: 500,
+      s: 640,
+      m: 1024,
+      l: 1280
+    }
+  }
+
   onMounted(() => {
     const mq = window.matchMedia('(max-width: 640px)')
     isMobile.value = mq.matches
@@ -31,7 +40,11 @@
 </script>
 <template>
   <div class="h-screen">
-    <n-config-provider preflight-style-disabled class="h-full">
+    <n-config-provider
+      :breakpoints="configProviderSettings.breakpoints"
+      preflight-style-disabled
+      class="h-full"
+    >
       <n-loading-bar-provider class="h-full">
         <n-message-provider>
           <n-notification-provider>

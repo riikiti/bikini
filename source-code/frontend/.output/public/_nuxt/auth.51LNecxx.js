@@ -1,1 +1,0 @@
-import{bp as s,be as i,bq as o,a4 as t,br as r}from"./entry.JSdb73Bp.js";const b=s(a=>{const{authTokenKey:n}=i().public,e=localStorage.getItem(n);if(e&&a.path==="/")return o(t.ACTIVE_CONTEST);if(!e&&a.path!==t.MAIN)return r(),o(t.MAIN)});export{b as default};

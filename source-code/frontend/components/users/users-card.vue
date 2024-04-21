@@ -22,6 +22,8 @@
   const message = useMessage()
   const settingsStore = useSettingsStore()
 
+  const router = useRouter()
+
   interface IInfo {
     messages_status: IUserModelMessageRules
   }
@@ -82,15 +84,16 @@
         {{ card.rating }}
       </n-tag>
     </div>
-    <div class="h-[250px] relative overflow-hidden rounded-md">
-      <n-image
+    <div
+      class="h-[250px] relative overflow-hidden rounded-md hover:cursor-pointer"
+      @click="router.push(RoutesNames.PROFILE + `${card.id}`)"
+    >
+      <img
         v-if="card.avatar"
         :src="card.avatar"
-        fallback-src="~/assets/images/profile/user-default.png"
         width="100%"
         height="100%"
-        object-fit="cover"
-        class="w-full h-full"
+        class="w-full h-full object-cover"
       />
       <img
         v-else
@@ -107,21 +110,27 @@
     </div>
     <div class="grid grid-cols-5 mt-2 self-center pb-2 pt-2">
       <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
-        <nuxt-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600">
+        <nuxt-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600 cursor-pointer">
           <n-icon :size="32">
             <mail :size="32" />
           </n-icon>
         </nuxt-link>
       </div>
       <div v-if="card.active_contest" class="text-gray-300 hover:text-red-600">
-        <nuxt-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
+        <nuxt-link
+          :to="RoutesNames.ACTIVE_CONTEST"
+          class="text-gray-300 hover:text-red-600 cursor-pointer"
+        >
           <n-icon :size="32">
             <star fill="currentColor" />
           </n-icon>
         </nuxt-link>
       </div>
       <div
-        :class="['text-gray-300 hover:text-red-600', { 'text-red-600': card.is_favorite }]"
+        :class="[
+          'text-gray-300 hover:text-red-600 cursor-pointer',
+          { 'text-red-600': card.is_favorite }
+        ]"
         @click="addToFavourite()"
       >
         <n-icon :size="32">
@@ -129,7 +138,7 @@
         </n-icon>
       </div>
       <div v-if="card.is_winner" class="text-gray-300 hover:text-red-600">
-        <nuxt-link :to="RoutesNames.WINNER_PAGE" class="text-red-600">
+        <nuxt-link :to="RoutesNames.WINNER_PAGE" class="text-red-600 cursor-pointer">
           <n-icon :size="32">
             <trophy :size="32" />
           </n-icon>

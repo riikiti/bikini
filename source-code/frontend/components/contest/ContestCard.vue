@@ -28,6 +28,8 @@
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
 
+  const router = useRouter()
+
   const { contestItem } = toRefs(props)
 
   const emits = defineEmits<{
@@ -35,7 +37,7 @@
   }>()
 
   const canAddingFreeLike = computed(() => {
-    return !contestItem.value.is_free_payment
+    return contestItem.value.is_free_payment
   })
 
   const freeLike = async type => {
@@ -79,14 +81,13 @@
       <div v-if="contestName">Конкурс: {{ contestName }}</div>
       <n-alert :title="'Рейтинг:' + contestItem.rating" type="success" />
     </div>
-    <div class="h-[250px] overflow-hidden rounded w-full max-h-full">
-      <n-image
+    <div
+      class="h-[250px] overflow-hidden rounded w-full max-h-full hover:cursor-pointer"
+      @click="router.push(RoutesNames.PROFILE + `${contestItem.user.id}`)"
+    >
+      <img
         :src="contestItem.photo"
-        height="100%"
-        width="100%"
-        max-height="100%"
-        max-width="100%"
-        class="w-full h-full"
+        class="w-full h-full max-w-full max-h-full aspect-square object-cover"
       />
     </div>
     <n-grid

@@ -55,7 +55,7 @@
     </n-space>
     <div v-else class="bg-gray-100/50 w-full py-8">
       <n-space vertical size="large" align="center">
-        <div class="text-2xl">
+        <div class="text-xl sm:text-2xl">
           Я участница конкурса,мой рейтинг
           <n-gradient-text gradient="linear-gradient(to right, #8a2387, #e94057, #f27121)">
             {{ currentModel.rating }}

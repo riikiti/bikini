@@ -47,7 +47,7 @@
         :bordered="false"
         size="huge"
         preset="card"
-        class="px-2"
+        class="px-2 gallery"
       >
         <n-carousel
           ref="carouselRef"
@@ -74,4 +74,10 @@
   </div>
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+  ::v-deep {
+    & .n-card__content {
+      padding: 0 !important;
+    }
+  }
+</style>

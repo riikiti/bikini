@@ -31,14 +31,14 @@
   <div class="text-2xl md:text-4xl font-bold mb-8">Избранное</div>
   <div
     v-if="modelList && modelList.length > 0"
-    class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-y-16 gap-x-4"
+    class="grid min-[420px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-y-16 gap-x-4"
   >
     <users-card v-for="card in modelList" :key="card.id" :card="card" @update="fetchModel()" />
   </div>
   <div v-else>
-    <n-result status="404" title="Добавляй в избранное!)" description="Список пуст" size="huge">
+    <n-result status="404" title="Список пуст!" description="Список пуст" size="huge">
       <template #footer>
-        <nuxt-link :to="RoutesNames.USERS">Ко всем пользователям</nuxt-link>
+        <nuxt-link :to="RoutesNames.USERS" class="text-black">Ко всем пользователям</nuxt-link>
       </template>
     </n-result>
   </div>

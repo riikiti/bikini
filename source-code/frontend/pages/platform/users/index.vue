@@ -42,7 +42,7 @@
   </n-space>
   <template v-else>
     <div class="text-2xl md:text-4xl font-bold mb-8">Все модели</div>
-    <div class="grid md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-y-16 gap-x-4">
+    <div class="grid min-[420px]:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-y-16 gap-x-4">
       <users-card v-for="card in modelList" :key="card.id" :card="card" @update="fetchModel()" />
     </div>
   </template>

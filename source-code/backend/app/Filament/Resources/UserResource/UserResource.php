@@ -11,7 +11,6 @@ use Filament\Tables;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
-use Illuminate\Http\Request;
 
 class UserResource extends Resource
 {
@@ -26,7 +25,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('UserId')->label('id'),
+                TextColumn::make('UserId')->label('id')->searchable(),
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
                 TextColumn::make('role')->label('Роль'),
@@ -82,8 +81,4 @@ class UserResource extends Resource
         ];
     }
 
-    public static function getAdminId(Request $request)
-    {
-        return $request->user()->id;
-    }
 }

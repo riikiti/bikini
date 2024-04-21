@@ -24,8 +24,8 @@
 
   const rules: FormRules = {
     email: [
-      { type: 'email', message: 'Invalid email address' },
-      { required: true, message: 'Email is required' }
+      { type: 'email', message: 'Неверный адрес электронной почты' },
+      { required: true, message: 'Электронная почта обязательна' }
     ]
   }
 
@@ -54,12 +54,8 @@
   </div>
   <div class="w-full">
     <n-form ref="formRef" :model="modelRef" :rules="rules">
-      <n-form-item path="email" label="E-mail">
-        <n-input
-          v-model:value="modelRef.email"
-          placeholder="Please enter your E-mail"
-          @keydown.enter.prevent
-        />
+      <n-form-item path="email" label="Е-Мейл">
+        <n-input v-model:value="modelRef.email" placeholder="Е-Мейл" @keydown.enter.prevent />
       </n-form-item>
       <n-row :gutter="[0, 24]">
         <n-col :span="24">

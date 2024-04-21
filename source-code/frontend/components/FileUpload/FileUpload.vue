@@ -6,21 +6,22 @@
   import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
   import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
   import FilePondPluginFilePoster from 'filepond-plugin-file-poster'
+  import 'filepond-plugin-image-edit/dist/filepond-plugin-image-edit.css'
+  import 'filepond-plugin-image-preview/dist/filepond-plugin-image-preview.css'
 
   const authStore = useAuthStore()
   const { apiUrl } = useRuntimeConfig().public
 
-  /*  import FilePondPluginImagePreview from 'filepond-plugin-image-preview'
-  import FilePondPluginFileValidateType from 'filepond-plugin-file-validate-type'
-  import FilePondPluginFileValidateSize from 'filepond-plugin-file-validate-size'
   import FilePondPluginImageEdit from 'filepond-plugin-image-edit'
   import FilePondPluginImageCrop from 'filepond-plugin-image-crop'
   import FilePondPluginImageResize from 'filepond-plugin-image-resize'
-  import FilePondPluginImageTransform from 'filepond-plugin-image-transform'*/
+  import FilePondPluginImageTransform from 'filepond-plugin-image-transform'
   const FilePond = vueFilePond(
     FilePondPluginFileValidateType,
     FilePondPluginImagePreview,
-    FilePondPluginFilePoster
+    FilePondPluginFilePoster,
+    FilePondPluginImageEdit,
+    FilePondPluginImageCrop
   )
 
   interface IProps {
@@ -63,6 +64,7 @@
 <template>
   <file-pond
     :name="name"
+    label-idle="Загрузить фотографию"
     :files="files"
     :allow-multiple="false"
     accept-file-types="image/png, imgage/jpeg"
@@ -70,4 +72,10 @@
   />
 </template>
 
-<style scoped></style>
+<style scoped lang="scss">
+  ::v-deep {
+    & .filepond--credits {
+      display: none;
+    }
+  }
+</style>

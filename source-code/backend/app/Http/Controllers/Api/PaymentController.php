@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Http\Resources\StatisticResource;
 use App\Models\Contest;
 use App\Models\ContestModel;
+use App\Models\Money;
 use App\Models\Statistic;
 use App\Models\Transaction;
 use App\Services\Helpers\Payment\PaymentHelperService;
@@ -80,7 +81,11 @@ class PaymentController extends Controller
                 $metadata = $payment->metadata;
                 if (isset($metadata->transaction_id)) {
                     $transactionId = intval($metadata->transaction_id);
+                    //Если операция успешна, то вызываем метод, который зачисляет деньги модели,
+                    // в зависимости от типа
                     $transaction = Statistic::findOrFail($transactionId);
+                    $this->addMoneyToModel($transaction->model_id,$transaction->type);
+
                     $transaction->fill(['status' => PaymentStatusEnum::CONFIRM])->save();
                     //todo добавить в конкурс https://www.youtube.com/watch?v=YlE433y5A9M&t=186s
                     $contest = Contest::query()->where('is_active', true)->first();
@@ -108,6 +113,27 @@ class PaymentController extends Controller
                 Log::channel('sms')->info(intval($transaction->model_id));
                 Log::channel('sms')->info(intval($amount->value));
             }
+        }
+    }
+    private function addMoneyToModel($model_id,$type): void
+    {
+        //кол-во денег, настраивается, слева тип, справа деньги к зачислению на счет
+       $money =  match($type){
+            5 => 50,
+            15 => 150,
+            25 => 250,
+            50 => 500,
+        };
+        $moneyModel = Money::query()
+        ->where('model_id', $model_id)->first();
+        if ($moneyModel !== null) {
+            $moneyModel->money += $money;
+            $moneyModel->save();
+        }else{
+            Money::create([
+                'model_id' => $model_id,
+                'money' => $money,
+            ]);
         }
     }
 }

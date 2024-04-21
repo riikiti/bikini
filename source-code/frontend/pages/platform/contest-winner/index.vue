@@ -21,6 +21,8 @@
 
   const userStore = useUserStore()
 
+  const router = useRouter()
+
   const isLoading = ref(false)
 
   const activeContest = ref(null)
@@ -46,20 +48,21 @@
       <n-card>
         <n-space vertical align="center" justify="center">
           <n-gradient-text type="success">
-            <div class="text-[64px]">{{ contestItem?.contest?.name }}</div>
+            <div class="text-2xl sm:text-6xl">{{ contestItem?.contest?.name }}</div>
           </n-gradient-text>
           <n-space v-if="contestItem.winners?.length" size="large">
             <n-card v-for="(winner, idx) in activeContest.winners" :key="idx">
               <n-space vertical>
-                <div class="h-[250px] overflow-hidden rounded w-full max-h-full">
-                  <n-image
+                <div
+                  class="h-[250px] overflow-hidden rounded w-full max-h-full"
+                  @click="RoutesNames.PROFILE + `${winner?.user?.id}`"
+                >
+                  <img
                     v-if="winner?.user?.avatar"
                     :src="winner?.user.avatar"
                     height="100%"
                     width="100%"
-                    max-height="100%"
-                    max-width="100%"
-                    class="w-full h-full"
+                    class="w-full h-full max-w-full max-h-full object-cover"
                   />
                   <n-alert v-else title="Произошла ошибка" type="error"> Попробуйте позже </n-alert>
                 </div>
@@ -84,7 +87,7 @@
             </n-result>
           </template>
           <div class="mt-6">
-            <span class="text-3xl text-center"
+            <span class="text-xl sm:text-3xl text-center"
               >c
               <n-gradient-text type="info">
                 <div>{{ contestItem.contest?.start }}</div>
