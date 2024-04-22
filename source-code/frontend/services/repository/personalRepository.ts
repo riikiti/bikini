@@ -14,6 +14,21 @@ const personalRepository = {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/refresh')
   },
+  refreshPassword: data => {
+    const { $http } = useNuxtApp()
+    //password-recovery
+    console.log(data)
+    return $http.get('/api/mail', {
+      params: {
+        email: data.email
+      }
+    })
+  },
+  confirmRecovery: async params => {
+    const { $http } = useNuxtApp()
+    const { data } = await $http.post('/api/confirm-password', params)
+    return data
+  },
   profile: () => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/me')

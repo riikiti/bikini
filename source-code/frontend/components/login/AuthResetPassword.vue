@@ -29,7 +29,9 @@
     ]
   }
 
-  const message = useMessage()
+  const emits = defineEmits<{
+    (e: 'validated', data: ILoginFields): void
+  }>()
 
   const formRef = ref<FormInst | null>(null)
 
@@ -37,10 +39,7 @@
     e.preventDefault()
     formRef.value?.validate((errors: Array<FormValidationError> | undefined) => {
       if (!errors) {
-        message.success('Valid')
-      } else {
-        console.log(errors)
-        message.error('Invalid')
+        emits('validated', modelRef.value)
       }
     })
   }

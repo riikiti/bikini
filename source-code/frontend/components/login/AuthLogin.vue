@@ -9,8 +9,7 @@
     NIcon,
     NInput,
     NRow,
-    NCol,
-    useMessage
+    NCol
   } from 'naive-ui'
   import { ref, h } from 'vue'
   import { LockKeyhole, UnlockKeyhole } from 'lucide-vue-next'
@@ -36,8 +35,6 @@
       }
     ]
   }
-
-  const message = useMessage()
 
   const formRef = ref<FormInst | null>(null)
 
