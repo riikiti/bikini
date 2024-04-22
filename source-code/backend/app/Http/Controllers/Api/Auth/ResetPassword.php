@@ -12,6 +12,6 @@ class ResetPassword extends Controller
     public function __invoke(Request $request)
     {
         dispatch(new SendRefreshPasswordMail(User::query()->where('email', $request->email)->first()));
-        return true;
+        return response()->json(['status' => true, 'message' => 'mail send']);
     }
 }

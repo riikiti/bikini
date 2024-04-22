@@ -18,7 +18,9 @@ class SendRefreshPasswordMail implements ShouldQueue
     protected string $email;
     protected string $subject;
     protected string $body;
-
+    public $tries = 5;
+    public $timeout = 120000;
+    public $failOnTimeout = false;
 
     public function __construct($user)
     {
