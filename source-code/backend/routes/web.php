@@ -13,6 +13,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/workerlog', function () {
+    $filePath = 'worker.log';
+    if (file_exists($filePath)) {
+        ob_start();
+        echo '<pre>';
+        require($filePath);
+        return ob_get_clean();
+    } else {
+        return "The worker.log file does not exist.";
+    }
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
