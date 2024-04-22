@@ -4,7 +4,9 @@ use App\Enum\PaymentStatusEnum;
 use App\Http\Controllers\Api\ApplicationController;
 use App\Http\Controllers\Api\Auth\AuthController;
 use App\Http\Controllers\Api\Auth\FillModelInfoController;
+use App\Http\Controllers\Api\Auth\FillNewPasswordController;
 use App\Http\Controllers\Api\Auth\RegisterController;
+use App\Http\Controllers\Api\Auth\ResetPassword;
 use App\Http\Controllers\Api\BlogController;
 use App\Http\Controllers\Api\BlogFillController;
 use App\Http\Controllers\Api\BoxController;
@@ -43,7 +45,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::get('/mail', \App\Http\Controllers\Api\Auth\ResetPassword::class);
+Route::get('/mail', ResetPassword::class);
+Route::post('/confirm-password', FillNewPasswordController::class);
 
 Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::post('login', [AuthController::class, 'login']);
