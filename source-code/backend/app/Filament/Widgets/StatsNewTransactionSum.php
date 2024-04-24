@@ -17,7 +17,7 @@ class StatsNewTransactionSum extends ChartWidget
         return [
             'datasets' => [
                 [
-                    'label' => 'деньги',
+                    'label' => 'Деньги',
                     'data' => $amounts['amountsPerMonth']
                 ],
             ],
