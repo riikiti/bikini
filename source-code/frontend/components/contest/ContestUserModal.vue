@@ -33,7 +33,7 @@
       method: 'POST'
     },
     update: {
-      route: '/api/auth/active-contest/add-photo',
+      route: '/api/auth/active-contest/update-photo',
       method: 'POST'
     }
   })
