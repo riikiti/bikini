@@ -4,13 +4,11 @@ const usersRepository = {
   models: async () => {
     const { $http } = useNuxtApp()
     const response = await $http.get('/api/auth/models')
-    console.log('respomse: ', response)
     return response.data
   },
   favourites: async () => {
     const { $http } = useNuxtApp()
     const response = await $http.get('/api/auth/user-favorites')
-    console.log('respomse: ', response)
     return response.data
   },
   profileById: async id => {

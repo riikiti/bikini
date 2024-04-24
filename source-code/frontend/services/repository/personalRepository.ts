@@ -18,8 +18,6 @@ const personalRepository = {
   },
   refreshPassword: data => {
     const { $http } = useNuxtApp()
-    //password-recovery
-    console.log(data)
     return $http.get('/api/mail', {
       params: {
         email: data.email

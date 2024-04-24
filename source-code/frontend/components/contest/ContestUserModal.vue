@@ -41,8 +41,6 @@
   const activeConfig = computed(() => {
     return config.value[props.isEdit ? 'update' : 'add']
   })
-
-  console.log(activeConfig)
 </script>
 
 <template>

@@ -12,7 +12,6 @@ const contestRepository = {
   winnerList: async () => {
     const { $http } = useNuxtApp()
     const response = await $http.get('/api/auth/winners')
-    console.log('winners: ', response)
     return response.data.data
   },
   statistics: async () => {
