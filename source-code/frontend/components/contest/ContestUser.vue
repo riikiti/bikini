@@ -1,14 +1,13 @@
 <script setup lang="ts">
-  import { NAlert, NButton, NGradientText, NSpace } from 'naive-ui'
-  import { ref } from 'vue'
+  import { NButton, NGradientText, NSpace } from 'naive-ui'
+  import { ref, onMounted, computed } from 'vue'
   import { ContestUserModal } from '#components'
+  import { useAuthStore } from '~/stores/auth'
   import { RoutesNames } from '~/services/routes-names'
   import contestRepository from '~/services/repository/contestRepository'
 
   const isEditForm = ref(false)
-
   const userStore = useAuthStore()
-  const { check } = storeToRefs(userStore)
 
   const handleEditForm = () => {
     isEditForm.value = true
@@ -18,10 +17,8 @@
   const contestUser = ref(null)
 
   const fetchActiveModel = async () => {
-    console.log('saver')
     const { data } = await contestRepository.currentUserList()
     contestUser.value = data.contest_model
-    console.log(contestUser.value)
   }
 
   const currentModel = computed(() => contestUser.value)

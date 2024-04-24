@@ -1,6 +1,6 @@
 <script setup lang="ts">
-  import { NButton, NModal, NSpace, useMessage } from 'naive-ui'
-  import { ref } from 'vue'
+  import { NButton, NModal, NSpace } from 'naive-ui'
+  import { ref, computed } from 'vue'
 
   interface IProps {
     isEdit: boolean
@@ -9,11 +9,9 @@
   const props = defineProps<IProps>()
   const emits = defineEmits<{
     (e: 'formsave', data: any): void
+    (e: 'formclose'): void
   }>()
-
-  const message = useMessage()
   const onPositiveClick = () => {
-    message.success('Submit')
     emits('formsave', file.value)
   }
   const onNegativeClick = () => {
@@ -24,7 +22,6 @@
 
   const setFileUpload = data => {
     file.value = data
-    console.log('file-upload: ', file.value)
   }
 
   const config = ref({
