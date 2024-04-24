@@ -1,6 +1,8 @@
 import { useNuxtApp } from '#imports'
 import type { IUserLogin } from '~/services/models'
 
+/*todo: ts types*/
+
 const personalRepository = {
   login: (params: IUserLogin) => {
     const { $http } = useNuxtApp()
