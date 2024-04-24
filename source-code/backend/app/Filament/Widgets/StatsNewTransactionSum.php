@@ -34,14 +34,16 @@ class StatsNewTransactionSum extends ChartWidget
     {
         $now = Carbon::now();
         $amountsPerMonth = [];
-        $months = collect(range(1, 12))->map(function ($month) use ($now, &$amountsPerMonth) {
-            $count = Transaction::whereMonth('created_at', Carbon::parse($now->month($month)->format('Y-m')))->where('status',PaymentStatusEnum::CONFIRM->value)->sum('amount');
+        $days = collect(range(1, $now->endOfMonth()->day))->map(function ($days) use ($now, &$amountsPerMonth) {
+            $count = Transaction::where('status', PaymentStatusEnum::CONFIRM->value)
+                ->whereDate('created_at', Carbon::parse($now->day($days)->format('Y-m-d')))
+                ->sum('amount');
             $amountsPerMonth[] = $count;
-            return $now->month($month)->translatedFormat('M');
+            return $now->day($days)->translatedFormat('d');
         })->toArray();
         return [
             'amountsPerMonth' => $amountsPerMonth,
-            'months' => $months
+            'months' => $days
         ];
     }
 }

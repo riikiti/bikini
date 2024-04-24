@@ -10,7 +10,7 @@ use Filament\Widgets\ChartWidget;
 
 class NewPayment extends ChartWidget
 {
-    protected static ?string $heading = 'Оплаты в месяц';
+    protected static ?string $heading = 'Оплаты по месяцам';
 
     protected function getData(): array
     {
@@ -39,7 +39,7 @@ class NewPayment extends ChartWidget
             $count = Transaction::whereMonth('created_at', Carbon::parse($now->month($month)->format('Y-m')))->where(
                 'status',
                 PaymentStatusEnum::CONFIRM->value
-            )->count();
+            )->sum('amount');
             $usersPerMonth[] = $count;
             return $now->month($month)->translatedFormat('M');
         })->toArray();
