@@ -22,7 +22,7 @@
     try {
       const { money } = await personalRepository.finance()
       totalFinance.value = money
-      message.success('Успещно получены данные!')
+      message.success('Успешно получены данные!')
     } catch (e) {
       console.log(e)
     }
