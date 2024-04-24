@@ -1,15 +1,10 @@
 <script setup lang="ts">
-  import {
-    definePageMeta,
-    useRouter,
-    useAuthStore,
-    onMounted,
-    storeToRefs,
-    useSettingsStore
-  } from '#imports'
+  import { definePageMeta, useRouter, useAuthStore, storeToRefs, useSettingsStore } from '#imports'
   import { EUserAccountType } from '~/services/enums'
   import { RoutesNames } from '~/services/routes-names'
-  import { NAlert, NGradientText, NSpace } from 'naive-ui'
+  import { NAlert, NGradientText, NSpace, useMessage } from 'naive-ui'
+  import personalRepository from '~/services/repository/personalRepository'
+  import { ref, computed, onMounted } from 'vue'
 
   definePageMeta({
     layout: 'profile-layout',
@@ -20,11 +15,28 @@
   const settingsStore = useSettingsStore()
   const { user } = storeToRefs(authStore)
   const router = useRouter()
+  const message = useMessage()
 
-  onMounted(() => {
-    if (user.value && user.value.role === EUserAccountType.USER_ACCOUNT) {
-      router.push(RoutesNames.ACTIVE_CONTEST)
+  const totalFinance = ref(null)
+  const fetchTotalEarnedMoney = async () => {
+    try {
+      const { money } = await personalRepository.finance()
+      totalFinance.value = money
+      message.success('Успещно получены данные!')
+    } catch (e) {
+      console.log(e)
     }
+  }
+
+  const money = computed(() => {
+    return totalFinance.value ? `${totalFinance.value} руб.` : '0 руб.'
+  })
+
+  onMounted(async () => {
+    if (user.value && user.value.role === EUserAccountType.USER_ACCOUNT) {
+      await router.push(RoutesNames.ACTIVE_CONTEST)
+    }
+    await fetchTotalEarnedMoney()
   })
 </script>
 
@@ -57,7 +69,7 @@
       <n-alert title="Сумма к выплате" type="success">
         <p class="text-xl font-medium">
           твой баланс Бонус-выплаты в текущем конкурсе составляет:
-          <n-gradient-text class="">0 руб.</n-gradient-text>
+          <n-gradient-text class="">{{ money }}</n-gradient-text>
         </p>
       </n-alert>
     </div>

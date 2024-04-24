@@ -48,6 +48,11 @@ const personalRepository = {
     const response = await $http.get('/api/auth/property?role=model')
     return response.data.data
   },
+  finance: async () => {
+    const { $http } = useNuxtApp()
+    const response = await $http.get('/api/auth/finance')
+    return response.data
+  },
   save: async params => {
     const { $http } = useNuxtApp()
     return $http.post('/api/auth/fill', params)
