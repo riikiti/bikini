@@ -8,7 +8,7 @@ use Database\Seeders\UserSeeder;
 use Filament\Widgets\ChartWidget;
 use Illuminate\Support\Facades\DB;
 
-class NewUsers extends ChartWidget
+class NewFans extends ChartWidget
 {
     protected static ?string $heading = 'Поклоники в месяц';
     protected static ?string $pollingInterval = '1m';
