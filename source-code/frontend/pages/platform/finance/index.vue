@@ -25,6 +25,7 @@
       message.success('Успешно получены данные!')
     } catch (e) {
       console.log(e)
+      message.error('Ошибка получения данных!')
     }
   }
 
