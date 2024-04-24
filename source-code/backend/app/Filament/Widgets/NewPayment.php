@@ -10,7 +10,7 @@ use Filament\Widgets\ChartWidget;
 
 class NewPayment extends ChartWidget
 {
-    protected static ?string $heading = 'Оплаты по месяцам';
+    protected static ?string $heading = 'Зарабаток по месяцам';
 
     protected function getData(): array
     {

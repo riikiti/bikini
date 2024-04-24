@@ -9,8 +9,11 @@ use Filament\Widgets\ChartWidget;
 
 class StatsNewTransactionSum extends ChartWidget
 {
-    protected static ?string $heading = 'Деньги в месяц';
 
+    public function getHeading(): string
+    {
+        return "Зарабаток за " . Carbon::now()->translatedFormat('F');
+    }
     protected function getData(): array
     {
         $amounts = $this->getTransactionPerMonth();

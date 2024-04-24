@@ -8,7 +8,7 @@ use Filament\Widgets\ChartWidget;
 
 class NewModels extends ChartWidget
 {
-    protected static ?string $heading = 'Модели в месяц';
+    protected static ?string $heading = 'Новые модели по месяцам';
     protected static ?string $pollingInterval = '1m';
 
     protected function getData(): array

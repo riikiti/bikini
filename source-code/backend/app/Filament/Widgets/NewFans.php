@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 
 class NewFans extends ChartWidget
 {
-    protected static ?string $heading = 'Поклоники в месяц';
+    protected static ?string $heading = 'Новые поклоники по месяцам';
     protected static ?string $pollingInterval = '1m';
 
     protected function getData(): array
