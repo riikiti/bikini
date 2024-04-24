@@ -10,8 +10,8 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Storage;
+use Intervention\Image\Image;
 use Intervention\Image\ImageManager;
-use Intervention\Image\Laravel\Facades\Image;
 
 class FillModelInfoController extends Controller
 {
@@ -45,10 +45,10 @@ class FillModelInfoController extends Controller
             $this->user->fill([
                 $name = md5(Carbon::now()) . '_' . $request->avatar->getClientOriginalName(),
                 $path = Storage::disk('public')->putFileAs('images', $request->avatar, $name),
-                'avatar' => $path,
+                $image = Image::make($path)->encode('webp', 80),
+                $webPath = Storage::disk('public')->putFileAs('images', $image, $name),
+                'avatar' => $webPath,
             ]);
-                $image = ImageManager::imagick()->read($path);
-                $image->resize(100,100)->save($path);
         }
 
 
