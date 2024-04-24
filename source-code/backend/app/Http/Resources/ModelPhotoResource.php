@@ -4,7 +4,6 @@ namespace App\Http\Resources;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
-use Intervention\Image\Laravel\Facades\Image;
 
 class ModelPhotoResource extends JsonResource
 {
@@ -14,7 +13,7 @@ class ModelPhotoResource extends JsonResource
     {
         $this->appUrl = config('app.url');
         return [
-            'photo' => Image::read("$this->image ? $this->appUrl.'/storage/'.$this->image : null"),
+            'photo' => $this->image ? $this->appUrl.'/storage/'.$this->image : null,
         ];
     }
 }
