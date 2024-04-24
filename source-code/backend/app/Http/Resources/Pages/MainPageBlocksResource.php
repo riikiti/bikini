@@ -5,6 +5,7 @@ namespace App\Http\Resources\Pages;
 use App\Enum\MainPageEnum;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Intervention\Image\Laravel\Facades\Image;
 
 class MainPageBlocksResource extends JsonResource
 {
@@ -39,7 +40,7 @@ class MainPageBlocksResource extends JsonResource
     public function initInfoBlock(array &$data): void
     {
         $data['description'] = $this->description;
-        $data['image'] = $this->image ? $this->appUrl . '/storage/' . $this->image : null;
+        $data['image'] = Image::read("$this->image ? $this->appUrl . '/storage/' . $this->image : null");
     }
 
 }

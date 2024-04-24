@@ -6,6 +6,7 @@ use App\Models\Statistic;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
+use Intervention\Image\Laravel\Facades\Image;
 
 class ContestModelsResource extends JsonResource
 {
@@ -26,7 +27,7 @@ class ContestModelsResource extends JsonResource
             ->where('type', 1)->exists();
         return [
             'user' => UserCompactCompactResource::make(User::find($this->user_id)),
-            'photo' => $this->photo ? $this->appUrl . '/storage/' . $this->photo : null,
+            'photo' => Image::read("$this->photo ? $this->appUrl . '/storage/' . $this->photo : null"),
             'rating' => $this->freeRating + $this->additionalFreeRating + $this->paidRating,
             'is_free_payment' => $check,
         ];
