@@ -41,7 +41,7 @@ class NewPayment extends ChartWidget
                 PaymentStatusEnum::CONFIRM->value
             )->count();
             $usersPerMonth[] = $count;
-            return $now->month($month)->format('M');
+            return $now->month($month)->translatedFormat('M');
         })->toArray();
         return [
             'usersPerMonth' => $usersPerMonth,

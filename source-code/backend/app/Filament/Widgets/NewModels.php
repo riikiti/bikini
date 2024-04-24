@@ -40,7 +40,7 @@ class NewModels extends ChartWidget
                 User::MODEL
             )->count();
             $usersPerMonth[] = $count;
-            return $now->month($month)->format('M');
+            return $now->month($month)->translatedFormat('M');
         })->toArray();
         return [
             'usersPerMonth' => $usersPerMonth,

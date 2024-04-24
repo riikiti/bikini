@@ -39,7 +39,7 @@ class NewFans extends ChartWidget
         $months = collect(range(1, 12))->map(function ($month) use ($now, &$usersPerMonth) {
             $count = User::whereMonth('created_at', Carbon::parse($now->month($month)->format('Y-m')))->where('role',User::USER)->count();
             $usersPerMonth[] = $count;
-            return $now->month($month)->format('M');
+            return $now->month($month)->translatedFormat('M');
         })->toArray();
         return [
             'usersPerMonth' => $usersPerMonth,
