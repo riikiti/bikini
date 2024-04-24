@@ -11,6 +11,7 @@ class ResetPassword extends Controller
 {
     public function __invoke(Request $request)
     {
+        //todo hash id of email send
         dispatch(new SendRefreshPasswordMail(User::query()->where('email', $request->email)->first()));
         return response()->json(['status' => true, 'message' => 'mail send']);
     }
