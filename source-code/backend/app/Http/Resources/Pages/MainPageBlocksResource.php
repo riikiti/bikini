@@ -40,7 +40,7 @@ class MainPageBlocksResource extends JsonResource
     public function initInfoBlock(array &$data): void
     {
         $data['description'] = $this->description;
-        $data['image'] = Image::read("$this->image ? $this->appUrl . '/storage/' . $this->image : null");
+        $data['image'] = "$this->image ? $this->appUrl . '/storage/' . $this->image : null";
     }
 
 }
