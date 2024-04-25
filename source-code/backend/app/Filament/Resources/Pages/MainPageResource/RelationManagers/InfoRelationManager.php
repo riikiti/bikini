@@ -42,8 +42,6 @@ class InfoRelationManager extends RelationManager
             ->columns([
                 Tables\Columns\TextColumn::make('description'),
                 ImageColumn::make('image')
-                    ->label('Изображение')
-                    ->height(96),
             ])
             ->filters([
                 //
