@@ -12,13 +12,13 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('agreements', function (Blueprint $table) {
-            $table->string('description', 20000)->change()->nullable();
+            $table->string('description', 16000)->change()->nullable();
         });
         Schema::table('policies', function (Blueprint $table) {
-            $table->string('description', 20000)->change()->nullable();
+            $table->string('description', 16000)->change()->nullable();
         });
         Schema::table('terms', function (Blueprint $table) {
-            $table->string('description', 20000)->change()->nullable();
+            $table->string('description', 16000)->change()->nullable();
         });
     }
 
