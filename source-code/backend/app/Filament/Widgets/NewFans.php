@@ -1,12 +1,10 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace app\Filament\Widgets;
 
 use App\Models\User;
 use Carbon\Carbon;
-use Database\Seeders\UserSeeder;
 use Filament\Widgets\ChartWidget;
-use Illuminate\Support\Facades\DB;
 
 class NewFans extends ChartWidget
 {

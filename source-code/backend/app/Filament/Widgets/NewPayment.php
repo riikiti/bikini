@@ -1,11 +1,9 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace app\Filament\Widgets;
 
 use App\Enum\PaymentStatusEnum;
 use App\Models\Statistic;
-use App\Models\Transaction;
-use App\Models\User;
 use Carbon\Carbon;
 use Filament\Widgets\ChartWidget;
 

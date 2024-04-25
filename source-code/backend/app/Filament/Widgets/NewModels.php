@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Filament\Widgets;
+namespace app\Filament\Widgets;
 
 use App\Models\User;
 use Carbon\Carbon;
