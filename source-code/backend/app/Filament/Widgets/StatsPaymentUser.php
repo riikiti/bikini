@@ -32,7 +32,7 @@ class StatsPaymentUser extends BaseWidget
                 ->color('success'),
             Stat::make('Всего заработано', $sum)
                 ->color('success'),
-            Stat::make('Заработано за месяц', $sumMonth)
+            Stat::make('Заработано за ' . Carbon::now()->translatedFormat('F'), $sumMonth)
                 ->color('success'),
         ];
     }
