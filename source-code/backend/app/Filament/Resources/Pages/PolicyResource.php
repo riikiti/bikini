@@ -31,7 +31,7 @@ class PolicyResource extends Resource
                             ->label('Заголовок'),
                         TinyEditor::make('description')
                             ->required()
-                            ->maxLength(5000)
+                            ->maxLength(10000)
                             ->label('Описание'),
                     ])
             ]);

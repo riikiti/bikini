@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('terms', function (Blueprint $table) {
             $table->id();
             $table->string('title', 255)->nullable();
-            $table->string('description', 5000)->nullable();
+            $table->string('description', 10000)->nullable();
             $table->timestamps();
         });
     }
