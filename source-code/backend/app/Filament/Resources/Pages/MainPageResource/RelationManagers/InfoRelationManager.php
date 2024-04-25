@@ -26,8 +26,7 @@ class InfoRelationManager extends RelationManager
                 Grid::make(1)
                     ->schema([
                         TinyEditor::make('description')
-                            ->required()
-                            ->maxLength(255)
+                            ->maxLength(2000)
                             ->label('Описание'),
                         FileUpload::make('image')
                             ->directory('main-page')

@@ -27,16 +27,13 @@ class MainPageResource extends Resource
                 Grid::make(3)
                     ->schema([
                         Forms\Components\TextInput::make('seo_title')
-                            ->required()
                             ->label('SEO Заголовок')
                             ->maxLength(255),
                         Forms\Components\TextInput::make('seo_description')
-                            ->required()
                             ->label('SEO Описание')
                             ->maxLength(5000),
                         Forms\Components\TextInput::make('head')
                             ->label('HEAD')
-                            ->required()
                             ->maxLength(255),
                     ])
             ]);

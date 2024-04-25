@@ -26,12 +26,10 @@ class PolicyResource extends Resource
                 Grid::make(1)
                     ->schema([
                        TextInput::make('title')
-                            ->required()
                             ->maxLength(255)
                             ->label('Заголовок'),
                         TinyEditor::make('description')
                             ->required()
-                            ->maxLength(5000)
                             ->label('Описание'),
                     ])
             ]);

@@ -24,15 +24,12 @@ class WinnersRelationManager extends RelationManager
                 Grid::make(1)
                     ->schema([
                         Forms\Components\TextInput::make('title')
-                            ->required()
                             ->maxLength(255)
                             ->label('Заголовок'),
                         TinyEditor::make('description')
-                            ->required()
-                            ->maxLength(255)
+                            ->maxLength(2000)
                             ->label('Описание'),
                         Forms\Components\TextInput::make('button_name')
-                            ->required()
                             ->maxLength(255)
                             ->label('Название кнопки')
                     ])
