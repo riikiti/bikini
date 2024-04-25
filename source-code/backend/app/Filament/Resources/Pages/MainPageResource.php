@@ -33,7 +33,7 @@ class MainPageResource extends Resource
                         Forms\Components\TextInput::make('seo_description')
                             ->required()
                             ->label('SEO Описание')
-                            ->maxLength(255),
+                            ->maxLength(5000),
                         Forms\Components\TextInput::make('head')
                             ->label('HEAD')
                             ->required()

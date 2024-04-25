@@ -31,7 +31,7 @@ class AgreementResource extends Resource
                             ->label('Заголовок'),
                         TinyEditor::make('description')
                             ->required()
-                            ->maxLength(255)
+                            ->maxLength(5000)
                             ->label('Описание'),
                     ])
             ]);
