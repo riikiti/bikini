@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Enum\PaymentStatusEnum;
+use App\Models\Statistic;
 use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
@@ -15,17 +16,17 @@ class StatsPaymentUser extends BaseWidget
     {
         $currentMonthStart = Carbon::now()->startOfMonth();
         $currentMonthEnd = Carbon::now()->endOfMonth();
-        $sum = Transaction::query()->where('status', PaymentStatusEnum::CONFIRM->value)->sum('amount');
-        $sumMonth = Transaction::query()
+        $sum = Statistic::query()->where('status', PaymentStatusEnum::CONFIRM->value)->sum('type');
+        $sumMonth = Statistic::query()
             ->where('status', PaymentStatusEnum::CONFIRM->value)
             ->whereBetween('created_at', [$currentMonthStart, $currentMonthEnd])
-            ->sum('amount');;
+            ->sum('type');;
         return [
-            Stat::make('Всего оплат', Transaction::count())
+            Stat::make('Всего оплат', Statistic::count())
                 ->color('success'),
             Stat::make(
                 'Успешных оплат',
-                Transaction::query()->where('status', PaymentStatusEnum::CONFIRM->value)->count()
+                Statistic::query()->where('status', PaymentStatusEnum::CONFIRM->value)->count()
             )
                 ->description('поступили на кошелек')
                 ->color('success'),
