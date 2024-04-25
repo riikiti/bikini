@@ -31,7 +31,7 @@ class TermsResource extends Resource
                             ->label('Заголовок'),
                         TinyEditor::make('description')
                             ->required()
-                            ->maxLength(10000)
+                            ->maxLength(5000)
                             ->label('Описание'),
                     ])
             ]);
