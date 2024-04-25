@@ -15,8 +15,6 @@
   const props = defineProps<IProps>()
   const { user } = toRefs(props)
 
-  console.log(user)
-
   const canWriteModel = computed(() => {
     const {
       info: { messages_status }

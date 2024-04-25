@@ -21,7 +21,7 @@
 
 <template>
   <div
-    class="bg-gray-50/60 rounded-xl overflow-hidden sm:shadow-lg px-2 sm:px-4 md:px-8 py-6 sm:py-12"
+    class="bg-gray-50/60 rounded-xl overflow-hidden sm:shadow-lg px-2 sm:px-4 md:px-8 py-6 sm:py-12 gallery-wrap"
   >
     <n-gradient-text :size="24" type="success">
       <div class="font-extrabold text-2xl sm:text-3xl mb-6">Галерея</div>
@@ -31,14 +31,6 @@
         v-for="(photoItem, index) in gallery"
         :key="index"
         :item="photoItem"
-        :class="[
-          { 'sm:aspect-video': index === 0 || index === 4 || index === 5 || index === 7 },
-          {
-            'sm:aspect-square':
-              index === 1 || index === 2 || index === 3 || index === 6 || index === 8
-          },
-          'mb-6'
-        ]"
         @click="handleGalleryModal()"
       />
       <n-modal
@@ -74,10 +66,14 @@
   </div>
 </template>
 
-<style scoped lang="scss">
-  ::v-deep {
-    & .n-card__content {
-      padding: 0 !important;
+<style lang="scss">
+  .gallery {
+    & .n-card-header {
+      display: flex !important;
+      flex-direction: row-reverse !important;
+    }
+    & .n-carousel__dots {
+      @apply bg-gray-700 p-2 rounded-lg;
     }
   }
 </style>

@@ -13,6 +13,8 @@
 
   const props = defineProps<IProps>()
   const { user } = toRefs(props)
+
+  const authStore = useAuthStore()
   const canWriteModel = computed(() => {
     const {
       info: { messages_status }
@@ -52,8 +54,6 @@
   }
 
   const modelMessengerLink = computed(() => RoutesNames.MESSENGER + `/${user.value.id}`)
-
-  console.log(user)
 </script>
 
 <template>
@@ -66,7 +66,7 @@
         </div>
         <div class="mt-4 font-bold text-2xl">{{ user.name }}</div>
       </n-space>
-      <n-space justify="center">
+      <n-space v-if="user.id !== authStore.user.id" justify="center">
         <div v-if="user.active_contest" class="text-gray-300 hover:text-red-600">
           <nuxt-link :to="RoutesNames.ACTIVE_CONTEST" class="text-gray-300 hover:text-red-600">
             <n-icon :size="32">

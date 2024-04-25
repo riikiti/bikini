@@ -34,8 +34,8 @@
     <the-wrapper class="py-12 h-max flex-1">
       <slot />
     </the-wrapper>
-    <div class="px-2 sm:px-4 h-max">
-      <div class="max-w-[1368px] mx-auto h-full">
+    <div class="h-max mt-8">
+      <div class="mx-auto h-full">
         <the-footer />
       </div>
     </div>

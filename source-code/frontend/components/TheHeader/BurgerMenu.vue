@@ -42,11 +42,16 @@
     >
       <div class="mt-2 flex flex-col items-end">
         <div v-for="(link, index) in userMenu" :key="index" class="px-4 py-2 border-b text-black">
-          <a :href="link.href" class="text-black no-underline text-[16px]">{{ link.name }}</a>
+          <nuxt-link :to="link.href" class="text-black no-underline text-[16px]">{{
+            link.name
+          }}</nuxt-link>
         </div>
-        <div class="px-4 py-2 border-b text-black no-underline text-[16px]">
+        <nuxt-link
+          :to="RoutesNames.PROFILE + `${user.id}`"
+          class="px-4 py-2 border-b text-black no-underline text-[16px]"
+        >
           {{ user.name }}
-        </div>
+        </nuxt-link>
         <div class="px-4 py-2 border-b text-black no-underline text-[16px]" @click="logout()">
           {{ $t('header.logout') }}
         </div>

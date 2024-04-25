@@ -10,6 +10,7 @@
   import { RoutesNames } from '~/services/routes-names'
   import personalRepository from '~/services/repository/personalRepository'
   import MainHeroSection from '~/components/Main/MainHeroSection.vue'
+  import wikiRepository from '~/services/repository/wikiRepository'
 
   definePageMeta({
     middleware: ['auth']
@@ -35,6 +36,15 @@
     } else {
       isResetForm.value = true
       isLoginForm.value = false
+    }
+  }
+
+  const fetchMainPage = async () => {
+    try {
+      const response = await wikiRepository.main()
+      console.log(response)
+    } catch (e) {
+      console.log(e)
     }
   }
 
@@ -76,11 +86,16 @@
       }
     }
   }
+
+  onMounted(async () => {
+    await fetchMainPage()
+  })
 </script>
 
 <template>
   <main-hero-section />
   <div
+    id="auth"
     class="h-1/2 pb-8 sm:min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:py-0 bg-gray-100"
   >
     <n-card size="medium" class="max-w-[360px]">
@@ -114,6 +129,10 @@
       </div>
     </n-card>
   </div>
+  <main-prizes-section />
+  <main-voting-section />
+  <main-info-section />
+  <main-winner-section />
 </template>
 
 <style scoped></style>

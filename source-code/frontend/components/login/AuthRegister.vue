@@ -214,7 +214,7 @@
                 class="w-full"
                 @click="handleValidateButtonClick"
               >
-                Вход
+                Регистрация
               </n-button>
             </div>
           </n-col>

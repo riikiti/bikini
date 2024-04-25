@@ -15,24 +15,26 @@
       <h1 class="text-5xl text-center sm:text-left sm:text-[82px] text-white font-extrabold">
         BIKINI STAR
       </h1>
-      <div class="max-w-[800px] mx-auto mt-6">
+      <div class="max-w-[800px] mx-auto mt-12 sm:mt-20">
         <div class="text-2xl sm:text-[42px] font-extrabold text-white">
           ИНТЕРНАЦИОНАЛЬНЫЙ Конкурс
         </div>
-        <div class="text-2xl sm:text-[42px] font-extrabold text-white">
+        <div class="text-2xl sm:text-[42px] font-extrabold text-white sm:mt-4">
           сетевой проект, объединяющий
         </div>
-        <div class="text-2xl sm:text-[42px] font-extrabold text-white">любителей фотографии</div>
+        <div class="text-2xl sm:text-[42px] font-extrabold text-white sm:mt-4">
+          любителей фотографии
+        </div>
       </div>
       <div
         class="text-white absolute bottom-8 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
       >
-        <div class="animate-bounce">
-          <ChevronDown :size="48" />
-        </div>
+        <nuxt-link to="#auth" class="text-white">
+          <div class="animate-bounce">
+            <ChevronDown :size="48" />
+          </div>
+        </nuxt-link>
       </div>
     </div>
   </div>
 </template>
-
-<style scoped></style>

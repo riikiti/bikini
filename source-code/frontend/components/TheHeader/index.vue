@@ -52,7 +52,7 @@
     },
     {
       href: RoutesNames.PROFILE + `${user.value.id}`,
-      name: 'Портфолио',
+      name: 'Профиль',
       isShown: EUserAccountType.MODEL_ACCOUNT === user.value?.role
     }
   ].filter(({ isShown }) => isShown)

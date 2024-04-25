@@ -9,7 +9,11 @@
 
 <template>
   <div class="overflow-hidden rounded-[4px] w-full h-full">
-    <img :src="item.photo" :alt="item.description || 'gallery photo'" class="w-full h-full" />
+    <img
+      :src="item.photo"
+      :alt="item.description || 'gallery photo'"
+      class="w-full h-full object-contain"
+    />
   </div>
 </template>
 

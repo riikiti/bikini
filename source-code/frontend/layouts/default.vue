@@ -7,7 +7,7 @@
     <div class="h-full">
       <slot />
     </div>
-    <div class="h-max mt-8">
+    <div class="h-max">
       <div class="mx-auto h-full">
         <the-footer />
       </div>
