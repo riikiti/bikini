@@ -129,7 +129,7 @@
       </div>
     </n-card>
   </div>
-  <main-prizes-section />
+  <!--  <main-prizes-section />-->
   <main-voting-section />
   <main-info-section />
   <main-winner-section />
