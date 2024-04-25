@@ -29,7 +29,6 @@ class InfoRelationManager extends RelationManager
                             ->maxLength(2000)
                             ->label('Описание'),
                         FileUpload::make('image')
-                            ->directory('main-page')
                             ->visibility('private')
                             ->label('Картинка')
                     ])
