@@ -1,0 +1,1 @@
+import{bq as i,bi as n,br as o,a2 as t,bs as r}from"./entry.NiESR0-2.js";const b=i(a=>{const{authTokenKey:s}=n().public,e=localStorage.getItem(s);if(e&&a.path==="/")return o(t.ACTIVE_CONTEST);if(!e&&a.path!==t.MAIN)return r(),o(t.MAIN)});export{b as default};
