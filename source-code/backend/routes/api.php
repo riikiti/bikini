@@ -59,7 +59,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
     Route::group(['middleware' => 'jwt.auth'], function () {
         Route::apiResource('user', UserController::class)->only('index', 'show');
 
-        Route::get('/main', [MainPageController::class, 'index']);
+
         Route::get('/finance', [StatisticController::class, 'getModelMoney']);
 
 
@@ -123,6 +123,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 Route::get('/agreement', AgreementController::class);
 Route::get('/policy', PolicyController::class);
 Route::get('/terms', TermsController::class);
+Route::get('/main', [MainPageController::class, 'index']);
 Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
 
