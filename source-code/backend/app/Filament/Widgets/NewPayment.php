@@ -3,6 +3,7 @@
 namespace App\Filament\Widgets;
 
 use App\Enum\PaymentStatusEnum;
+use App\Models\Statistic;
 use App\Models\Transaction;
 use App\Models\User;
 use Carbon\Carbon;
@@ -36,10 +37,10 @@ class NewPayment extends ChartWidget
         $now = Carbon::now();
         $usersPerMonth = [];
         $months = collect(range(1, 12))->map(function ($month) use ($now, &$usersPerMonth) {
-            $count = Transaction::whereMonth('created_at', Carbon::parse($now->month($month)->format('Y-m')))->where(
+            $count = Statistic::whereMonth('created_at', Carbon::parse($now->month($month)->format('Y-m')))->where(
                 'status',
                 PaymentStatusEnum::CONFIRM->value
-            )->sum('amount');
+            )->sum('type');
             $usersPerMonth[] = $count;
             return $now->month($month)->translatedFormat('M');
         })->toArray();
