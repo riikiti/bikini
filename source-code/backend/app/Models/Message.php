@@ -13,7 +13,7 @@ class Message extends Model
 
     protected $table = 'messages';
 
-    protected $fillable = ['sender_id', 'content'];
+    protected $fillable = ['sender_id', 'content','chat_id'];
 
     public static function getCreatedAtAttribute($value) {
         return date('Y-m-d H:i:s', strtotime($value));

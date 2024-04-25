@@ -61,9 +61,7 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
 
         Route::get('/main', [MainPageController::class, 'index']);
         Route::get('/finance', [StatisticController::class, 'getModelMoney']);
-        Route::get('/agreement', AgreementController::class);
-        Route::get('/policy', PolicyController::class);
-        Route::get('/terms', TermsController::class);
+
 
         Route::get('/models', [ModelsPageController::class, 'getAll']);
 
@@ -122,6 +120,9 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         });
     });
 });
+Route::get('/agreement', AgreementController::class);
+Route::get('/policy', PolicyController::class);
+Route::get('/terms', TermsController::class);
 Route::post('/payment/callback', [PaymentController::class, 'callback'])->name('payment.callback');
 
 
