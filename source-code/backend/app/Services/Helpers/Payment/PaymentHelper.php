@@ -52,7 +52,7 @@ class PaymentHelper implements PaymentHelperService
                 ),
                 'confirmation' => array(
                     'type' => 'redirect',
-                    'return_url' => 'https://bikini-star.com/',
+                    'return_url' => 'http://bikini-star-test.ru:81/',
                 ),
                 'capture' => false,
                 'description' => 'Покупка услуги на сайте bikini-star',
