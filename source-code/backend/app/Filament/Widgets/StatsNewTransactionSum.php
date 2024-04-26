@@ -14,6 +14,7 @@ class StatsNewTransactionSum extends ChartWidget
     {
         return "Зарабаток за " . Carbon::now()->translatedFormat('F');
     }
+
     protected function getData(): array
     {
         $amounts = $this->getTransactionPerMonth();
@@ -41,7 +42,7 @@ class StatsNewTransactionSum extends ChartWidget
             $count = Statistic::where('status', PaymentStatusEnum::CONFIRM->value)
                 ->whereDate('created_at', Carbon::parse($now->day($days)->format('Y-m-d')))
                 ->sum('type');
-            $amountsPerMonth[] = $count;
+            $amountsPerMonth[] = intval($count) * 5;
             return $now->day($days)->translatedFormat('d');
         })->toArray();
         return [
