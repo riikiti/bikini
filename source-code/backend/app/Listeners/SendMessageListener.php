@@ -3,6 +3,7 @@
 namespace App\Listeners;
 
 use App\Events\SendMessageEvent;
+use App\Models\Chat;
 use App\Models\Message;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -23,10 +24,14 @@ class SendMessageListener
      */
     public function handle(SendMessageEvent $event): void
     {
+        $chat = new Chat(
+            ['sender_id' => User::query()->where('role', User::ADMIN)->first()->id, 'receiver_id' => $event->user->id]
+        );
+        $chat->save();
         $data = [
-            'sender_id' => User::query()->where('role',User::ADMIN)->first()->id,
-            'receiver_id' => $event->user->id,
-            'content' => 'Привет, мы рады тебе :) Есть вопросы ?'
+            'sender_id' => User::query()->where('role', User::ADMIN)->first()->id,
+            'content' => 'Привет, мы рады тебе :) Есть вопросы ?',
+            'chat_id' => $chat->id
         ];
         Message::create($data);
     }
