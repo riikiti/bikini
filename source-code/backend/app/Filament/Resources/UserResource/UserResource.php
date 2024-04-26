@@ -8,6 +8,7 @@ use Filament\Forms\Components\Hidden;
 use Filament\Forms\Components\TextInput;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\ImageColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Columns\ToggleColumn;
 use Filament\Tables\Table;
@@ -26,6 +27,7 @@ class UserResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('id')->label('id')->searchable(),
+                ImageColumn::make('avatar'),
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
                 TextColumn::make('role')->label('Роль'),
