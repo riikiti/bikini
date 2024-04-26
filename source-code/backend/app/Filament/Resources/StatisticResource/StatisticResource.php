@@ -37,13 +37,15 @@ class StatisticResource extends Resource
                         'success' => 'CONFIRM',
                         'danger' => 'WAITING',
                     ]),
+                TextColumn::make('created_at')->label('Дата оплаты'),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
                     ->options([
-                    PaymentStatusEnum::CONFIRM->value => 'Подтвержден',
-                    PaymentStatusEnum::WAITING->value => 'В обработке / отменен',
-                    PaymentStatusEnum::CREATED->value => 'Создан но не оплачен',
+                        PaymentStatusEnum::CONFIRM->value => 'Подтвержден',
+                        PaymentStatusEnum::WAITING->value => 'В обработке / отменен',
+                        PaymentStatusEnum::CREATED->value => 'Создан но не оплачен',
                     ]),
             ])
             ->bulkActions([

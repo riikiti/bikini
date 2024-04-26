@@ -31,6 +31,7 @@ class UserResource extends Resource
                 TextColumn::make('role')->label('Роль'),
                 ToggleColumn::make('approved')->label('Активен'),
             ])
+            ->defaultSort('created_at', 'desc')
             ->filters([
                 Tables\Filters\SelectFilter::make('role')
                     ->options([
