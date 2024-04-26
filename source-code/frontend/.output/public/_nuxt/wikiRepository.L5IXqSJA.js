@@ -1,0 +1,1 @@
+import{ak as s}from"./entry.PBEUk6LD.js";const n={userPrivacy:async()=>{const{$http:t}=s();return(await t.get("/api/agreement")).data},privacy:async()=>{const{$http:t}=s();return(await t.get("/api/policy")).data},terms:async()=>{const{$http:t}=s();return(await t.get("/api/terms")).data},main:async()=>{const{$http:t}=s();return(await t.get("/api/main")).data}};export{n as w};

@@ -1,1 +1,0 @@
-import{bq as t,a2 as a,br as s}from"./entry.XcK5jdsb.js";import{u}from"./index.xyXm3k7V.js";const r=t(e=>{if(e.fullPath.includes(a.PLATFORM_BLOG)||e.fullPath.includes(a.PLATFORM_BOX)||e.fullPath.includes(a.PLATFORM_GALLERY)){const l=u();return s(l(a.PROFILE))}});export{r as default};
