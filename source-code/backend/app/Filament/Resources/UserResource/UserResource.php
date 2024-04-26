@@ -25,7 +25,7 @@ class UserResource extends Resource
     {
         return $table
             ->columns([
-                TextColumn::make('UserId')->label('id')->searchable(),
+                TextColumn::make('id')->label('id')->searchable(),
                 TextColumn::make('email')->label('E-mail')->searchable(),
                 TextColumn::make('created_at')->label('Дата регистрации')->date(),
                 TextColumn::make('role')->label('Роль'),
@@ -40,25 +40,6 @@ class UserResource extends Resource
                     ]),
             ])
             ->actions([
-                Tables\Actions\CreateAction::make('send')
-                    ->label('Написать')
-                    ->model(Message::class)
-                    ->form([
-                        TextInput::make('content')
-                            ->label('Сообщение')
-                            ->required()
-                            ->maxLength(2048),
-                        Hidden::make('sender_id')
-                            ->label('Id отправителя')
-                            ->required()
-                            ->default(fn() => auth()->id()),
-                        Hidden::make('receiver_id')
-                            ->label('Id получателя')
-                            ->required()
-                            ->default(fn($record) => $record->UserId),
-
-                        // ...
-                    ])
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
