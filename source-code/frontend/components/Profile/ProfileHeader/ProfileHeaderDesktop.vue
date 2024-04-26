@@ -4,7 +4,7 @@
   import { NEllipsis, NGrid, NGridItem, NIcon, NSpace, NTooltip, useMessage } from 'naive-ui'
   import { computed, toRefs } from 'vue'
   import { RoutesNames } from '~/services/routes-names'
-  import { BookmarkPlus, Heart, Mail, Star, Trophy } from 'lucide-vue-next'
+  import { BookmarkPlus, Heart, Mail, Star, Trophy, Globe } from 'lucide-vue-next'
   import personalRepository from '~/services/repository/personalRepository'
 
   interface IProps {
@@ -131,16 +131,17 @@
         <n-space vertical class="h-full">
           <n-space size="medium">
             <div class="font-bold">Страна:</div>
-            <n-tooltip trigger="hover" placement="bottom">
+            <n-tooltip v-if="user.country" trigger="hover" placement="bottom">
               <template #trigger>
                 <img :src="user.country?.icon" class="shadow-lg w-[20px] h-[20px]" />
               </template>
               {{ user.country?.name }}
             </n-tooltip>
+            <globe v-else :size="20" class="text-gray-400" />
           </n-space>
           <n-space size="medium">
             <div class="font-bold">Город:</div>
-            <div>{{ user.info?.city }}</div>
+            <div>{{ user.info?.city ?? 'не заполнено' }}</div>
           </n-space>
           <div>
             <n-ellipsis expand-trigger="click" line-clamp="3" :tooltip="false">

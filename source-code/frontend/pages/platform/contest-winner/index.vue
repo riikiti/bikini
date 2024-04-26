@@ -47,9 +47,11 @@
     <n-space v-for="(contestItem, idx) in activeContest" v-else :key="idx" vertical :size="40">
       <n-card>
         <n-space vertical align="center" justify="center">
-          <n-gradient-text type="success">
-            <div class="text-2xl sm:text-6xl">{{ contestItem?.contest?.name }}</div>
-          </n-gradient-text>
+          <span class="text-3xl sm:text-4xl md:text-[64px] line-height-[100%] sm:leading-normal">
+            <n-gradient-text type="success" class="whitespace-normal text-center">
+              {{ contestItem?.contest?.name }}
+            </n-gradient-text>
+          </span>
           <n-space v-if="contestItem.winners?.length" size="large">
             <n-card v-for="(winner, idx) in activeContest.winners" :key="idx">
               <n-space vertical>
@@ -86,7 +88,7 @@
               </template>
             </n-result>
           </template>
-          <div class="mt-6">
+          <div class="flex items-center mt-6">
             <span class="text-xl sm:text-3xl text-center"
               >c
               <n-gradient-text type="info">

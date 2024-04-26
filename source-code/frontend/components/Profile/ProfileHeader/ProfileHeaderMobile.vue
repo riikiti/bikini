@@ -4,7 +4,7 @@
   import { computed, toRefs } from 'vue'
   import personalRepository from '~/services/repository/personalRepository'
   import { RoutesNames } from '~/services/routes-names'
-  import { BookmarkPlus, Heart, Mail, Star, Trophy } from 'lucide-vue-next'
+  import { BookmarkPlus, Heart, Mail, Star, Trophy, Globe } from 'lucide-vue-next'
 
   interface IProps {
     user: IUser
@@ -122,11 +122,12 @@
           <n-space vertical class="h-full mt-4">
             <n-space size="medium">
               <div class="font-bold">Страна:</div>
-              <img :src="user.country?.icon" class="shadow-lg" />
+              <img v-if="user.country" :src="user.country?.icon" class="shadow-lg" />
+              <globe v-else :size="20" class="text-gray-400" />
             </n-space>
             <n-space size="medium">
               <div class="font-bold">Город:</div>
-              <div>{{ user.info?.city }}</div>
+              <div>{{ user.info?.city ?? 'Не заполнено' }}</div>
             </n-space>
             <div>
               {{ user.info?.about }}

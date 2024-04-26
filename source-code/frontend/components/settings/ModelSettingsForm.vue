@@ -6,7 +6,7 @@
     NFormItem,
     NGrid,
     NGridItem,
-    NInput,
+    useMessage,
     NInputNumber,
     NSelect,
     NSpace
@@ -34,6 +34,8 @@
   const props = defineProps<IProps>()
 
   const { settingsList } = toRefs(props)
+
+  const message = useMessage()
 
   const birthdaySelect = computed(() => {
     return useGenerateDateArray(COUNT_OF_YEARS)
@@ -89,11 +91,17 @@
       }, []) ?? []
     )
   })
+
   const save = async () => {
-    const messages_status = JSON.parse(JSON.stringify(message_statuses))
-    const savedData = { ...user.value, ...modelRef.value, messages_status }
-    const response = await personalRepository.save(savedData)
-    await userStore.profile()
+    try {
+      const messages_status = JSON.parse(JSON.stringify(message_statuses))
+      const savedData = { ...user.value, ...modelRef.value, messages_status }
+      const response = await personalRepository.save(savedData)
+      await userStore.profile()
+      message.success('Данные успешно обновлены!')
+    } catch (e) {
+      message.error('Ошибка обновления данных!')
+    }
   }
 
   const message_statuses = reactive({

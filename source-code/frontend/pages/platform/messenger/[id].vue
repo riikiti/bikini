@@ -24,7 +24,7 @@
     try {
       const response = await messengerRepository.getMessagesById(route.params.id)
       console.log('Response messenger: ', response)
-      messenger.value = new Messenger(response.messenger) ?? null
+      messenger.value = new Messenger(response.messages) ?? null
       console.log('mess: ', messenger.value)
     } catch (e) {
       console.log(e)
@@ -62,7 +62,7 @@
     <div class="mt-6">
       <div class="text-xl mb-3">Переписка</div>
       <n-space v-if="messenger && messenger.messages.length" vertical>
-        <div v-for="(message, idx) in messenger.messages" class="chat">
+        <div v-for="(message, idx) in messenger.messages" :key="idx" class="chat">
           <n-space>
             <n-space>
               <div class="h-[65px] relative overflow-hidden rounded-md">

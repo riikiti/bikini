@@ -37,6 +37,7 @@
   }
   const props = defineProps<IProps>()
   const { card } = toRefs(props)
+  const authStore = useAuthStore()
 
   const canWriteModel = computed(() => {
     const {
@@ -108,7 +109,7 @@
         </h3>
       </nuxt-link>
     </div>
-    <div class="grid grid-cols-5 mt-2 self-center pb-2 pt-2">
+    <div v-if="authStore.user.id !== card.id" class="grid grid-cols-5 mt-2 self-center pb-2 pt-2">
       <div v-if="canWriteModel" class="text-gray-300 hover:text-red-600">
         <nuxt-link :to="modelMessengerLink" class="text-gray-300 hover:text-red-600 cursor-pointer">
           <n-icon :size="32">

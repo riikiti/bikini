@@ -1,13 +1,10 @@
 <script setup lang="ts">
   import { Menu, X } from 'lucide-vue-next'
-  import GhostButton from '~/components/TheHeader/GhostButton.vue'
   import { ref, toRefs } from 'vue'
   import type { ILinkSettings } from '~/services/models'
-  import UserAvatar from '~/components/TheHeader/UserAvatar.vue'
-  import { useUserStore } from '~/stores/user'
-  import { useI18n } from '#imports'
   import { storeToRefs } from 'pinia'
   import { RoutesNames } from '~/services/routes-names'
+  import { useRouter, useAuthStore } from '#imports'
 
   interface IProps {
     userMenu: ILinkSettings[]
@@ -16,7 +13,6 @@
 
   const router = useRouter()
 
-  const { t } = useI18n()
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
   const { userMenu } = toRefs(props)
@@ -28,6 +24,12 @@
   const logout = () => {
     userStore.logout()
     router.push(RoutesNames.MAIN)
+    isOpen.value = false
+  }
+
+  const redirectOnPage = (link: string) => {
+    router.push(link)
+    isOpen.value = false
   }
 </script>
 
@@ -42,16 +44,16 @@
     >
       <div class="mt-2 flex flex-col items-end">
         <div v-for="(link, index) in userMenu" :key="index" class="px-4 py-2 border-b text-black">
-          <nuxt-link :to="link.href" class="text-black no-underline text-[16px]">{{
+          <span class="text-black no-underline text-[16px]" @click="redirectOnPage(link.href)">{{
             link.name
-          }}</nuxt-link>
+          }}</span>
         </div>
-        <nuxt-link
-          :to="RoutesNames.PROFILE + `${user.id}`"
+        <span
           class="px-4 py-2 border-b text-black no-underline text-[16px]"
+          @click="redirectOnPage(RoutesNames.PROFILE + `${user.id}`)"
         >
           {{ user.name }}
-        </nuxt-link>
+        </span>
         <div class="px-4 py-2 border-b text-black no-underline text-[16px]" @click="logout()">
           {{ $t('header.logout') }}
         </div>

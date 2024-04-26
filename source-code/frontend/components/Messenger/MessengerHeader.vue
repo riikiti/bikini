@@ -12,6 +12,8 @@
   }
 
   const props = defineProps<IProps>()
+
+  console.log(props.user)
 </script>
 
 <template>

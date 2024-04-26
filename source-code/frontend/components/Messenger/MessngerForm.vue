@@ -1,11 +1,12 @@
 <script setup lang="ts">
   import { type FormRules, NButton, NForm, NFormItem, NInput } from 'naive-ui'
+  import { ref } from 'vue'
 
   const rules: FormRules = {
     textarea: {
       required: true,
       trigger: ['blur', 'input'],
-      message: 'Please input textareaValue'
+      message: 'Поле не должно быть пустым'
     }
   }
 
@@ -24,6 +25,7 @@
     formRef.value?.validate(errors => {
       if (!errors) {
         emits('validated', modelRef.value.textarea)
+        modelRef.value.textarea = ''
       } else {
         emits('rejected')
       }
@@ -51,5 +53,3 @@
     </n-space>
   </n-form>
 </template>
-
-<style scoped></style>

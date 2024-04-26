@@ -9,7 +9,7 @@
 
 <template>
   <div id="prizes" class="pb-12">
-    <div class="text-[48px] mb-8 sm:mb-16 text-center">Наши призы</div>
+    <div class="text-2xl sm:text-[48px] mb-8 sm:mb-16 text-center">Наши призы</div>
     <div
       v-if="prizeList.length"
       class="flex flex-col justify-center sm:flex-row md:columns-3 h-full md:gap-8"

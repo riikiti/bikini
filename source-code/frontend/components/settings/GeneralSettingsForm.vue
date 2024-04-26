@@ -7,10 +7,9 @@
     NGridItem,
     NIcon,
     NInput,
-    NModal,
+    useMessage,
     NSelect,
-    NSpace,
-    NUpload
+    NSpace
   } from 'naive-ui'
   import { computed, ref, h } from 'vue'
   import { useGenerateDateArray } from '~/services/utils'
@@ -19,21 +18,10 @@
   import { storeToRefs } from 'pinia'
   import personalRepository from '~/services/repository/personalRepository.ts'
   import { LockKeyhole, UnlockKeyhole } from 'lucide-vue-next'
+  import { EUserAccountType } from '~/services/enums'
 
   const userStore = useAuthStore()
   const { user } = storeToRefs(userStore)
-
-  const countryList = [
-    { label: 'English', value: 6 },
-    { label: 'French', value: 2 },
-    { label: 'German', value: 3 },
-    { label: 'Spanish', value: 4 },
-    { label: 'Portuguese', value: 5 },
-    { label: 'Russian', value: 1 },
-    { label: 'Japanese', value: 7 },
-    { label: 'Korean', value: 8 },
-    { label: 'Chinese', value: 9 }
-  ]
 
   interface IProps {
     settingsList: unknown
@@ -46,6 +34,8 @@
   const birthdaySelect = computed(() => {
     return useGenerateDateArray(COUNT_OF_YEARS)
   })
+
+  const message = useMessage()
 
   //upload block
   const showModalRef = ref(false)
@@ -130,11 +120,19 @@
 
   const formRef = ref(null)
   const save = async () => {
-    const x = Array.from(user.value.info)
-    console.log('x: ', x)
-    const savedData = { ...user.value.info, ...modelRef.value }
-    const response = await personalRepository.save(savedData)
-    await userStore.profile()
+    try {
+      if (user.value.role === EUserAccountType.MODEL_ACCOUNT) {
+        const x = Array.from(user.value.info)
+        const savedData = { ...user.value.info, ...modelRef.value }
+        const response = await personalRepository.save(savedData)
+      } else {
+        const response = await personalRepository.save(modelRef.value)
+      }
+      await userStore.profile()
+      message.success('Данные успешно обновлены!')
+    } catch (e) {
+      message.error('Ошибка обновления данных!')
+    }
   }
 </script>
 
