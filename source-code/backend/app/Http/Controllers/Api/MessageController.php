@@ -62,7 +62,7 @@ class MessageController extends Controller
             ],]);
         }
         $sortedSentMessages = collect($senderMessages->merge($receiverMessages))
-            ->sortBy('created_at')
+            ->sortByDesc('created_at')
             ->values()
             ->all();
         return response()->json([
