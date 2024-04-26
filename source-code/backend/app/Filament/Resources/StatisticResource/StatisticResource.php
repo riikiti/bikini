@@ -9,6 +9,7 @@ use App\Models\Statistic;
 use Filament\Forms\Form;
 use Filament\Resources\Resource;
 use Filament\Tables;
+use Filament\Tables\Columns\BadgeColumn;
 use Filament\Tables\Columns\TextColumn;
 use Filament\Tables\Table;
 
@@ -29,7 +30,13 @@ class StatisticResource extends Resource
                 TextColumn::make('type')->label('Деньги'),
                 TextColumn::make('users.email')->label('От кого'),
                 TextColumn::make('model.email')->label('Кому'),
-                TextColumn::make('status')->label('Статус оплаты')->badge()
+                BadgeColumn::make('status')
+                    ->label('Статус оплаты')
+                    ->colors([
+                        'primary' => 'CREATED',
+                        'success' => 'CONFIRM',
+                        'danger' => 'WAITING',
+                    ]),
             ])
             ->filters([
                 Tables\Filters\SelectFilter::make('status')
