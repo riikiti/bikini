@@ -2,6 +2,7 @@
 
 namespace app\Filament\Resources\StatisticResource;
 
+use App\Enum\PaymentStatusEnum;
 use App\Filament\Resources\StatisticResource\Pages;
 use App\Filament\Resources\StatisticResource\RelationManagers;
 use App\Models\Statistic;
@@ -28,10 +29,15 @@ class StatisticResource extends Resource
                 TextColumn::make('type')->label('Деньги'),
                 TextColumn::make('users.email')->label('От кого'),
                 TextColumn::make('model.email')->label('Кому'),
-                TextColumn::make('status')->label('Статус оплаты')
+                TextColumn::make('status')->label('Статус оплаты')->badge()
             ])
             ->filters([
-                //
+                Tables\Filters\SelectFilter::make('status')
+                    ->options([
+                    PaymentStatusEnum::CONFIRM->value => 'Подтвержден',
+                    PaymentStatusEnum::WAITING->value => 'В обработке / отменен',
+                    PaymentStatusEnum::CREATED->value => 'Создан но не оплачен',
+                    ]),
             ])
             ->bulkActions([
                 Tables\Actions\BulkActionGroup::make([
