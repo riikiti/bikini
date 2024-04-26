@@ -12,14 +12,14 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        $this->call(AdminUserSeeder::class);
-        $this->call(HairColorSeeder::class);
-        $this->call(BreastSeeder::class);
+       // $this->call(AdminUserSeeder::class);
+        //$this->call(HairColorSeeder::class);
+       // $this->call(BreastSeeder::class);
         $this->call(UserSeeder::class);
-        $this->call(MainPageSeeder::class);
+       // $this->call(MainPageSeeder::class);
       //  $this->call(BoxSeeder::class);
       //  $this->call(BlogSeeder::class);
-        $this->call(ContestSeeder::class);
+      //  $this->call(ContestSeeder::class);
       //  $this->call(BlogPhotoSeeder::class);
       //  $this->call(BlogVideoSeeder::class);
       //  $this->call(BoxVideoSeeder::class);
