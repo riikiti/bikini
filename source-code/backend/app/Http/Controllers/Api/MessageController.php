@@ -53,15 +53,24 @@ class MessageController extends Controller
                 ->where('chat_id', $chat2->id)
                 ->get();
         } else {
-            return response()->json(['status' => 'no messages']);
+            return response()->json(['data' => [
+                'messages' => [
+                    'sender_user' => UserMessageResource::make($request->user()),
+                    'receiver_user' => UserMessageResource::make($user),
+                    'sent_messages' => null,
+                ],
+            ],]);
         }
+        $sortedSentMessages = collect($senderMessages->merge($receiverMessages))
+            ->sortBy('created_at')
+            ->values()
+            ->all();
         return response()->json([
             'data' => [
                 'messages' => [
                     'sender_user' => UserMessageResource::make($request->user()),
                     'receiver_user' => UserMessageResource::make($user),
-                    'sent_messages' => $senderMessages,
-                    'received_messages' => $receiverMessages,
+                    'sent_messages' => $sortedSentMessages,
                 ],
             ],
         ]);
