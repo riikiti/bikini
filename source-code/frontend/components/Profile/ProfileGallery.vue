@@ -6,8 +6,11 @@
 
   interface IProps {
     gallery: IPhoto[]
+    isDeletable?: boolean
   }
-  const props = defineProps<IProps>()
+  const props = withDefaults(defineProps<IProps>(), {
+    isDeletable: false
+  })
 
   const bodyStyle = ref({
     width: '600px'
@@ -16,6 +19,13 @@
   const carouselRef = ref(null)
   const handleGalleryModal = (): void => {
     showModal.value = true
+  }
+  const emits = defineEmits<{
+    (e: 'delete', id: number): void
+  }>()
+
+  const deletePhotoById = id => {
+    emits('delete', id || 0)
   }
 </script>
 
@@ -26,12 +36,17 @@
     <n-gradient-text :size="24" type="success">
       <div class="font-extrabold text-2xl sm:text-3xl mb-6">Галерея</div>
     </n-gradient-text>
-    <div v-if="gallery.length" class="gap-4 sm:gap-8 columns-2 sm:columns-3">
+    <div
+      v-if="gallery.length"
+      class="gap-4 sm:gap-4 md:gap-8 columns-1 min-[500px]:columns-2 md:columns-3"
+    >
       <gallery-card
         v-for="(photoItem, index) in gallery"
         :key="index"
+        :is-deletable="isDeletable"
         :item="photoItem"
         @click="handleGalleryModal()"
+        @delete="deletePhotoById($event)"
       />
       <n-modal
         v-model:show="showModal"

@@ -8,11 +8,11 @@
     useRoute,
     useRouter
   } from '#imports'
-  import { ref, onMounted, h, computed } from 'vue'
+  import { ref, onMounted, computed } from 'vue'
   import { EUserAccountType } from '~/services/enums'
   import ProfileHeaderDesktop from '~/components/Profile/ProfileHeader/ProfileHeaderDesktop.vue'
   import ProfileUpload from '~/components/Profile/ProfileUpload.vue'
-  import { NGradientText, NSkeleton, NSpace } from 'naive-ui'
+  import { NGradientText, NSkeleton, NSpace, useMessage } from 'naive-ui'
   import ProfileActiveContest from '~/components/Profile/ProfileActiveContest.vue'
   import { RoutesNames } from '~/services/routes-names'
 
@@ -29,6 +29,8 @@
   const settingsStore = useSettingsStore()
   const authStore = useAuthStore()
 
+  const message = useMessage()
+
   const { user } = storeToRefs(authStore)
 
   const isLoading = ref(false)
@@ -38,11 +40,20 @@
     try {
       userProfile.value = await usersRepository.profileById(profileId)
       await authStore.profile()
-      console.log(userProfile.value)
     } catch (e) {
-      console.log(e)
+      message.error('Ошибка сети')
     }
     isLoading.value = false
+  }
+
+  const deletePhotoById = async id => {
+    try {
+      const response = await usersRepository.deleteGalleryPhoto(id)
+      await authStore.profile()
+      message.success('Фото успешно удалено')
+    } catch (e) {
+      message.error('Ошибка удаления данных')
+    }
   }
 
   const userBaseStatistics = computed(() => {
@@ -124,7 +135,11 @@
         <profile-active-contest :active-contest="userProfile.contest_photo" />
       </div>
     </div>
-    <profile-gallery :gallery="userProfile?.gallery_photo ?? []" />
+    <profile-gallery
+      :is-deletable="hasCurrentUserPage"
+      :gallery="userProfile?.gallery_photo ?? []"
+      @delete="deletePhotoById($event)"
+    />
   </div>
 </template>
 

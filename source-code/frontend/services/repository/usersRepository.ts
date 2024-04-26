@@ -25,6 +25,11 @@ const usersRepository = {
     const { $http } = useNuxtApp()
     const response = await $http.post(`/api/auth/gallery-photo`)
     return response
+  },
+  deleteGalleryPhoto: async params => {
+    const { $http } = useNuxtApp()
+    const response = await $http.post(`/api/auth/delete-gallery-photo`, params)
+    return response
   }
 }
 export default usersRepository
