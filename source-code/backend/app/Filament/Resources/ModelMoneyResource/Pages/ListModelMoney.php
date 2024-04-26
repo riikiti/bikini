@@ -9,6 +9,7 @@ use Filament\Resources\Pages\ListRecords;
 class ListModelMoney extends ListRecords
 {
     protected static string $resource = ModelMoneyResource::class;
+    protected static ?string $title = 'Выплаты моделям';
 
     protected function getHeaderActions(): array
     {

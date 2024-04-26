@@ -16,8 +16,8 @@ class ModelMoneyResource extends Resource
 
     protected static ?string $navigationIcon = 'heroicon-o-currency-dollar';
 
-    protected static ?string $navigationLabel = 'Финансы';
-    protected static ?string $navigationGroup = 'Пользователь';
+    protected static ?string $navigationLabel = 'Выплаты моделям';
+    protected static ?string $navigationGroup = 'Финансы';
 
     public static function form(Form $form): Form
     {
