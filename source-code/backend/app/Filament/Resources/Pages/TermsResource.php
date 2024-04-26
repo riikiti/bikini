@@ -26,7 +26,6 @@ class TermsResource extends Resource
                 Grid::make(1)
                     ->schema([
                        TextInput::make('title')
-                            ->maxLength(255)
                             ->label('Заголовок'),
                         TinyEditor::make('description')
                             ->required()
