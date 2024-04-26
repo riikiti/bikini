@@ -40,7 +40,7 @@ class UserController extends Controller
             ->first();
 
         if ($user->role === $user::MODEL && isset($modelPhoto)) {
-            $isWinner= WinnerList::query()->where('user_id',$user->id)->get();
+            $isWinner = WinnerList::query()->where('user_id', $user->id)->get();
             return response()->json([
                 'status' => 'success',
                 'data' => [
@@ -50,7 +50,7 @@ class UserController extends Controller
                     'is_winner' => WinnerResource::collection($isWinner)
                 ],]);
         } elseif ($user->role === $user::MODEL) {
-            $isWinner= WinnerList::query()->where('user_id',$user->id)->get();
+            $isWinner = WinnerList::query()->where('user_id', $user->id)->get();
 
             return response()->json([
                 'status' => 'success',
@@ -83,6 +83,26 @@ class UserController extends Controller
             'model_photo' => ModelPhotoResource::make(ModelPhoto::create($data))
         ]);
 
+
+    }
+
+    public function deletePhoto(Request $request): JsonResponse
+    {
+        $photo = ModelPhoto::query()
+            ->where('user_id', $request->user()->id)
+            ->where('id', $request->photo_id)
+            ->exists();
+        if ($photo) {
+            ModelPhoto::query()
+                ->where('user_id', $request->user()->id)
+                ->where('id', $request->photo_id)
+                ->delete();
+            return response()->json([
+                'status' => 'ok',
+            ]);
+        } else {
+            return response()->json(['status' => 'error']);
+        }
 
     }
 

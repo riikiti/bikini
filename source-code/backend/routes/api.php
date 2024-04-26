@@ -66,6 +66,8 @@ Route::group(['middleware' => 'api', 'prefix' => 'auth'], function ($router) {
         Route::get('/models', [ModelsPageController::class, 'getAll']);
 
         Route::post('/gallery-photo', [UserController::class, 'addPhoto']);
+        Route::post('/delete-gallery-photo', [UserController::class, 'deletePhoto']);
+
 
         Route::get('/model-photos/{user}', [UserController::class, 'showModelPhoto']);
 
