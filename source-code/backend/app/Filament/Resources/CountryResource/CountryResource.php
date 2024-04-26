@@ -40,7 +40,7 @@ class CountryResource extends Resource
                     })
                     ->extraImgAttributes([
                         'img' => 'src'
-                    ])
+                    ])->square()
             ])
             ->filters([
                 //
