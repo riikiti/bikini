@@ -28,9 +28,11 @@ class StatsPaymentUser extends BaseWidget
             )
                 ->description('поступили на кошелек')
                 ->color('success'),
-            Stat::make('Всего заработано', $sum)
+            Stat::make('Всего заработано', $sum * 5)
+                ->description('в рублях')
                 ->color('success'),
-            Stat::make('Заработано за ' . Carbon::now()->translatedFormat('F'), $sumMonth)
+            Stat::make('Заработано за ' . Carbon::now()->translatedFormat('F'), $sumMonth * 5)
+                ->description('в рублях')
                 ->color('success'),
         ];
     }
