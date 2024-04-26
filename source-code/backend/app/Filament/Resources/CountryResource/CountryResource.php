@@ -41,6 +41,7 @@ class CountryResource extends Resource
                     ->extraImgAttributes([
                         'img' => 'src'
                     ])->circular()
+                ->label('Флаг')
             ])
             ->filters([
                 //
