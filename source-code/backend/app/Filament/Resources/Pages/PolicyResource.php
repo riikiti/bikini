@@ -28,7 +28,6 @@ class PolicyResource extends Resource
                        TextInput::make('title')
                             ->label('Заголовок'),
                         TinyEditor::make('description')
-                            ->required()
                             ->label('Описание'),
                     ])
             ]);
