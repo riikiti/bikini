@@ -25,7 +25,7 @@ class CountryResource extends Resource
         return $form
             ->schema([
                 TextInput::make('name')->label('Страна')->required(),
-                TextInput::make('icon')->label('Иконка страны')->url(),
+                TextInput::make('icon')->label('Иконка страны')->required()->url(),
             ]);
     }
 
@@ -34,6 +34,13 @@ class CountryResource extends Resource
         return $table
             ->columns([
                 TextColumn::make('name')->label('Страна')->searchable(),
+                ImageColumn::make('icon')
+                    ->getStateUsing(function (Country $record): string {
+                        return $record->icon;
+                    })
+                    ->extraImgAttributes([
+                        'img' => 'src'
+                    ])
             ])
             ->filters([
                 //
