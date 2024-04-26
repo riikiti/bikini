@@ -13,10 +13,16 @@ class Message extends Model
 
     protected $table = 'messages';
 
-    protected $fillable = ['sender_id', 'content','chat_id'];
+    protected $fillable = ['sender_id', 'content', 'chat_id'];
 
-    public static function getCreatedAtAttribute($value) {
+    public static function getCreatedAtAttribute($value)
+    {
         return date('Y-m-d H:i:s', strtotime($value));
+    }
+
+    public function chat(): BelongsTo
+    {
+        return $this->belongsTo(Chat::class);
     }
 
     public function sender(): BelongsTo
