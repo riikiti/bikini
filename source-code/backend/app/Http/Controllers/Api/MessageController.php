@@ -103,39 +103,45 @@ class MessageController extends Controller
     }
 
     public function store(Request $request, User $user): JsonResponse
-    {
-        $chat = Chat::query()
-            ->where('sender_id', $request->user()->id)
-            ->where('receiver_id', $user->id)
-            ->exists();
-        $chat2 = Chat::query()
-            ->where('sender_id', $user->id)
-            ->where('receiver_id', $request->user()->id)
-            ->exists();
-        if (!$chat && !$chat2) {
-            $chat = Chat::create([
-                'sender_id' => $request->user()->id,
-                'receiver_id' => $user->id,
-            ]);
-        } else {
+        {
             $chat = Chat::query()
                 ->where('sender_id', $request->user()->id)
                 ->where('receiver_id', $user->id)
-                ->first();
-        }
-        // Получаем данные формы
-        $data = $request->validate([
-            'content' => 'required',
-        ]);
-        // Создаем новое сообщение
-        $message = new Message([
-            'sender_id' => $request->user()->id,
-            'content' => $data['content'],
-            'chat_id' => $chat->id,
-        ]);
-        // Сохраняем сообщение
-        $message->save();
+                ->exists();
+            $chat2 = Chat::query()
+                ->where('sender_id', $user->id)
+                ->where('receiver_id', $request->user()->id)
+                ->exists();
+            if (!$chat && !$chat2) {
+                $chat = Chat::create([
+                    'sender_id' => $request->user()->id,
+                    'receiver_id' => $user->id,
+                ]);
+            } elseif($chat) {
+                $chat = Chat::query()
+                    ->where('sender_id', $request->user()->id)
+                    ->where('receiver_id', $user->id)
+                    ->first();
+            }else{
+                $chat = Chat::query()
+                    ->where('sender_id', $user->id)
+                    ->where('receiver_id', $request->user()->id)
+                    ->first();
+            }
 
-        return response()->json(['status' => 'success', 'data' => 'Сообщение отправлено']);
-    }
+            // Получаем данные формы
+            $data = $request->validate([
+                'content' => 'required',
+            ]);
+            // Создаем новое сообщение
+            $message = new Message([
+                'sender_id' => $request->user()->id,
+                'content' => $data['content'],
+                'chat_id' => $chat->id,
+            ]);
+            // Сохраняем сообщение
+            $message->save();
+
+            return response()->json(['status' => 'success', 'data' => 'Сообщение отправлено']);
+        }
 }
