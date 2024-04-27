@@ -48,8 +48,11 @@
 
   const deletePhotoById = async id => {
     try {
-      const response = await usersRepository.deleteGalleryPhoto(id)
-      await authStore.profile()
+      const data = {
+        photo_id: id
+      }
+      const response = await usersRepository.deleteGalleryPhoto(data)
+      await fetchUserProfile()
       message.success('Фото успешно удалено')
     } catch (e) {
       message.error('Ошибка удаления данных')
